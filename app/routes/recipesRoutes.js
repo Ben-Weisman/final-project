@@ -9,7 +9,7 @@ router.get('/get-all', recipesController.getAll);
 
 router.get('/cookbook',recipesController.getCookbook);
 
-router.post('/add', recipesController.addRecipe);
+router.post('/add-new', recipesController.createNewRecipe);
 
 router.delete('/remove', recipesController.removeByID);
 

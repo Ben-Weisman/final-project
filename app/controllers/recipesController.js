@@ -78,5 +78,7 @@ module.exports.createNewRecipe = (req,res) =>{
 }
 
 const findExistingRecords = (recipeIngredients,data) => {
-    
+    for (let i = 0;i < recipeIngredients.length; i++){
+        
+    }
 };
