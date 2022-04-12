@@ -1,27 +1,32 @@
 const { query } = require('express');
 const db = require('./../db/db');
+const worker = require('./../data-access/dataAccess');
+const queries = require('./../data-access/queries/queries');
+const { resolve } = require('path');
 
 
-
-module.exports.fetchUserByEmail = (email,callback) => {
-    // query the db and getch the user by given email address (unique).
-    let query = `SELECT email,user_password,is_admin,full_name FROM User WHERE email = '${email}';`
-    db.query(query,(err,result) => {
-        if (err) callback(err,null);
-        else callback(null,result);
+module.exports.fetchUserByEmail = (email) => {
+    return new Promise ((resolve,reject) => {
+        console.log('LOG: in fetchUserByEmail Promise');
+        worker.executeQuery(queries.getUserByEmail(email)).then((data) => {
+            resolve(data);
+        }).catch((err) => {
+            reject(err);
+        });
     })
-    
 }
 
-module.exports.insertUser = (userRecord, callback) =>{
-    console.log('LOG: in insertUser')
-    let query = `INSERT INTO User VALUES ('${userRecord.user_id}','${userRecord.email}','${userRecord.user_password}','${userRecord.full_name}','${userRecord.username}','${userRecord.cookbook_id}','${userRecord.profile_picture_id}');`;
-    db.query(query,(err,result)=>{
-        if (err){
-            callback(err,null);
-        }
-        else callback (null,result);
-    });
+
+module.exports.insertUser = (userRecord) =>{
+    return new Promise((resolve,reject) => {
+        console.log('LOG: in insertUser Promise ---->')
+        console.log('LOG: ' + JSON.stringify(userRecord,null,4));
+            worker.executeQuery(queries.insertNewUser(userRecord)).then((res) => {
+                resolve(res);
+            }).catch((err) => {
+                reject(err);
+            })
+    })
 }
 
 module.exports.deleteUser = (user) =>{

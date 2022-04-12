@@ -5,9 +5,9 @@ const recipesController = require('./../controllers/recipesController')
 
 router.get('/get-by-owner', recipesController.getAllRecipesByOwner);
 
-router.get('/get-all', recipesController.getAll);
+router.get('/get-all', recipesController.getAll); // done
 
-router.get('/cookbook',recipesController.getCookbook);
+router.get('/cookbook',recipesController.getCookbook); // done
 
 router.post('/add-new', recipesController.createNewRecipe);
 

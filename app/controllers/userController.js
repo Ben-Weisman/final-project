@@ -2,34 +2,28 @@ const { randomUUID } = require('crypto');
 const userDataAccess = require('./../data-access/userDataAccess');
 
 module.exports.validate = (req,res) => {
-    console.log('Log: In users/validate');
+    console.log('LOG: in validate')
     let password = req.body.user_password;
     let email = req.body.email;
 
-    userDataAccess.fetchUserByEmail(email, (err,data) => {
-        if (err){
-            res.status(401);
+    userDataAccess.fetchUserByEmail(email).then((user) => {
+        console.log(JSON.stringify(user,null,4));
+        resJson = validateUser(user,password);
+        if (resJson){
+            res.status(200);
+            res.contentType('application/json');
+            res.send(resJson);
         }
-        else {
-            resJson = validateUser(data,password);
-            if (resJson){
-                res.status(200);
-                res.contentType('application/json');
-                console.log(`LOG: resJson = ${JSON.stringify(resJson)}`);
-                res.send(resJson);
-            } 
-            else res.status(401);
-        }
-    });
+    }).catch((err) => {
+        res.status(401);
+    })
 }
 
 module.exports.createUser = (req,res) => {
-    console.log('LOG: in createUser');
     user = req.body;
     if (validateParams(user)){
         email = user.email;
         password = user.password;
-        username = email;
         cookbook_id = randomUUID();
         user_id = randomUUID();
         fullName = user.name;
@@ -39,21 +33,20 @@ module.exports.createUser = (req,res) => {
             email:email,
             user_password: password,
             full_name:fullName,
-            username:email,
             cookbook_id:cookbook_id,
-            profile_picture_id:null
+            profile_picture_id:null,
+            is_admin: false
         }
-        console.log('LOG: userRecord = ' + JSON.stringify(userRecord,null,2));
-
-        userDataAccess.insertUser(userRecord, (err,data) => {
-            console.log('LOG: --calledback--')
-            if (err){
-                res.status(400);
-            }
-            else{
-                res.status(200);
-            }
-        });
+        
+        userDataAccess.insertUser(userRecord).then(() => {
+            res.status(200);
+            res.contentType('application/json');
+            res.send("ok");
+        }).catch((err) => {
+            res.status(400);
+            res.contentType('application/json');
+            res.send(err);
+        })
     }
 }
 
@@ -71,17 +64,15 @@ const validateParams = (user) =>{
 }
 
 const validateUser = (user,pass) => {
-    console.log('LOG: in validateUser')
     res = null;
     if (user){
-        console.log('LOG: passed if(user)')
-        console.log(`LOG: user = ${JSON.stringify(user[0])}`);
         if (user[0].user_password == pass){
             is_admin = isAdmin(user[0]);
             res = {
-                "name":user[0].full_name,
-                "email":user[0].email,
-                "is_admin": is_admin
+                name:user[0].full_name,
+                email:user[0].email,
+                admin: is_admin
+                
             }
         }
     }

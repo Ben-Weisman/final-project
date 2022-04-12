@@ -1,8 +1,8 @@
-
 const { randomUUID } = require('crypto');
 const { send } = require('process');
 const recipesDataAccess = require('./../data-access/recipesDataAccess');
-const dataAccessMdule = require('./../data-access/dataAccess')
+const dataAccessMdule = require('./../data-access/dataAccess');
+const utilParser = require('./../utils/parser');
 
 // Get a recipe per user(email)
 module.exports.getAllRecipesByOwner = (req,res) =>{
@@ -22,26 +22,34 @@ module.exports.getAllRecipesByOwner = (req,res) =>{
     
 }
 
-// get all recipes from db
+// get all recipes from db - done
 module.exports.getAll = (req,res) =>{
-    recipes = recipesDataAccess.fetchAll();
-    res.status(200);
-    res.contentType('application/json');
-    res.send(recipes);
+    recipesDataAccess.fetchAll().then ((data) => {
+        recipes = utilParser.parseToRecipe(data);
+        res.status(200);
+        res.contentType('application/json');
+        res.send(recipes);
+    }).catch((err) => {
+        res.status(500);
+    });
+ 
 }
 
 
+// get all recipes of a user's cookbook. done
 module.exports.getCookbook = (req,res) => {
-    user_email = req.body.email;
-    cookbook = recipesDataAccess.fetchCookbook(user_email);
-    if (cookbook){
-        res.status(200);
-        res.contentType('application/json');
-        res.send(cookbook);
-    }
-    else{
-        res.status(500);
-    }
+    user_id = req.body.user_id;
+    recipesDataAccess.fetchCookbook(user_id).then ((recipes_ids) => {
+        recipesDataAccess.fetchRecipesByIDs(recipes_ids).then((rawRecipes) => {
+            recipes = utilParser.parseToRecipe(rawRecipes);
+            res.status(200);
+            res.contentType('application/json');
+            res.send(recipes);
+        }).catch((err) => {
+            res.status(500);
+        });
+
+    });
 }
 
 
@@ -67,7 +75,12 @@ module.exports.createNewRecipe = (req,res) =>{
     if (validateParams(recipe)){ // implement validateRecipes
         dataAccessMdule.fetchRecordsFromTable('Ingredients','*',(err,data) => {
             console.log('LOG: in callback function');
-             recordsToInsert = findExistingRecords(recipe.ingredients,data);
+            if (!err){
+                recipe.ingredients= checkAppearancesInDB(recipe.ingredients,data);
+                console.log(data);
+                console.log('LOG: Printing...')
+
+            }
         })
         recipesDataAccess.insertRecipe(recipe);
         res.status(200);
@@ -77,8 +90,24 @@ module.exports.createNewRecipe = (req,res) =>{
     }
 }
 
-const findExistingRecords = (recipeIngredients,data) => {
-    for (let i = 0;i < recipeIngredients.length; i++){
+const validateParams = (recipe) => {
+    return true;
+}
+const checkAppearancesInDB = (recipeIngredients,dbIngredients) => {
+
+    recipeIngredients.forEach(function(ingredient) {
+        let name = ingredient.ingredient_name;
+        found = dbIngredients.filter(function(ingredient) {
+            
+            return ingredient.ingredient_name.toLowerCase() == name.toLowerCase();
+        });
+
         
-    }
-};
+    });
+
+//     Object.keys(result).forEach(function(key) {
+//         var row = result[key];
+//         console.log(row.id);
+    
+// });
+}

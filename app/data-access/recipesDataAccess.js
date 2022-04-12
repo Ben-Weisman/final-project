@@ -1,7 +1,69 @@
 
 const { query } = require('express');
 const db = require('./../db/db');
+const worker = require('./../data-access/dataAccess');
+const queries = require('./../data-access/queries/queries');
+const { resolve } = require('path');
 
+
+module.exports.fetchAll = () => {
+    return new Promise((resolve,reject) =>{
+        let res = {};
+        console.log('LOG: in fetchAll Promise');
+        worker.executeQuery(queries.getAllRecipesDetails).then( (data) => {
+            console.log('LOG: resolving in fetchAll');
+            res.recipes = data;
+        }).catch( (err) => {
+            reject(err);
+        });
+        worker.executeQuery(queries.getAllRecipesIngredients).then( (data) => {
+            console.log('LOG: resolving in fetchAll');
+            res.ingredients = data;
+        }).catch((err) => {
+            reject(err);
+        });
+        worker.executeQuery (queries.getAllRecipesInstructions).then((data) => {
+            console.log('LOG: resolving in fetchAll');
+            res.instructions = data;
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+module.exports.fetchCookbook = (id) => {
+    return new Promise((resolve,reject) => {
+        worker.executeQuery(queries.getCookbookByUserID(id)).then((data) => {
+            resolve(data);
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+module.exports.fetchRecipesByIDs = (ids_arr) => {
+    return new Promise((resolve,reject) => {
+        res = {};
+        worker.executeQuery(queries.getRecipeRecordsByIDsBuilder(ids_arr,"details")).then((data) => {
+            res.recipes = data;
+        }).catch ((err) => {
+            reject(err);
+        });
+        worker.executeQuery(queries.getRecipeRecordsByIDsBuilder(ids_arr,"ingredients")).then((data) => {
+            res.ingredients = data;
+        }).catch ((err) => {
+            reject(err);
+        });
+        worker.executeQuery(queries.getRecipeRecordsByIDsBuilder(ids_arr,"instructions")).then((data) =>{
+            res.instructions = data;
+            resolve(res);
+        }).catch((err) => {
+            reject(err);
+        })
+        });
+    
+}
 
 module.exports.fetchRecipesByOwner = (email) =>{
     // query by email.

@@ -4,9 +4,9 @@ const usersController = require('./../controllers/userController');
 
 
 // validate user credentials
-router.post('/login',usersController.validate);
+router.post('/login',usersController.validate); // done
 
-router.post('/add',usersController.createUser);
+router.post('/add',usersController.createUser); // done
 
 router.delete('/remove',usersController.removeUser);
 
