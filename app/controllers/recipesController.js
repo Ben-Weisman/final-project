@@ -3,12 +3,15 @@ const { send } = require('process');
 const recipesDataAccess = require('./../data-access/recipesDataAccess');
 const dataAccessMdule = require('./../data-access/dataAccess');
 const utilParser = require('./../utils/parser');
-
+const Tables = require('./../utils/dbEnums');
 // Get a recipe per user(email)
 module.exports.getAllRecipesByOwner = (req,res) =>{
 
     email = req.body.email;
-    recipeRecord = recipesDataAccess.fetchRecipesByOwner(email);
+    recipesDataAccess.fetchRecipesByOwner(email).then((data) => {
+        recipes = utilParser.parseToRecipe(data);
+        console.log('LOG: recipes => ' + recips);
+    })
     
     if (recipeRecord){
         res.status(200);
@@ -40,7 +43,8 @@ module.exports.getAll = (req,res) =>{
 module.exports.getCookbook = (req,res) => {
     user_id = req.body.user_id;
     recipesDataAccess.fetchCookbook(user_id).then ((recipes_ids) => {
-        recipesDataAccess.fetchRecipesByIDs(recipes_ids).then((rawRecipes) => {
+        let idsArray = recipes_ids.map(item => item.recipe_id);
+        recipesDataAccess.fetchRecipesByIDs(idsArray).then((rawRecipes) => {
             recipes = utilParser.parseToRecipe(rawRecipes);
             res.status(200);
             res.contentType('application/json');
@@ -69,45 +73,25 @@ module.exports.removeByID = (req,res) =>{
 
 // insert new recipe to db -- Should be moved to Scraper API entry points.
 module.exports.createNewRecipe = (req,res) =>{
-    recipe = req.body;
-    recipe.recipe_id = randomUUID();
-
-    if (validateParams(recipe)){ // implement validateRecipes
-        dataAccessMdule.fetchRecordsFromTable('Ingredients','*',(err,data) => {
-            console.log('LOG: in callback function');
-            if (!err){
-                recipe.ingredients= checkAppearancesInDB(recipe.ingredients,data);
-                console.log(data);
-                console.log('LOG: Printing...')
-
-            }
-        })
-        recipesDataAccess.insertRecipe(recipe);
-        res.status(200);
+    let recipeDetailsRecord = {
+        recipeID: randomUUID(),
+        recipeName: req.body.recipe_name,
+        description: req.body.recipe_description,
+        category: req.body.category,
+        ownerID: req.body.owner_id,
+        uploadedDate: new Date().toISOString().slice(0,10),
+        deletedByOwner: false,
+        public: true
     }
-    else{
-        res.status(400);
-    }
-}
 
-const validateParams = (recipe) => {
-    return true;
-}
-const checkAppearancesInDB = (recipeIngredients,dbIngredients) => {
-
-    recipeIngredients.forEach(function(ingredient) {
-        let name = ingredient.ingredient_name;
-        found = dbIngredients.filter(function(ingredient) {
-            
-            return ingredient.ingredient_name.toLowerCase() == name.toLowerCase();
-        });
-
-        
-    });
-
-//     Object.keys(result).forEach(function(key) {
-//         var row = result[key];
-//         console.log(row.id);
+    let ingredientsRecord = generateIngredientsJsonRecordValues(req.body.ingredients);
+    let instructionsRecord = generateIngredientsJsonRecordValues(req.body.instructions);
     
-// });
+    
+    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord);
+    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientsRecord);
+    recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientsRecord);
+    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsRecord);
+    recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsRecord);
 }
+

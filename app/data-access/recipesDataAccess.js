@@ -4,26 +4,74 @@ const db = require('./../db/db');
 const worker = require('./../data-access/dataAccess');
 const queries = require('./../data-access/queries/queries');
 const { resolve } = require('path');
+const Tables = require('../utils/dbEnums');
+
+module.exports.insertRecipeTableRecord = (record) => {
+    let values = `('${record.recipeID}','${record.recipeName}','${record.description}','${record.category}','${record.ownerID}','${record.uploadedDate}',${record.deletedByOwner},${public})`
+    return new Promise ((resolve,reject) => {
+        worker.executeQuery(queries.insertQueryBuilder("Recipes",values)).then((data) => {
+            resolve("OK");
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+
+    
+}
+
+module.exports.insertNewRecord = (tableName,record) => {
+
+        let flag = true;
+        switch (tableName){
+            case Tables.Tables.RECIPES_TABLE:
+                values = `('${record.recipeID}','${record.recipeName}','${record.description}','${record.category}','${record.ownerID}','${record.uploadedDate}',${record.deletedByOwner},${public})`;
+                break;
+            case Tables.Tables.RECIPE_INGREDIENT_TABLE:
+                values = ``;
+                break;
+            case Tables.Tables.INGREDIENTS_TABLE:
+                values = ``;
+                break;
+            case Tables.Tables.RECIPE_INSTRUCTIONS_TABLE:
+                values = ``;
+                break;
+            case Tables.Tables.INSTRUCTIONS_TABLE:
+                values = ``;
+                break;
+            default:
+                flag = false;
+                break;
+        }
+        if (flag){
+            return new Promise ((resolve,reject) => {
+                worker.executeQuery(queries.insertQueryBuilder(tableName,values)).then((data) => {
+                    resolve("OK");
+                }).catch((err) => {
+                    reject(err);
+                });
+            });
+        }
+}
+
+module.exports.insertIngredients = (ingredients) => {
+    let values = `('','','','')`;
+}
 
 
 module.exports.fetchAll = () => {
     return new Promise((resolve,reject) =>{
         let res = {};
-        console.log('LOG: in fetchAll Promise');
         worker.executeQuery(queries.getAllRecipesDetails).then( (data) => {
-            console.log('LOG: resolving in fetchAll');
             res.recipes = data;
         }).catch( (err) => {
             reject(err);
         });
         worker.executeQuery(queries.getAllRecipesIngredients).then( (data) => {
-            console.log('LOG: resolving in fetchAll');
             res.ingredients = data;
         }).catch((err) => {
             reject(err);
         });
         worker.executeQuery (queries.getAllRecipesInstructions).then((data) => {
-            console.log('LOG: resolving in fetchAll');
             res.instructions = data;
             resolve(res);
         }).catch((err) => {
@@ -45,17 +93,23 @@ module.exports.fetchCookbook = (id) => {
 module.exports.fetchRecipesByIDs = (ids_arr) => {
     return new Promise((resolve,reject) => {
         res = {};
-        worker.executeQuery(queries.getRecipeRecordsByIDsBuilder(ids_arr,"details")).then((data) => {
+        
+        worker.executeQuery(queries.getRecipeComponentsByIDsQueryBuilder(ids_arr,"details")).then((data) => {
+            console.log('LOG: data = ' + data);
             res.recipes = data;
         }).catch ((err) => {
             reject(err);
         });
-        worker.executeQuery(queries.getRecipeRecordsByIDsBuilder(ids_arr,"ingredients")).then((data) => {
+        
+        worker.executeQuery(queries.getRecipeComponentsByIDsQueryBuilder(ids_arr,"ingredients")).then((data) => {
+            console.log('LOG: data = ' + data);
             res.ingredients = data;
         }).catch ((err) => {
             reject(err);
         });
-        worker.executeQuery(queries.getRecipeRecordsByIDsBuilder(ids_arr,"instructions")).then((data) =>{
+        
+        worker.executeQuery(queries.getRecipeComponentsByIDsQueryBuilder(ids_arr,"instructions")).then((data) =>{
+            console.log('LOG: data = ' + data);
             res.instructions = data;
             resolve(res);
         }).catch((err) => {
@@ -66,36 +120,29 @@ module.exports.fetchRecipesByIDs = (ids_arr) => {
 }
 
 module.exports.fetchRecipesByOwner = (email) =>{
-    // query by email.
+    return new Promise ((resolve,reject) => {
+        let recipesIDs = {};
+        let userID = {};
+        worker.executeQuery(queries.getUserByEmail("ben.weisman15@gmail.com")).then((data) => {
+            userID = data[0].user_id;
+
+            worker.executeQuery(queries.getAllRecipesIDsByOwner(userID)).then((data) => {
+                let idsArray = data.map(item => item.recipe_id);
+                this.fetchRecipesByIDs(idsArray).then((data) => {
+                    // console.log(data);
+                }).catch((err) => {
+                    reject(err);
+                });
+            }).catch((err) => {
+                reject(err);
+            });
+
+
+        }).catch((err) => {
+            reject(err);
+        });
+
+    });
     
 }
 
-module.exports.insertRecipe = (recipe) => {
-
-    populateRecipesTable(recipe);
-    populateIngredients(recipe);
-}
-
-
-const populateRecipesTable = (recipe) => {
-    let isoDate = new Date().toISOString().replace(/T/,' ');
-    let formattedDate = isoDate.substring(0,isoDate.indexOf(' '));
-
-    let queryRecipes = `INSERT INTO Recipes VALUES ('${recipe.recipe_id}','${recipe.recipe_name}','${recipe.recipe_description}','${recipe.category}','${recipe.owner_id}','${formattedDate}',${false},'${recipe.is_public}');`;
-
-}
-
-const populateIngredients = (recipe) => {
-    // let currentIngredientsInDBQuery = 'SELECT id,ingredient_name FROM Ingredients';
-    
-    let ingredientsToPush = JSON.parse({});
-    
-    let ingredients = recipe.ingredients;
-    for (let i = 0;i<ingredients.length;i++){
-        for (let j=0;j<currentIngredientsInDB.length;j++){
-            if (ingredients[i] == currentIngredientsInDB[j].ingredient_name){
-                ingredientsToPush.push({id:currentIngredientsInDB.id,name: currentIngredientsInDB.name});
-            }
-        }
-    }
-}

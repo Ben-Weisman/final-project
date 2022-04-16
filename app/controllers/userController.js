@@ -3,17 +3,21 @@ const userDataAccess = require('./../data-access/userDataAccess');
 
 module.exports.validate = (req,res) => {
     console.log('LOG: in validate')
-    let password = req.body.user_password;
+    let password = req.body.password;
     let email = req.body.email;
 
     userDataAccess.fetchUserByEmail(email).then((user) => {
-        console.log(JSON.stringify(user,null,4));
         resJson = validateUser(user,password);
         if (resJson){
             res.status(200);
             res.contentType('application/json');
             res.send(resJson);
         }
+        else{
+            console.log('LOG: failed to validate')
+            res.status(401);
+            res.send({status:"ERROR"});
+        } 
     }).catch((err) => {
         res.status(401);
     })
@@ -48,6 +52,10 @@ module.exports.createUser = (req,res) => {
             res.send(err);
         })
     }
+    else {
+        res.status(400);
+        res.send({status:"ERROR"});
+    }
 }
 
 module.exports.removeUser = (req,res) => {
@@ -66,13 +74,17 @@ const validateParams = (user) =>{
 const validateUser = (user,pass) => {
     res = null;
     if (user){
+        console.log('LOG: validateUser user: ' + user[0].user_password);
+        console.log('LOG: pass = ' + pass);
         if (user[0].user_password == pass){
+            console.log('LOG: valid')
             is_admin = isAdmin(user[0]);
             res = {
                 name:user[0].full_name,
                 email:user[0].email,
-                admin: is_admin
-                
+                admin: is_admin,
+                status: "Success",
+                userID: user[0].user_id
             }
         }
     }

@@ -4,7 +4,6 @@ const db = require('./../db/db');
 
 
 module.exports.fetchRecordsFromTable = (tableName,columns,callback) => {
-    console.log('LOG: in fetchRecordsFromTable');
     tableName = tableName.trim();
     columns = columns.trim();
 
@@ -20,13 +19,11 @@ module.exports.fetchRecordsFromTable = (tableName,columns,callback) => {
 }
 
 module.exports.executeQuery = (query) => {
-    console.log('LOG: in executeQuery, query = ' + query);
     return new Promise((resolve,reject) => {
         db.query(query,(err,result) => {
             if (err)
-                return reject(err);
+                reject(err);
             else {
-                console.log('LOG: resolving..');
                 resolve(result)
             };
         })
