@@ -3,7 +3,7 @@ const userDataAccess = require('./../data-access/userDataAccess');
 
 module.exports.validate = (req,res) => {
     console.log('LOG: in validate')
-    let password = req.body.user_password;
+    let password = req.body.password;
     let email = req.body.email;
 
     userDataAccess.fetchUserByEmail(email).then((user) => {

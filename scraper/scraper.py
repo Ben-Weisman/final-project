@@ -3,8 +3,9 @@ from unicodedata import category
 import requests
 from bs4 import BeautifulSoup
 import json
+from utils.db import redis_string
 
-from utils.validations import validateRecipe
+# from utils.validations import validateRecipe
 # url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
 
 
@@ -103,7 +104,7 @@ def main(url):
         # print(recipeIndexJson)
         recipeJson = createRecipeJson(soup,recipeIndexJson)
         print(recipeJson) # test log
-        validateRecipe(recipeJson)
+        # validateRecipe(recipeJson)
     except:
         print("couldn't find json")
 
@@ -111,5 +112,6 @@ def main(url):
 
 
 if __name__ == '__main__':
-    url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
+    url = "https://www.bbc.co.uk/food/recipes/easter_brownies_39845"
+    # redis_string()
     main(url)
