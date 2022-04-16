@@ -27,7 +27,11 @@ const useStyles = makeStyles(theme => {
       display: "flex"
     },
     drawer: {
-      width: drawerWidth
+      width: drawerWidth,
+      minHeight: "100vh",
+      backgroundColor: "#FAEBD7",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover"
     },
     drawerPaper: {
       width: drawerWidth

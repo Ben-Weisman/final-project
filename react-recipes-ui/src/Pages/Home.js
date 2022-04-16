@@ -17,7 +17,7 @@ const Home = () => {
   const classes = useStyles();
   const page = "Home";
   return (
-    <div>
+    <div className={classes.root}>
       <RecipesArray page={page} />
       {/* <Button className='btn' /> */}
     </div>
