@@ -20,7 +20,7 @@ import AddIcon from "@mui/icons-material/Add";
 import IngredientItem from "../Elements/IngredientItem";
 import IngredientsList from "../Elements/IngredientsList";
 import { CompressOutlined } from "@mui/icons-material";
-import { uuid } from "uuidv4";
+import { uuid, v4 } from "uuidv4";
 import DynamicListElement from "../Elements/DynamicListElement";
 import { useHistory } from "react-router-dom";
 
@@ -60,17 +60,14 @@ const InsertRecipeManualForm = () => {
   const handleSubmit = e => {
     e.prevetDefault();
     console.log(ingredients);
+    const recipe = { name, foodType, description, ingredients, instructions };
     fetch("http://localhost:8000/recipes", {
       method: "POST",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        name,
-        foodType,
-        description,
-        ingredients,
-        instructions
-      })
-    }).then(() => history.push("/"));
+      body: JSON.stringify(recipe)
+    })
+      .then(() => console.log("recipe added"))
+      .then(() => history.push("/home"));
   };
 
   const handleChange = event => {
@@ -114,7 +111,7 @@ const InsertRecipeManualForm = () => {
   const addIngredient = e => {
     const newIngredients = ingredients.concat({
       text: ingredientInput,
-      id: uuid()
+      id: v4()
     });
     setIngredients(newIngredients);
     setIngredientInput("");

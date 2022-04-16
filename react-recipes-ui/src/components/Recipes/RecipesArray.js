@@ -25,11 +25,14 @@ const RecipesArray = page => {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/recipes")
+    fetch("http://localhost:3000/api/v1/recipes/get-all")
       .then(res => res.json())
-      .then(data => setRecipes(data));
+      .then(data => {
+        console.log(data);
+        setRecipes(data.recipes);
+      });
   }, []);
-  const openFullRecipe = id => {};
+
   return (
     <Container className="container">
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>

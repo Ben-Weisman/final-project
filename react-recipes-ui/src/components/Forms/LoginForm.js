@@ -66,35 +66,37 @@ const useStyles = makeStyles(theme => ({
 // const [usernameError, setUsernameError] = useState(false)
 // const [passwordError, setPasswordError] = useState(false)
 
-async function loginUser(credentials) {
-  console.log(credentials);
-  return (
-    fetch("http://localhost:8000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(credentials)
-    })
-      //.then(data => data.json())
-      .then(data => console.log(data))
-  );
+async function loginUser(email, password) {
+  console.log(email, password);
+  return fetch("http://localhost:3000/api/v1/users/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(email, password)
+  })
+    .then(data => data.json())
+    .then(data => {
+      console.log(data);
+      return data;
+    });
 }
 
 const LoginForm = () => {
   const classes = useStyles();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async e => {
     e.preventDefault();
     const response = await loginUser({
-      username,
+      email,
       password
     });
 
-    if ("accessToken" in response) {
-      Swal.fire("Success", response.message, "success", {
+    console.log(response);
+    if (response) {
+      Swal.fire("Success", "login succeed", "success", {
         buttons: false,
         timer: 2000
       }).then(value => {
@@ -103,7 +105,7 @@ const LoginForm = () => {
         window.location.href = "/home";
       });
     } else {
-      //Swal("Failed", response.message, "error");
+      Swal("Failed", response.message, "error");
       Swal.fire("Failed", "Failed to login", "error");
     }
   };
@@ -127,9 +129,9 @@ const LoginForm = () => {
               <TextField
                 required
                 id="outlined-basic"
-                label="Username"
-                name="username"
-                onChange={e => setUsername(e.target.value)}
+                label="Email"
+                name="email"
+                onChange={e => setEmail(e.target.value)}
               />
             </div>
             <div className={classes.input}>

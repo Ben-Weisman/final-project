@@ -9,7 +9,7 @@
         "cucumber": "3",
         "carrot": "1"
       },
-      "picture": "/salad.png",
+      "picture": "public/salad.png",
       "instructions": {
         "1": "cut tomato",
         "2": "cut cucomber",
@@ -57,7 +57,7 @@
     }
   ],
   "login": {
-    "username": "guy",
-    "password": "1234"
+    "username": "",
+    "password": ""
   }
 }
