@@ -1,7 +1,8 @@
 module.exports = {
     getAllRecipesDetails:"SELECT Recipes.recipe_id,recipe_name,recipe_description,category,uploaded_date FROM Recipes;",
-    getAllRecipesIngredients:"SELECT Recipes.recipe_id, Ingredients.ingredient_description FROM (Recipes INNER JOIN Recipe_Ingredients ON Recipes.recipe_id = Recipe_Ingredients.recipe_id) INNER JOIN Ingredients ON Recipe_Ingredients.ingredient_id = Ingredients.id;",
+    getAllRecipesIngredients:"SELECT Recipes.recipe_id, Ingredients.ingredient_name FROM (Recipes INNER JOIN Recipe_Ingredients ON Recipes.recipe_id = Recipe_Ingredients.recipe_id) INNER JOIN Ingredients ON Recipe_Ingredients.ingredient_id = Ingredients.id;",
     getAllRecipesInstructions:"SELECT Recipes.recipe_id,Instructions.instruction_description,Instructions.step FROM (Recipes INNER JOIN Recipe_Instructions ON Recipes.recipe_id = Recipe_Instructions.recipe_id) INNER JOIN Instructions ON Recipe_Instructions.instruction_id = Instructions.instruction_id;",
+    getAllIngredients:"select id,ingredient_name from Ingredients;"
 }
 
 

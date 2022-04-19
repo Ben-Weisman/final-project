@@ -7,39 +7,39 @@ const recipeDataAccess = require('./data-access/recipesDataAccess');
 const queries = require('./data-access/queries/queries');
 const worker = require('./data-access/dataAccess')
 const utilParser = require('./utils/parser');
-
+const { randomUUID } = require('crypto');
+const recipeController = require('./controllers/recipesController');
 
 
 const func = ()=>{
     
-    let = today = new Date().toISOString().slice(0,10);
-    console.log(today);
-
-    // return new Promise ((resolve,reject) => {
-    //     let recipesIDs = {};
-    //     let userID = {};
-    //     worker.executeQuery(queries.getUserByEmail("ben.weisman15@gmail.com")).then((data) => {
-    //         userID = data[0].user_id;
-    //         console.log('LOG: user_id = ' + userID);
-    //         worker.executeQuery(queries.getAllRecipesIDsByOwner(userID)).then((data) => {
-    //             let idsArray = data.map(item => item.recipe_id);
-    //             console.log('LOG: recipes ids = ' + idsArray);
-    //             recipeDataAccess.fetchRecipesByIDs(idsArray).then((data) => {
-    //                 recipes = utilParser.parseToRecipe(data);
-    //                 console.log(recipes);
-    //             }).catch((err) => {
-    //                 reject(err);
-    //             });
-    //         }).catch((err) => {
-    //             reject(err);
-    //         });
+    // worker.executeQuery(queries.getAllIngredients).then((data) => {
+    //         if (Object.values(data).indexOf(14) > -1)
+    //             console.log('')
+    // }).catch((err) => {
+    //     console.log(err);
+    // })
 
 
-    //     }).catch((err) => {
-    //         reject(err);
-    //     });
+    // {
+	// 	"owner_id":"59dc8b97-6fae-4dcc-82ed-7cd8e21340a0",
+	// 	"recipe_name":"Pasta",
+	// 	"recipe_description": "Best Pasta EVERRRR",
+	// 	"category": "italian",
+	// 	"recipe_instructions": ["step 1","step 2","step 3"] ,
+	// 	"ingredients": ["1 salt","4 bread","only love","3 cups of soy milk"]
+	// }
 
-    // });
-
+    let obj = 	{ body: {
+		owner_id:'59dc8b97-6fae-4dcc-82ed-7cd8e21340a0',
+		recipe_name:'Pasta',
+		recipe_description: 'Best Pasta EVERRRR',
+		category: 'italian',
+		recipe_instructions: ['step 1','step 2','step 3'] ,
+		ingredients: ['1 salt','4 brea','only love','3 cups of soy milk']
+         }
+    }
+    recipeController.createNewRecipe(obj,null);
+    // console.log(recipeController.createNewRecipe(obj,null));
 }
 func();

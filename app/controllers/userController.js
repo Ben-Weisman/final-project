@@ -14,7 +14,6 @@ module.exports.validate = (req,res) => {
             res.send(resJson);
         }
         else{
-            console.log('LOG: failed to validate')
             res.status(401);
             res.send({status:"ERROR"});
         } 

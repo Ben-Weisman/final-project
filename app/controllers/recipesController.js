@@ -4,6 +4,7 @@ const recipesDataAccess = require('./../data-access/recipesDataAccess');
 const dataAccessMdule = require('./../data-access/dataAccess');
 const utilParser = require('./../utils/parser');
 const Tables = require('./../utils/dbEnums');
+const e = require('express');
 // Get a recipe per user(email)
 module.exports.getAllRecipesByOwner = (req,res) =>{
 
@@ -27,6 +28,7 @@ module.exports.getAllRecipesByOwner = (req,res) =>{
 
 // get all recipes from db - done
 module.exports.getAll = (req,res) =>{
+    console.log('LOG: in getAll');
     recipesDataAccess.fetchAll().then ((data) => {
         recipes = utilParser.parseToRecipe(data);
         res.status(200);
@@ -70,28 +72,153 @@ module.exports.removeByID = (req,res) =>{
 }
 
 
+const generateIngredientsObjectWithIDs = (ingredients,recipeID) => {
+    res = {ingredients:[]};
+    ingredients.forEach(ingredient => {
+        let id = randomUUID();
+        res.ingredients.push({ingredient_id:id,name:ingredient,recipe_id:recipeID});
+    });
+    return res;
+ }
 
+
+const generateInstructionsObjectWithIDs = (instructions,recipeID) => {
+    res = {instructions:[]};
+    let i=1;
+    instructions.forEach(instruction => {
+        let id = randomUUID();
+        res.instructions.push({instruction_id:id,name:instruction,recipe_id:recipeID,step:i});
+        i++;
+    });
+    return res;
+}
+const create = (inputData) => {
+    return new Promise((resolve,reject) => {
+           // Insert to Recipes table
+    let recipeDetailsRecord = generateRecipeDetailsJSON(inputData);
+    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord).then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        reject(err);
+    });
+
+
+    // // Insert to Ingredients table
+    
+    let ingredientObjDetails = generateIngredientsObjectWithIDs(inputData.ingredients,recipeDetailsRecord.recipeID);
+    recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientObjDetails.ingredients).then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        reject(err);
+    });
+    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientObjDetails.ingredients).then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        reject(err);
+    });
+
+    // // Insert to Recipe_Ingredients table
+    let instructionsObjDetails = generateInstructionsObjectWithIDs(inputData.recipe_instructions,recipeDetailsRecord.recipeID);
+    
+    recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        reject(err);
+    });
+    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
+        console.log(data);
+    }).catch((err) => {
+        reject(err);
+    });
+    obj = {
+        recipe_id:recipeDetailsRecord.recipeID,
+         user_id:recipeDetailsRecord.ownerID
+    }
+    recipesDataAccess.insertNewRecord(Tables.Tables.COOKBOOK_TABLE,obj).then((data) => {
+        console.log(data);
+        resolve(data);
+    }).catch((err) => {
+        reject(err);
+    })
+    });
+}
 // insert new recipe to db -- Should be moved to Scraper API entry points.
 module.exports.createNewRecipe = (req,res) =>{
-    let recipeDetailsRecord = {
+
+    create(req.body).then((data) =>{
+        res.status(200);
+        res.send({status:"OK"});
+    }).catch((err) => {
+        res.status(400);
+        res.send({status:"ERROR",error: err});
+    });
+    // // Insert to Recipes table
+    // let recipeDetailsRecord = generateRecipeDetailsJSON(req.body);
+    // recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // });
+
+
+    // // // Insert to Ingredients table
+    
+    // let ingredientObjDetails = generateIngredientsObjectWithIDs(req.body.ingredients,recipeDetailsRecord.recipeID);
+    // recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientObjDetails.ingredients).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // });
+    // recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientObjDetails.ingredients).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // });
+
+    // // // Insert to Recipe_Ingredients table
+    // let instructionsObjDetails = generateInstructionsObjectWithIDs(req.body.recipe_instructions,recipeDetailsRecord.recipeID);
+    
+    // recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // });
+    // recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // });
+    // obj = {
+    //     recipe_id:recipeDetailsRecord.recipeID,
+    //      user_id:recipeDetailsRecord.ownerID
+    // }
+    // recipesDataAccess.insertNewRecord(Tables.Tables.COOKBOOK_TABLE,obj).then((data) => {
+    //     console.log(data);
+    // }).catch((err) => {
+    //     console.log(err);
+    // })
+    
+    
+    
+}
+
+
+const generateRecipeDetailsJSON = (data) => {
+    return  {
         recipeID: randomUUID(),
-        recipeName: req.body.recipe_name,
-        description: req.body.recipe_description,
-        category: req.body.category,
-        ownerID: req.body.owner_id,
+        recipeName: data.recipe_name,
+        description: data.recipe_description,
+        category: data.category,
+        ownerID: data.owner_id,
         uploadedDate: new Date().toISOString().slice(0,10),
         deletedByOwner: false,
         public: true
     }
-
-    let ingredientsRecord = generateIngredientsJsonRecordValues(req.body.ingredients);
-    let instructionsRecord = generateIngredientsJsonRecordValues(req.body.instructions);
-    
-    
-    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord);
-    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientsRecord);
-    recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientsRecord);
-    recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsRecord);
-    recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsRecord);
 }
+
+// const checkForExistenceInDB = (ingredients) => {
+//     dbIngredients = recipesDataAccess.getAllIngredients().then((data) => {
+
+//     });
+// }
 
