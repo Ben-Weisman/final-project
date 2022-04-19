@@ -120,7 +120,7 @@ const RecipeCardBig = ({ recipe, page }) => {
             <List>
               {recipe.ingredients.map(item => (
                 <ListItem>
-                  <ListItemText primary={item.ingredients_description} />
+                  <ListItemText primary={item.ingredient_name} />
                 </ListItem>
               ))}
             </List>

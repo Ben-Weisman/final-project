@@ -151,55 +151,7 @@ module.exports.createNewRecipe = (req,res) =>{
     }).catch((err) => {
         res.status(400);
         res.send({status:"ERROR",error: err});
-    });
-    // // Insert to Recipes table
-    // let recipeDetailsRecord = generateRecipeDetailsJSON(req.body);
-    // recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord).then((data) => {
-    //     console.log(data);
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-
-
-    // // // Insert to Ingredients table
-    
-    // let ingredientObjDetails = generateIngredientsObjectWithIDs(req.body.ingredients,recipeDetailsRecord.recipeID);
-    // recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientObjDetails.ingredients).then((data) => {
-    //     console.log(data);
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-    // recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientObjDetails.ingredients).then((data) => {
-    //     console.log(data);
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-
-    // // // Insert to Recipe_Ingredients table
-    // let instructionsObjDetails = generateInstructionsObjectWithIDs(req.body.recipe_instructions,recipeDetailsRecord.recipeID);
-    
-    // recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
-    //     console.log(data);
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-    // recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
-    //     console.log(data);
-    // }).catch((err) => {
-    //     console.log(err);
-    // });
-    // obj = {
-    //     recipe_id:recipeDetailsRecord.recipeID,
-    //      user_id:recipeDetailsRecord.ownerID
-    // }
-    // recipesDataAccess.insertNewRecord(Tables.Tables.COOKBOOK_TABLE,obj).then((data) => {
-    //     console.log(data);
-    // }).catch((err) => {
-    //     console.log(err);
-    // })
-    
-    
-    
+    }); 
 }
 
 
@@ -215,10 +167,4 @@ const generateRecipeDetailsJSON = (data) => {
         public: true
     }
 }
-
-// const checkForExistenceInDB = (ingredients) => {
-//     dbIngredients = recipesDataAccess.getAllIngredients().then((data) => {
-
-//     });
-// }
 
