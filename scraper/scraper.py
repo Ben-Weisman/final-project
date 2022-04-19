@@ -15,7 +15,7 @@ def getUrl():
     return main(url)
 
 
-# user_id: 59dc8b97-6fae-4dcc-82ed-7cd8e21340a0
+
 
 #from utils.validations import validateRecipe
 # url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
@@ -99,10 +99,13 @@ def createRecipeJson(soup, recipeIndexJson):
             print("No category")
     # image = getImage(soup,recipeIndexJson)  /// for later
         dic = {}
-        dic["title"] = title
-        dic["description"] = description
+        dic["owner_id"] = "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0"
+        dic["recipe_name"] = title
+        dic["recipe_description"] = description
+        dic["category"] = "italian"
+        dic["recipe_instructions"] = method
         dic["ingredients"] = ingredients
-        dic["method"] = method
+
         return json.dumps(dic)
 
     except:
@@ -115,11 +118,14 @@ def main(url):
     soup = BeautifulSoup(content, features="html.parser")
     try: 
        recipeIndexJson = getJsonFromDB(url)
-       if recipeIndexJson !=NULL:
+       if recipeIndexJson != NULL:
         # print(recipeIndexJson)
         recipeJson = createRecipeJson(soup, recipeIndexJson)
 
         print(recipeJson) # test log
+
+        req = requests.post('http://localhost:3000/api/v1/recipes/add-new', data=recipeJson)
+
         return recipeJson
        # validateRecipe(recipeJson)
     except:
