@@ -2,27 +2,100 @@
     "webSitesUrl":[
         
         {
-         "url": "https://www.bbc.co.uk/food/recipes",
-         "title":{
-             "lookFor":"h1",
-             "className":"gel-trafalgar content-title__text"         
-        },
-        "description":{
-            "lookFor": "p",
-            "className": "recipe-description__text"
-        },
-        "ingredients":{
-            "lookFor": "li",
-            "className": "recipe-ingredients__list-item"
-        },"method":{
+             "url": "https://www.bbc.co.uk/food/recipes",
+             "title":{
+                 "lookFor":"h1",
+                 "className":"gel-trafalgar content-title__text"
+            },
+            "description":{
+                "lookFor": "p",
+                "className": "recipe-description__text"
+            },
+            "ingredients":{
                 "lookFor": "li",
-                "className": "recipe-method__list-item"
-        },"image":{
-            "lookFor": "img",
-            "className": "check-later"
-        }
+                "className": "recipe-ingredients__list-item"
+            },"method":{
+                    "lookFor": "li",
+                    "className": "recipe-method__list-item"
+            },"image":{
+                "lookFor": "img",
+                "className": "check-later"
+            }
 
-    }
+        },
+
+
+
+        {
+             "url": "https://www.allrecipes.com/",
+             "title":{
+                 "lookFor":"h1",
+                 "className":"headline heading-content elementFont__display"
+            },
+            "description":{
+                "lookFor": "p",
+                "className": "margin-0-auto"
+            },
+            "ingredients":{
+                "lookFor": "li",
+                "className": "ingredients-item"
+            },"method":{
+                    "lookFor": "li",
+                    "className": "subcontainer instructions-section-item"
+            },"image":{
+                "lookFor": "img",
+                "className": "check-later"
+            }
+
+        },
+
+
+        {
+             "url": "https://www.bbcgoodfood.com/recipes",
+             "title":{
+                 "lookFor":"h1",
+                 "className":"heading-1"
+            },
+            "description":{
+                "lookFor": "p",
+                "className": ""
+            },
+            "ingredients":{
+                "lookFor": "li",
+                "className": "pb-xxs pt-xxs list-item list-item--separator"
+            },"method":{
+                    "lookFor": "li",
+                    "className": "pb-xs pt-xs list-item"
+            },"image":{
+                "lookFor": "img",
+                "className": "check-later"
+            }
+
+        },
+
+
+                {
+             "url": "https://www.simplyrecipes.com/",
+             "title":{
+                 "lookFor":"h1",
+                 "className":"heading__title"
+            },
+            "description":{
+                "lookFor": "h2",
+                "className": "heading__subtitle"
+            },
+            "ingredients":{
+                "lookFor": "li",
+                "className": "simple-list__item js-checkbox-trigger ingredient text-passage"
+            },"method":{
+                    "lookFor": "li",
+                    "className": "comp mntl-sc-block-group--LI mntl-sc-block mntl-sc-block-startgroup"
+            },"image":{
+                "lookFor": "img",
+                "className": "check-later"
+            }
+
+        }
     ]
         
                 
