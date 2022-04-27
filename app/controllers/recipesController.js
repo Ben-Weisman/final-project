@@ -144,8 +144,8 @@ const create = (inputData) => {
 }
 // insert new recipe to db -- Should be moved to Scraper API entry points.
 module.exports.createNewRecipe = (req,res) =>{
-
-    create(req.body).then((data) =>{
+    recipe = JSON.parse(req.body.body)
+    create(recipe).then((data) =>{
         res.status(200);
         res.send({status:"OK"});
     }).catch((err) => {
