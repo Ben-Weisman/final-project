@@ -84,12 +84,12 @@ const RecipeCardBig = ({ recipe, page }) => {
         }
         title={recipe.recipe_name}
       ></CardHeader>
-      <CardMedia
+      {/* <CardMedia
         component="img"
         height="194"
         image={recipe.picture}
         alt={recipe.recipe_name}
-      />
+      /> */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {recipe.recipe_description}
@@ -98,20 +98,6 @@ const RecipeCardBig = ({ recipe, page }) => {
           ItemsArray={recipe.instructions}
           title="Ingredients"
         ></ElementList> */}
-        <Grid>
-          <Typography variant="h6" className={classes.title}>
-            {recipe.instructions.title}
-          </Typography>
-          <div className={"classes.demo"}>
-            <List dense={true}>
-              {recipe.instructions.map(item => (
-                <ListItem>
-                  <ListItemText primary={item.instruction_description} />
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </Grid>
         <Grid item xs={12} md={6}>
           <Typography variant="h6" className={"classes.title"}>
             {recipe.ingredients.title}
@@ -121,6 +107,20 @@ const RecipeCardBig = ({ recipe, page }) => {
               {recipe.ingredients.map(item => (
                 <ListItem>
                   <ListItemText primary={item.ingredient_name} />
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </Grid>
+        <Grid>
+          <Typography variant="h6" className={classes.title}>
+            {recipe.instructions.title}
+          </Typography>
+          <div className={"classes.demo"}>
+            <List dense={true}>
+              {recipe.instructions.map(item => (
+                <ListItem>
+                  <ListItemText primary={item.instruction_description} />
                 </ListItem>
               ))}
             </List>

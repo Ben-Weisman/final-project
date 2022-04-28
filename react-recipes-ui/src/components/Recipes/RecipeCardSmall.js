@@ -68,7 +68,6 @@ const RecipeCardSmall = ({ recipe, page }) => {
     if (page === "Home") return "none";
   };
   useEffect(() => {
-    console.log("use effect run");
     checkPage(page);
   }, []);
 
@@ -82,12 +81,12 @@ const RecipeCardSmall = ({ recipe, page }) => {
         }
         title={recipe.recipe_name}
       ></CardHeader>
-      <CardMedia
+      {/* <CardMedia
         className="recipe-image"
         image="public\salad.jpg"
         height="194"
         alt={recipe.name_name}
-      />
+      /> */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {recipe.recipe_description}

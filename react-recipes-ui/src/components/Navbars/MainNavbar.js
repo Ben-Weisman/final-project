@@ -1,13 +1,6 @@
-import {
-  AppBar,
-  Box,
-  makeStyles,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography
-} from "@mui/material";
-import React from "react";
+import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router-dom";
 
 // const useStyles = makeStyles((theme)=>{
@@ -18,45 +11,39 @@ import { Redirect } from "react-router-dom";
 //     }
 //   })
 // })
-const pages = ["Home", "My Recipes"];
-
-const RedirectToPage = e => {};
+const useStyles = makeStyles(theme => {
+  return {
+    toolbar: theme.mixins.toolbar,
+    backgroundColor: "#FAEBD7",
+    avatar: {
+      marginLeft: theme.spacing(2)
+    }
+  };
+});
+function getUserName() {
+  const user = localStorage.getItem("user");
+  const userJson = JSON.parse(user);
+  console.log(userJson);
+  return userJson["name"];
+}
 const MainNavbar = () => {
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    setUserName(getUserName());
+  }, []);
+
+  const classes = useStyles();
   //  const classes = useStyles()
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
+      <Toolbar className={classes.Toolbar} color="transparent">
+        <div>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Recipes Helper
+            {userName}
           </Typography>
-        </Toolbar>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorElNav}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "left"
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "left"
-          }}
-          open={Boolean(anchorElNav)}
-          sx={{
-            display: { xs: "block", md: "none" }
-          }}
-        >
-          {pages.map(page => (
-            <MenuItem key={page} onClick={RedirectToPage}>
-              <Typography textAlign="center">{page}</Typography>
-            </MenuItem>
-          ))}
-        </Menu>
-      </AppBar>
+        </div>
+      </Toolbar>
     </Box>
   );
 };

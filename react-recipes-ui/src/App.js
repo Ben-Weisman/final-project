@@ -10,6 +10,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { purple } from "@mui/material/colors";
 import InsertRecipeManualForm from "./components/Forms/InsertRecipeManualForm";
 import Landing from "./Pages/Landing";
+import CookBook from "./Pages/CookBook";
 
 const theme = createTheme({
   palette: {
@@ -44,6 +45,9 @@ function App() {
             </Route>
             <Route exact path="/create">
               <InsertRecipeManualForm />
+            </Route>
+            <Route exact path="/cookbook">
+              <CookBook />
             </Route>
           </Layout>
         </Switch>

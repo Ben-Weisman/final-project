@@ -78,7 +78,7 @@ export default function Layout({ children }) {
 
       {/* main content */}
       <div className={classes.page}>
-        <div className={classes.toolbar}></div>
+        <MainNavbar className={classes.toolbar}></MainNavbar>
         {children}
       </div>
     </div>

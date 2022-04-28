@@ -5,6 +5,8 @@ import {
   FormControl,
   FormLabel,
   Grid,
+  IconButton,
+  InputAdornment,
   Paper,
   TextField,
   Typography
@@ -18,6 +20,8 @@ import { Backdrop } from "@mui/material";
 import React, { useState } from "react";
 import SignupForm from "./SignupForm";
 import Swal from "sweetalert2";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+//import axios from "axios";
 // import FormLable from '@mui/material/core/FormLable'
 const useStyles = makeStyles(theme => ({
   field: {
@@ -86,6 +90,7 @@ const LoginForm = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState("");
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -94,22 +99,24 @@ const LoginForm = () => {
       password
     });
 
-    console.log(response);
-    if (response) {
-      Swal.fire("Success", "login succeed", "success", {
+    console.log(response.name);
+    if (response.status === "Success") {
+      Swal.fire("Success", "Hello " + response.name, "success", {
         buttons: false,
         timer: 2000
-      }).then(value => {
-        localStorage.setItem("accessToken", response["accessToken"]);
-        localStorage.setItem("user", JSON.stringify(response["user"]));
+      }).then(() => {
+        localStorage.setItem("user", JSON.stringify(response));
         window.location.href = "/home";
       });
     } else {
-      Swal("Failed", response.message, "error");
+      console.log("here 111");
       Swal.fire("Failed", "Failed to login", "error");
+      setPassword("");
+      setEmail("");
     }
   };
 
+  const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
     setOpen(true);
@@ -117,6 +124,10 @@ const LoginForm = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClickShowPassword = () => {
+    setShowPassword(true);
+  };
+
   return (
     <Grid align="center" className={classes.root}>
       <FormControl className="login-form-control">
@@ -132,6 +143,7 @@ const LoginForm = () => {
                 label="Email"
                 name="email"
                 onChange={e => setEmail(e.target.value)}
+                value={email}
               />
             </div>
             <div className={classes.input}>
@@ -141,8 +153,21 @@ const LoginForm = () => {
                 id="outlined-basic"
                 label="Password"
                 name="password"
+                value={password}
+                type={showPassword ? "text" : "password"}
                 onChange={e => setPassword(e.target.value)}
-              />
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              ></TextField>
             </div>
             <div className={classes.btnWrapper}>
               <Grid>
