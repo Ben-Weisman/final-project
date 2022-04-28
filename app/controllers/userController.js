@@ -15,10 +15,12 @@ module.exports.validate = (req,res) => {
         }
         else{
             res.status(401);
-            res.send({status:"ERROR"});
+            res.send({status:"error", message:"Invalid credentials"});
         } 
     }).catch((err) => {
         res.status(401);
+        res.contentType('application/json');
+        res.send({status:"error",message: "User isn't found"})
     })
 }
 

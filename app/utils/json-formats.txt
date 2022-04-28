@@ -1,0 +1,22 @@
+--- LOGIN ---
+Request:
+{
+    "email": "", 
+    "password": ""  
+}
+Response:
+    if failed:
+        {
+            "status":"error",
+            "message": reason of failure
+        }
+    if succeed:
+        {
+            "name": "",
+            "email": "",
+            "admin": BOOLEAN,
+            "status": "ok",
+            "userID": ""
+        }
+
+--- Get All Recipes ---

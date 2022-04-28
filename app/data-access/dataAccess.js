@@ -20,6 +20,7 @@ module.exports.fetchRecordsFromTable = (tableName,columns,callback) => {
 
 module.exports.executeQuery = (query) => {
     return new Promise((resolve,reject) => {
+        console.log(`LOG: executing query: ${query}`)
         db.query(query,(err,result) => {
             if (err)
                 reject(err);
