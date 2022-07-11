@@ -19,7 +19,6 @@ module.exports.fetchUserByEmail = (email) => {
 
 module.exports.insertUser = (userRecord) =>{
     return new Promise((resolve,reject) => {
-        console.log('LOG: in insertUser Promise ---->')
         console.log('LOG: ' + JSON.stringify(userRecord,null,4));
             worker.executeQuery(queries.insertNewUser(userRecord)).then((res) => {
                 resolve(res);

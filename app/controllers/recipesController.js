@@ -5,6 +5,7 @@ const dataAccessMdule = require('./../data-access/dataAccess');
 const utilParser = require('./../utils/parser');
 const Tables = require('./../utils/dbEnums');
 const e = require('express');
+const { resolve } = require('path');
 // Get a recipe per user(email)
 module.exports.getAllRecipesByOwner = (req,res) =>{
 
@@ -43,7 +44,9 @@ module.exports.getAll = (req,res) =>{
 
 // get all recipes of a user's cookbook. done
 module.exports.getCookbook = (req,res) => {
+    
     user_id = req.body.user_id;
+    console.log(`LOG: in getCookbook, user_id = ${user_id}`);
     recipesDataAccess.fetchCookbook(user_id).then ((recipes_ids) => {
         let idsArray = recipes_ids.map(item => item.recipe_id);
         recipesDataAccess.fetchRecipesByIDs(idsArray).then((rawRecipes) => {
@@ -61,14 +64,31 @@ module.exports.getCookbook = (req,res) => {
 
 // remove a recipe by a given id from the db
 module.exports.removeByID = (req,res) =>{
-    id = req.body.id;
-    if (recipesDataAccess.deleteByID(id)){
-        res.status(200);
-    }
-    else{
-        res.status(403);
-    }
-    
+    id = req.body.recipe_id;
+    recipesDataAccess.removeRecord(id,RECIPES_TABLE).then((data) => {
+            console.log(`LOG: Deleted recipe_id (${id}) from table ${RECIPES_TABLE}`);
+    }).catch((err) => {
+        reject(err);
+    });
+
+    recipesDataAccess.removeRecord(id,RECIPE_INGREDIENT_TABLE).then((data) => {
+        console.log(`LOG: Deleted recipe_id (${id}) from table ${RECIPE_INGREDIENT_TABLE}`);
+    }).catch((err) => {
+        reject(err);
+    });
+
+    recipesDataAccess.removeInstructionsRecordsOfRecipeID(id).then((data) => {
+        console.log(`LOG: Deleted recipe_id (${id}) from table ${RECIPE_INSTRUCTIONS_TABLE} JOIN ${INSTRUCTIONS_TABLE}`);
+    }).catch((err) => {
+        reject(err);
+    });
+
+    recipesDataAccess.removeRecord(id,COOKBOOK_TABLE).then((data) => {
+        console.log(`LOG: Deleted recipe_id (${id}) from table ${COOKBOOK_TABLE}`);
+        resolve(data);
+    }).catch((err) => {
+        reject(err);
+    });
 }
 
 

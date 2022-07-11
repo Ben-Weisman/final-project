@@ -110,7 +110,7 @@ const LoginForm = () => {
       });
     } else {
       console.log("here 111");
-      Swal.fire("Failed", "Failed to login", "error");
+      Swal.fire("Failed", response.message, "error");
       setPassword("");
       setEmail("");
     }

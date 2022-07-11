@@ -8,7 +8,7 @@ Response:
     if failed:
         {
             "status":"error",
-            "message": reason of failure
+            "message": "reason of failure"
         }
     if succeed:
         {

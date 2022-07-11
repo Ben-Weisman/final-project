@@ -30,11 +30,9 @@ module.exports.createUser = (req,res) => {
         email = user.email;
         password = user.password;
         cookbook_id = randomUUID();
-        user_id = randomUUID();
         fullName = user.name;
 
         userRecord = {
-            user_id:user_id,
             email:email,
             user_password: password,
             full_name:fullName,
@@ -46,7 +44,7 @@ module.exports.createUser = (req,res) => {
         userDataAccess.insertUser(userRecord).then(() => {
             res.status(200);
             res.contentType('application/json');
-            res.send("ok");
+            res.send({status:"ok"});
         }).catch((err) => {
             res.status(400);
             res.contentType('application/json');

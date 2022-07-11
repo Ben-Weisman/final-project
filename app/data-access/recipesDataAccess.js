@@ -7,6 +7,28 @@ const { resolve } = require('path');
 const Tables = require('../utils/dbEnums');
 const { randomUUID } = require('crypto');
 
+
+module.exports.removeInstructionsRecordsOfRecipeID = (id) => {
+    return new Promise ((resolve,reject) => {
+        worker.executeQuery(queries.deleteRecipeInstructionsQueryBuilder(id)).then((data) => {
+            resolve("OK");
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+module.exports.removeRecord = (id,tableName) => {
+    return new Promise ((resolve,reject) => {
+        worker.executeQuery(queries.deleteQueryBuilder(tableName,id)).then((data) => {
+            resolve("OK");
+        }).catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+
 module.exports.insertRecipeTableRecord = (record) => {
     let values = `('${record.recipeID}','${record.recipeName}','${record.description}','${record.category}','${record.ownerID}','${record.uploadedDate}',${record.deletedByOwner},${public})`
     return new Promise ((resolve,reject) => {

@@ -20,11 +20,22 @@ const CookBook = () => {
   const [recipes, setRecipes] = useState([]);
   const [userID, setUserID] = useState("");
   const classes = useStyles();
+
+
+
+
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: userID })
+};
+
+
+
+
   useEffect(() => {
     setUserID(JSON.stringify(getUserName()));
-    fetch("http://localhost:3000/api/v1/recipes/cookbook/", {
-      user_id: userID
-    })
+    fetch("http://localhost:3000/api/v1/recipes/cookbook/", requestOptions)
       .then(res => res.json())
       .then(data => {
         console.log(data);
