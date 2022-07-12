@@ -11,7 +11,7 @@ import {
   IconButton,
   Modal,
   Paper,
-  Typography
+  Typography,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -21,35 +21,35 @@ import RecipeCardBig from "./RecipeCardBig";
 import { Dialog } from "@mui/material";
 import Popup from "../Tools/Popup";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   field: {
     marginTop: 20,
     marginBottom: 20,
-    display: "block"
+    display: "block",
   },
   btn: {
     marginTop: 5,
     marginBottom: 5,
-    width: 210
+    width: 210,
   },
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   paper: {
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    height: "200vh"
+    height: "200vh",
   },
   home: {
-    display: "none"
+    display: "none",
   },
   cookbook: {
-    display: "flex"
-  }
+    display: "flex",
+  },
 }));
 
 const RecipeCardSmall = ({ recipe, page }) => {
@@ -63,7 +63,7 @@ const RecipeCardSmall = ({ recipe, page }) => {
   const handleClose = () => {
     setOpenPopup(false);
   };
-  const checkPage = page => {
+  const checkPage = (page) => {
     console.log(page === "Home");
     if (page === "Home") return "none";
   };
@@ -71,12 +71,31 @@ const RecipeCardSmall = ({ recipe, page }) => {
     checkPage(page);
   }, []);
 
+  const handelDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //delete from DB
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+        window.location.reload();
+      }
+    });
+  };
+
   return (
     <Card elevation={3}>
       <CardHeader
         action={
           <IconButton className={classes.style} aria-label="delete">
-            <DeleteOutlined />
+            <DeleteOutlined onClick={handelDelete} />
           </IconButton>
         }
         title={recipe.recipe_name}
