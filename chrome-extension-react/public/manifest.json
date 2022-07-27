@@ -1,0 +1,17 @@
+{
+  "name": "recpies",
+  "description:": "save your recpies",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": ["storage", "activeTab", "scripting","declarativeContent", "tabs", "webRequest"],
+  "action": {
+    "defalut_title": "recpies",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16":"logo192.png",
+      "128": "logo192.png"
+    }
+  }
+
+
+}
