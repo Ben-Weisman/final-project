@@ -1,28 +1,28 @@
 from asyncio.windows_events import NULL
 from unicodedata import category
+import flask_restful
 import requests
 from bs4 import BeautifulSoup
 import json
 from flask import Flask
 from flask import request
+from flask_cors import CORS
+
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route("/getUrl")
 def getUrl():
     url = request.args['url']
+    print("URL recieved: " + url)
     return main(url)
-
-
 
 
 #from utils.validations import validateRecipe
 # url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
 
-
 # content = res.text
-
 
 # lookFor= "li"
 # lis = soup.find_all(lookFor,class_="recipe-ingredients__list-item")
@@ -31,7 +31,6 @@ def getUrl():
 #     print(li.text)
 # print(res)
 # print(res.status_code==200)
-
 
 # index = (content.index("Coconut chicken curry"))
 # print(content[index:index+200])
@@ -106,6 +105,7 @@ def createRecipeJson(soup, recipeIndexJson):
         dic["recipe_instructions"] = method
         dic["ingredients"] = ingredients
 
+        print(json.dumps(dic))
         return json.dumps(dic)
 
     except:
@@ -121,13 +121,12 @@ def main(url):
        if recipeIndexJson != NULL:
         # print(recipeIndexJson)
         recipeJson = createRecipeJson(soup, recipeIndexJson)
-
-        print(recipeJson) # test log
-        key = "body"
-        newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        req = requests.post('http://localhost:3000/api/v1/recipes/add-new', json={key:recipeJson},headers=newHeaders)
-
-        print(req)
+        # print(recipeJson)  # test log
+        # key = "body"
+        # newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        # req = requests.post('http://localhost:8000/api/v1/recipes/add-new', json={key: recipeJson}, headers=newHeaders)
+        # print(req)
+        print(recipeJson)
         return recipeJson
        # validateRecipe(recipeJson)
     except:
