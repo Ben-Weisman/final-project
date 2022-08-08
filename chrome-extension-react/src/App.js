@@ -1,14 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState, useEffect } from "react";
-import MainScreen from './components/Screens/MainScreen';
+import MainWindow from './components/mainWindow';
+
+
 
 function App() {
   return (
     <div className="App">
-      <MainScreen />
+      <MainWindow />
     </div>
   );
 }
+
+
 
 export default App;
