@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Tabs, useChromeTabs } from "@sinm/react-chrome-tabs";
 import ChromeTabs from "@sinm/react-chrome-tabs/dist/chrome-tabs";
 import ShowRecipe from './showRecipe';
-import image from "./images/icon.png"
+import image from "../images/icon.png"
 
 
 export default function MainWindow() {
