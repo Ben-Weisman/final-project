@@ -1,10 +1,8 @@
-const Tables = Object.freeze ({
-    RECIPES_TABLE : "Recipes",
-    RECIPE_INGREDIENT_TABLE : "Recipe_Ingredients",
-    INGREDIENTS_TABLE : "Ingredients",
-    INSTRUCTIONS_TABLE : "Instructions",
-    RECIPE_INSTRUCTIONS_TABLE : "Recipe_Instructions",
-    COOKBOOK_TABLE:"Cookbook"
+
+const Collections = Object.freeze ({
+    RECIPE_COLLECTION: "recipes",
+    COOKBOOK_COLLECTION: "cookbooks",
+    USERS_COLLECTION: "users"
 });
 
-module.exports.Tables = Tables;
+module.exports.Collections = Collections;
