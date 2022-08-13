@@ -61,13 +61,14 @@ const InsertRecipeManualForm = () => {
     e.prevetDefault();
     console.log(ingredients);
     const recipe = { name, foodType, description, ingredients, instructions };
-    fetch("http://localhost:8000/recipes", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify(recipe)
-    })
-      .then(() => console.log("recipe added"))
-      .then(() => history.push("/home"));
+    console.log(recipe);
+    // fetch("http://localhost:8000/recipes", {
+    //   method: "POST",
+    //   headers: { "Content-type": "application/json" },
+    //   body: JSON.stringify(recipe)
+    // })
+    //   .then(() => console.log("recipe added"))
+    //   .then(() => history.push("/home"));
   };
 
   const handleChange = event => {
@@ -111,7 +112,7 @@ const InsertRecipeManualForm = () => {
   const addIngredient = e => {
     const newIngredients = ingredients.concat({
       text: ingredientInput,
-      id: v4()
+      id: uuid()
     });
     setIngredients(newIngredients);
     setIngredientInput("");
@@ -130,7 +131,7 @@ const InsertRecipeManualForm = () => {
 
   return (
     <Grid align="center">
-      <FormControl fullWidth>
+      <FormControl>
         <div className="insert-reciped-manual-form-container">
           <Typography className={classes.field} component="h2" variant="h6">
             Insert recipe

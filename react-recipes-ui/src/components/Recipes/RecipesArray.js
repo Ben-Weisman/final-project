@@ -20,12 +20,12 @@ const useStyles = makeStyles({
     height: `calc(100% - ${MainNavbar}px)`
   }
 });
-const RecipesArray = page => {
+const RecipesArray = props => {
   const classes = useStyles();
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/v1/recipes/get-all")
+    fetch(props.ServerURL + "recipes/get-all")
       .then(res => res.json())
       .then(data => {
         console.log(data);
@@ -48,7 +48,7 @@ const RecipesArray = page => {
             <RecipeCardSmall
               className={classes.recipeCard}
               recipe={recipe}
-              page={page}
+              page={props.page}
             ></RecipeCardSmall>
           </Grid>
         ))}

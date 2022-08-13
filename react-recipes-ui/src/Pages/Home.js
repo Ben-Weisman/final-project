@@ -13,12 +13,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Home = () => {
+const Home = props => {
   const classes = useStyles();
   const page = "Home";
   return (
     <div className={classes.root}>
-      <RecipesArray page={page} />
+      <RecipesArray ServerURL={props.ServerURL} page={page} />
       {/* <Button className='btn' /> */}
     </div>
   );
