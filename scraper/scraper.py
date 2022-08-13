@@ -78,7 +78,11 @@ def getMethod(soup, recipeIndexJson):
         methods.append(method.text)
     return methods
 
-# def getImage(soup,recipeIndexJson):  /// for later
+def getImage(soup, recipeIndexJson): 
+   image = soup.find(recipeIndexJson['image']['lookFor'],class_=recipeIndexJson['image']['className']).find("img")
+   return image['src']
+
+
 
 def getCategory(soup, recipeIndexJson):
     categories = soup.find_all(recipeIndexJson['category']['lookFor'],class_=recipeIndexJson['category']['className'])
@@ -92,11 +96,12 @@ def createRecipeJson(soup, recipeIndexJson):
         description = getDescription(soup, recipeIndexJson)
         ingredients = getIngredients(soup, recipeIndexJson)
         method = getMethod(soup, recipeIndexJson)
+        image = getImage(soup,recipeIndexJson) 
+
         try:
             category = getCategory(soup, recipeIndexJson)
         except:
             print("No category")
-    # image = getImage(soup,recipeIndexJson)  /// for later
         dic = {}
         dic["owner_id"] = "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0"
         dic["recipe_name"] = title
@@ -104,6 +109,7 @@ def createRecipeJson(soup, recipeIndexJson):
         dic["category"] = "italian"
         dic["recipe_instructions"] = method
         dic["ingredients"] = ingredients
+        dic["image"] = image
 
         print(json.dumps(dic))
         return json.dumps(dic)
@@ -134,7 +140,4 @@ def main(url):
 
 
 if __name__ == '__main__':
-    #url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
-    #url = getUrl()
-    #main(url)
     app.run(debug=True)

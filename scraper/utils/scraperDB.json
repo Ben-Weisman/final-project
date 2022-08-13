@@ -18,13 +18,11 @@
                     "lookFor": "li",
                     "className": "recipe-method__list-item"
             },"image":{
-                "lookFor": "img",
-                "className": "check-later"
+                "lookFor": "div",
+                "className": "recipe-media__image responsive-image-container__16/9"
             }
 
         },
-
-
 
         {
              "url": "https://www.allrecipes.com/",
@@ -43,8 +41,8 @@
                     "lookFor": "li",
                     "className": "subcontainer instructions-section-item"
             },"image":{
-                "lookFor": "img",
-                "className": "check-later"
+                "lookFor": "",
+                "className": ""
             }
 
         },
@@ -66,9 +64,10 @@
             },"method":{
                     "lookFor": "li",
                     "className": "pb-xs pt-xs list-item"
-            },"image":{
-                "lookFor": "img",
-                "className": "check-later"
+            },
+            "image":{
+                "lookFor": "div",
+                "className": "image chromatic-ignore post-header-image image--fluid image--scaled-up"
             }
 
         },
@@ -91,11 +90,35 @@
                     "lookFor": "li",
                     "className": "comp mntl-sc-block-group--LI mntl-sc-block mntl-sc-block-startgroup"
             },"image":{
-                "lookFor": "img",
-                "className": "check-later"
+                "lookFor": "div",
+                "className": "figure__media js-figure-media figure__media--portrait"
             }
 
-        }
+        },
+
+        {
+            "url": "https://tophomerecipes.com/",
+            "title":{
+                "lookFor":"h1",
+                "className":"single-title entry-title"
+           },
+           "description":{
+               "lookFor": "div",
+               "className": "cooked-recipe-excerpt cooked-clearfix"
+           },
+           "ingredients":{
+               "lookFor": "div",
+               "className": "cooked-recipe-ingredients"
+           },"method":{
+                   "lookFor": "div",
+                   "className": "cooked-recipe-directions"
+           },
+           "image":{
+               "lookFor": "div",
+               "className": "single-feat"
+           }
+
+       }
     ]
         
                 

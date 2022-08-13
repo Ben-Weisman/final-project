@@ -12,7 +12,7 @@ export default function SaveRecipe(props) {
 
     return (
 
-        <newWindow>
+        <NewWindow>
          <Card sx={{ minHeight: 450, minWidth: 345 }}>
             <CardHeader
             title={props.recipe_name}
@@ -22,7 +22,7 @@ export default function SaveRecipe(props) {
             <h3>{props.instructions}</h3>
             <h4>{props.comments}</h4>
         </Card>
-        </newWindow>
+        </NewWindow>
 
 
     )
