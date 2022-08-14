@@ -226,12 +226,14 @@ module.exports.fetchCookbookByUserID = (email) => {
     return new Promise ((resolve,reject) => {
         cookbookDataAccess.getRecipesIDsByUserEmail(email)
         .then((recipesIDs) => {
-            console.log(`LOG: recipesIDs =`);
-            console.log(recipesIDs);
-            Recipes.find({recipeID: {$or:[recipesIDs]}, active:true}) //{$and: [{recipeID: {$or:recipesIDs}},{active:true}]}
+
+            rawUserRecipes = recipesIDs[0].recipes;
+            filtered = [];
+            rawUserRecipes.forEach(element => {
+                filtered.push(element.id);
+            });
+            Recipes.find({'recipeID': {$in: filtered}})
             .then((data) => {
-                console.log('\n\n\n\nfetched data\n\n\n')
-                console.log(data);
                 resolve(data);
             })
             .catch((err) => {
@@ -243,9 +245,6 @@ module.exports.fetchCookbookByUserID = (email) => {
             reject(err);
         });
     })
-    // cookbookDataAccess.getRecipesIDsByUserEmail(email).then((recipesIDs) => {
-    //     return Recipes.find({$and: [{recipeID: {$or:recipesIDs}},{active:true}]}).exec();
-    // });
 }
 
 module.exports.fetchRecipesByIDs = (ids_arr) => {
