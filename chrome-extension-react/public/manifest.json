@@ -4,6 +4,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "permissions": ["storage", "activeTab", "scripting","declarativeContent", "tabs", "webRequest"],
+  "host_permissions": ["https://*/","http://*/"],
   "action": {
     "defalut_title": "Recipe Helper",
     "default_popup": "index.html",

@@ -13,7 +13,9 @@ import { Toolbar } from "@mui/material";
 import { Avatar } from "@mui/material";
 import MainNavbar from "./MainNavbar";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-
+import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
+import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
+import Swal from "sweetalert2";
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => {
@@ -52,6 +54,9 @@ const useStyles = makeStyles(theme => {
     toolbar: theme.mixins.toolbar,
     avatar: {
       marginLeft: theme.spacing(2)
+    },
+    secondMenuItems: {
+      bottom: 0
     }
   };
 });
@@ -78,7 +83,40 @@ export default function SideBar({ children }) {
       path: "/cookbook"
     }
   ];
+  //need to check how to insert a function inside an array list
+  //like there
+  // const SecondMenu = [
+  //   {
+  //     text: "Edit profile",
+  //     icon: <PermIdentityOutlinedIcon color="primary" />,
+  //     function: handleEditProfile()
+  //   },
+  //   {
+  //     text: "Logout",
+  //     icon: <LogoutOutlinedIcon color="primary" />,
+  //     function: handleLogout()
+  //   }
+  // ];
 
+  const handleEditProfile = () => {};
+  const handleLogout = e => {
+    Swal.fire({
+      title: "Are you sure?",
+      showCancelButton: true,
+      confirmButtonText: "Yes",
+      denyButtonText: `No`
+    }).then(result => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        Swal.fire("Loging out", "");
+        localStorage.removeItem("user");
+        history.push("/");
+      }
+      // } else if (result.isDenied) {
+      //   Swal.fire('Changes are not saved', '', 'info')
+      // }
+    });
+  };
   return (
     // <div className={classes.root}>
     <Drawer
@@ -106,6 +144,20 @@ export default function SideBar({ children }) {
             <ListItemText primary={item.text} />
           </ListItem>
         ))}
+      </List>
+      <List className="secondMenuItems">
+        <ListItem button key="Edit profile" onClick={() => handleEditProfile()}>
+          <ListItemIcon>
+            <PermIdentityOutlinedIcon color="primary"></PermIdentityOutlinedIcon>
+          </ListItemIcon>
+          <ListItemText primary="Edit profile" />
+        </ListItem>
+        <ListItem button key="Logout" onClick={() => handleLogout()}>
+          <ListItemIcon>
+            <LogoutOutlinedIcon color="primary" />,
+          </ListItemIcon>
+          <ListItemText primary="Logout" />
+        </ListItem>
       </List>
     </Drawer>
   );

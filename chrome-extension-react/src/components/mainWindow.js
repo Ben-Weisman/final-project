@@ -5,6 +5,7 @@ import { Tabs, useChromeTabs } from "@sinm/react-chrome-tabs";
 import ChromeTabs from "@sinm/react-chrome-tabs/dist/chrome-tabs";
 import ShowRecipe from './showRecipe';
 import image from "../images/icon.png"
+import { getTextFieldUtilityClass } from "@mui/material";
 
 
 export default function MainWindow() {
@@ -27,7 +28,7 @@ export default function MainWindow() {
       const recipe_data = await response.json(); 
       setData(recipe_data);
   };
-
+  
 
 
     return (
@@ -39,6 +40,7 @@ export default function MainWindow() {
            <button className='button' onClick={() =>{setOpen(true); getUrl();}}>Add This Recipe</button>
            {Object.keys(data).length !== 0 && open && <ShowRecipe recipe={data}></ShowRecipe> }                    
            <button className='button'>My Coockbook</button>
+          
          </div>
        </div>
   );    
