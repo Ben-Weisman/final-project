@@ -104,10 +104,7 @@ const InsertRecipeManualForm = () => {
     setInstructions(newInstructoins);
   };
 
-  useEffect(() => {
-    console.log("use effect run");
-    console.log(ingredients);
-  }, []);
+  useEffect(() => {}, []);
 
   const addIngredient = e => {
     const newIngredients = ingredients.concat({

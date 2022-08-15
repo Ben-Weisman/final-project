@@ -33,7 +33,7 @@ function Copyright(props) {
 }
 async function loginUser(email, password, url) {
   console.log(email, password, url);
-  console.log(url + "users/login");
+  // console.log(url + "users/login");
   //need to fix it to work with url from the parameter
   return fetch("http://localhost:3000/api/v1/users/login", {
     method: "POST",
@@ -68,7 +68,7 @@ export default function SignIn(props) {
       password,
       url
     });
-    console.log(response.name);
+    console.log(response);
     if (response.status === "Success") {
       Swal.fire("Success", "Hello " + response.name, "success", {
         buttons: false,
@@ -78,7 +78,6 @@ export default function SignIn(props) {
         window.location.href = "/home";
       });
     } else {
-      console.log("here 111");
       Swal.fire("Failed", response.message, "error");
       // setPassword("");
       // setEmail("");

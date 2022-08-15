@@ -24,19 +24,19 @@ const RecipesArray = props => {
   const classes = useStyles();
   const [recipes, setRecipes] = useState([]);
 
-  useEffect(() => {
-    fetch(props.ServerURL + "recipes/get-all")
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setRecipes(data.recipes);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch(props.ServerURL + "recipes/get-all")
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       setRecipes(data.recipes);
+  //     });
+  // }, []);
 
   return (
     <Container className="container">
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {recipes.map(recipe => (
+        {props.recipes.map(recipe => (
           <Grid
             className="recipeCard"
             item

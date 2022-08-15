@@ -1,7 +1,7 @@
 import { Pages } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RecipeCardSmall from "../components/Recipes/RecipeCardSmall";
 import RecipesArray from "../components/Recipes/RecipesArray";
 const useStyles = makeStyles(theme => ({
@@ -14,11 +14,22 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Home = props => {
+  const [recipes, setRecipes] = useState([]);
+
+  useEffect(() => {
+    fetch(props.ServerURL + "recipes/get-all")
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        setRecipes(data.recipes);
+      });
+  }, []);
+
   const classes = useStyles();
   const page = "Home";
   return (
     <div className={classes.root}>
-      <RecipesArray ServerURL={props.ServerURL} page={page} />
+      <RecipesArray ServerURL={props.ServerURL} recipes={recipes} page={page} />
       {/* <Button className='btn' /> */}
     </div>
   );
