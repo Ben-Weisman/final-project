@@ -1,29 +1,45 @@
-
-import NewWindow from "react-new-window";
 import * as React from 'react';
-import {Card,  CardHeader} from "@mui/material";
+
     
 
-   
+const scraperUrl = "http://localhost:5000/";   
 
 export default function SaveRecipe(props) {
 
+    //create new updated json of the recipe
+    const newJson = {
+        "owner_id": "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0",
+        "recipe_name": props.recipe_name,
+        "recipe_description": props.description,
+        "category": "italian",
+        "recipe_instructions": props.instructions,
+        "ingredients": props.ingredients,
+        "image": props.image
+    }
+
+    
+    //send the updated json to the scraper
+    async function sendJson(newJson) {
+        const response =  await fetch(scraperUrl+"/receiveJson", {
+            method: "POST",
+            body: JSON.stringify(newJson)
+        })
+
+        if (response.status===200){
+            return true
+        }
+
+
+        else {
+            return false
+        }
+          
+    }
 
 
     return (
-
-        <newWindow>
-         <Card sx={{ minHeight: 450, minWidth: 345 }}>
-            <CardHeader
-            title={props.recipe_name}
-            />
-            <h1>{props.description}</h1>
-            <h2>{props.ingredients}</h2>
-            <h3>{props.instructions}</h3>
-            <h4>{props.comments}</h4>
-        </Card>
-        </newWindow>
-
+  
+        sendJson(newJson)? alert("The recipe was added to your cookbook :)"): alert("Something went wrong, please try again")
 
     )
 
