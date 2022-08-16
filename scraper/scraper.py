@@ -18,6 +18,14 @@ def getUrl():
     print("URL recieved: " + url)
     return main(url)
 
+@app.route("/receiveJson", methods=['GET', 'POST'])
+def receiveJson():
+    if request.method == 'POST':
+        updatedJson = request.data
+    
+    print(updatedJson)
+    return("f")
+
 
 #from utils.validations import validateRecipe
 # url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
@@ -60,7 +68,11 @@ def getTitle(soup, recipeIndexJson):
 
 def getDescription(soup, recipeIndexJson):
     description = soup.find_all(recipeIndexJson['description']['lookFor'],class_=recipeIndexJson['description']['className'])
-    return description[0].text
+    if description != []:
+        return description[0].text
+    return description
+
+    
 
 
 def getIngredients(soup, recipeIndexJson):
