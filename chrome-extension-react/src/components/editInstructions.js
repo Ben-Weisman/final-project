@@ -8,7 +8,7 @@ import{
     SaveButton,
     RecipeHeader,
     Wrapper
-} from "./Recipes.styles";
+} from "./recpies.style";
 
 export default function EditInstructions(props) {
 
