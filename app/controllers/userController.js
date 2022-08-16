@@ -70,25 +70,48 @@ const validateParams = (user) =>{
     return true;
 }
 
+
 const validateUser = (user,pass) => {
+    console.log(`LOG: user email: ${user.email}`)
     res = null;
     if (user){
-        console.log('LOG: validateUser user: ' + user[0].user_password);
-        console.log('LOG: pass = ' + pass);
-        if (user[0].user_password == pass){
-            console.log('LOG: valid')
-            is_admin = isAdmin(user[0]);
-            res = {
-                name:user[0].full_name,
-                email:user[0].email,
-                admin: is_admin,
-                status: "Success",
-                userID: user[0].user_id
+        if (user.active == true){
+            console.log('LOG: validateUser user: ' + user.password);
+            if (user.password == pass){
+                console.log('LOG: valid')
+                is_admin = isAdmin(user);
+                res = {
+                    name:user.name,
+                    email:user.email,
+                    admin: is_admin,
+                    status: "ok"
+                }
             }
         }
     }
     return res;
 }
+
+
+// const validateUser = (user,pass) => {
+//     res = null;
+//     if (user){
+//         console.log('LOG: validateUser user: ' + user[0].user_password);
+//         console.log('LOG: pass = ' + pass);
+//         if (user[0].user_password == pass){
+//             console.log('LOG: valid')
+//             is_admin = isAdmin(user[0]);
+//             res = {
+//                 name:user[0].full_name,
+//                 email:user[0].email,
+//                 admin: is_admin,
+//                 status: "Success",
+//                 userID: user[0].user_id
+//             }
+//         }
+//     }
+//     return res;
+// }
 
 const isAdmin = (user) => {
     if (user.is_admin)
