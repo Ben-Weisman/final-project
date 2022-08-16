@@ -19,7 +19,7 @@ import{
     RecipeHeader,
     Title,
     Description
-} from "./Recipes.styles";
+} from "./recpies.style";
 
 
 export default function ShowRecipe({ recipe }) {
@@ -55,7 +55,7 @@ export default function ShowRecipe({ recipe }) {
 
 
 
-
+    console.log("5")
     return (
         <NewWindow title="Recipe Preview" center="screen">   
             <RecipeWrapper> 

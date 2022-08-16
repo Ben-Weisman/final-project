@@ -26,6 +26,24 @@ export const EditButton = styled.button`
     }
 `
 
+export const ExtensionButton = styled.button`
+    display: inline-block;
+    outline: 0;
+    border: none;
+    cursor: pointer;
+    height: 60px;
+    padding: 12px 17px;
+    border-radius: 50px;
+    background-color: rgb(100, 149, 237);;
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0.5em;
+    :hover {
+        background-color: rgb(133, 193, 233);
+    }
+`
+
 export const SaveButton = styled.button`
     display: inline-block;
     outline: 0;
@@ -85,6 +103,18 @@ export const Wrapper = styled.section`
   background: papayawhip; */
     margin: 2rem;
     background-color: rgb(250, 250, 250);
+    justify-content: center;
+    align-items: center;
+`;
+
+export const ExtensionWrapper = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+
+
 `;
 
 export const RecipeTitle = styled.h1`
@@ -259,9 +289,9 @@ text-align: center;
 
 export const RecipeCardTitle = styled.h4`
 font-size: 1.4rem;
-@media only screen and (max-width:700px){
-    font-size: 1.2rem;
-}
+font-family: cursive;
+text-align: center;
+
 `;
 
 export const RecipeCardItem = styled.div`

@@ -5,7 +5,22 @@ import { Tabs, useChromeTabs } from "@sinm/react-chrome-tabs";
 import ChromeTabs from "@sinm/react-chrome-tabs/dist/chrome-tabs";
 import ShowRecipe from './showRecipe';
 import image from "../images/icon.png"
-import { getTextFieldUtilityClass } from "@mui/material";
+import{
+    ExtensionWrapper,
+    RecipeCardTitle,
+    ExtensionButton,
+    Wrapper,
+    RecipeTitle,
+    SaveButton,
+    EditButton,
+    ParentDiv,
+    ChildDiv,
+    RecipeHeader,
+    Title,
+    Description
+} from "./recpies.style";
+
+//import { getTextFieldUtilityClass } from "@mui/material";
 
 
 export default function MainWindow() {
@@ -32,16 +47,14 @@ export default function MainWindow() {
 
 
     return (
-        <div className="main-window">
-         <h1>Recipe Helper</h1>
-         <img src={image} id="cookingGirl" width="100" height="120"/>
-         <br></br>
-         <div className='list'>
-           <button className='button' onClick={() =>{setOpen(true); getUrl();}}>Add This Recipe</button>
+      <ExtensionWrapper>
+         <RecipeCardTitle>Recipe Helper</RecipeCardTitle>
+         <img src={image} id="cookingGirl" width="120" height="140"/>
+         <Wrapper>
+           <ExtensionButton onClick={() =>{setOpen(true); getUrl();}}>Add This Recipe</ExtensionButton>
            {Object.keys(data).length !== 0 && open && <ShowRecipe recipe={data}></ShowRecipe> }                    
-           <button className='button'>My Coockbook</button>
-          
-         </div>
-       </div>
+           <ExtensionButton className='button'>My Coockbook</ExtensionButton>
+           </Wrapper>
+        </ExtensionWrapper>
   );    
 }
