@@ -136,10 +136,10 @@ def main(url):
 
         print(recipeJson) # test log
         key = "body"
-        newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        req = requests.post('http://localhost:3000/api/v1/recipes/add-new', json={key:recipeJson},headers=newHeaders)
+        #newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+        #req = requests.post('http://localhost:3000/api/v1/recipes/add-new', json={key:recipeJson},headers=newHeaders)
 
-        print(req)
+        #print(req)
         return recipeJson
        # validateRecipe(recipeJson)
     except:
