@@ -10,43 +10,39 @@ import{
     Wrapper
 } from "./recpies.style";
 
-function closeOpenedWindow() {
-    window.opener = null;
-    window.open("", "_self");
-    window.close();
-  }
 
-export default function EditInstructions(props) {
+export default function EditIngredients (props) {
 
-    const [instructions, setInstructions] = useState(props.instructions);
 
-    const changeInstructions = ({ value, previousValue }) => {
-        setInstructions(instructions.map((item) => item === previousValue ? value : item
+    const [ingredients, setIngredients] = useState(props.ingredients);
+
+    const changeIngredients = ({ value, previousValue }) => {
+        setIngredients(ingredients.map((item) => item === previousValue ? value : item
         ));
     };
 
     
     return (
-        <NewWindow name="win" title="Instructions Preview">
+        <NewWindow title="Ingredients Preview">
             <RecipeWrapper>
-                <RecipeHeader>Instructions Preview</RecipeHeader>   
+                <RecipeHeader>Ingredients Preview</RecipeHeader>   
                 <Wrapper>
                     <ul>
-                     {instructions.map(item => (
+                     {ingredients.map(item => (
                                 <li>
-                                    {<EditTextarea
-                                        rows= "event.target.rows"
+                                    {<EditText
                                         defaultValue={item}
-                                        onSave={changeInstructions}
+                                        onSave={changeIngredients}
                                         />}
                                 </li>
                             ))}
                     </ul>
-
+                    
                 </Wrapper>
-                <SaveButton onClick={()=>{props.changeIns(instructions)}}>Save Instructions</SaveButton>
+                <SaveButton onClick={()=>props.changeIng(ingredients)}>Save Ingredients</SaveButton>
             </RecipeWrapper>          
         </NewWindow>
        
     )
+
 };
