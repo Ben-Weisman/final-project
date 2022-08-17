@@ -28,7 +28,7 @@ module.exports.updateField = (searchField,targetVal,field,newVal) => {
     });
 }
 module.exports.fetchRecipesByOwner = (email) => {
-    Recipes.find({'owner': email}).exec();
+    return Recipes.find({ownerEmail: email}).exec();
 }
 
 
