@@ -10,11 +10,11 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover"
   }
 }));
-function getUserID() {
+function getUserEmail() {
   const user = localStorage.getItem("user");
   const userJson = JSON.parse(user);
-  console.log(userJson.userID);
-  return userJson.userID;
+  console.log(userJson.email);
+  return userJson.email;
 }
 
 const CookBook = () => {
@@ -31,19 +31,19 @@ const CookBook = () => {
   useEffect(() => {
     // setUserID(JSON.stringify(getUserName()));
     // setUserID(localStorage.getItem("user").userID);
-    let userID = getUserID();
-    console.log(userID);
+    let userEmail = getUserEmail();
+    console.log(userEmail);
     fetch("http://localhost:3000/api/v1/recipes/cookbook/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ user_id: userID })
+      body: JSON.stringify({ email: userEmail })
     })
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        setRecipes(data.recipes);
+        setRecipes(data);
       });
-  }, []);
+  }, [setRecipes]);
 
   const page = "cookbook";
 

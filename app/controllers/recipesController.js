@@ -1,42 +1,68 @@
 const { randomUUID } = require('crypto');
 const { send } = require('process');
 const recipesDataAccess = require('./../data-access/recipesDataAccess');
-const dataAccessMdule = require('./../data-access/dataAccess');
+const dataAccess = require('./../data-access/dataAccess');
 const utilParser = require('./../utils/parser');
-const Tables = require('./../utils/dbEnums');
+const Collections = require('./../utils/dbEnums');
 const e = require('express');
 const { resolve } = require('path');
+
+
+module.exports.getByName = (name) => {
+    dataAccess.fetchRecipeByName(name)
+    .then((data) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status: "ok", message: data});
+    })
+    .catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status: "error", message: err});
+    });
+}
+
+module.exports.addExistingRecipeToCookbook = (req,res) => {
+    const recipeID = req.body.id;
+    const email = req.body.email;
+    dataAccess.addRecipeToCookbook(recipeID,email)
+    .then((result) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send(result);
+    }).catch((err) => {
+        res.status(401);
+        res.contentType('application/json');
+        res.send(err);
+    });
+}
+
+
+
 // Get a recipe per user(email)
 module.exports.getAllRecipesByOwner = (req,res) =>{
 
     email = req.body.email;
-    recipesDataAccess.fetchRecipesByOwner(email).then((data) => {
-        recipes = utilParser.parseToRecipe(data);
-        console.log('LOG: recipes => ' + recips);
-    })
-    
-    if (recipeRecord){
+    dataAccess.getRecipesByOwner(email).then((recipes) => {
         res.status(200);
-        resJson = recipeRecord;
         res.contentType('application/json');
-        res.send(resJson);
-    }
-    else{
+        res.send(recipes);
+    }).catch((err) => {
         res.status(401);
-    }
+        res.send({status: "error", message: err});
+    });
     
 }
 
 // get all recipes from db - done
 module.exports.getAll = (req,res) =>{
-    console.log('LOG: in getAll');
-    recipesDataAccess.fetchAll().then ((data) => {
-        recipes = utilParser.parseToRecipe(data);
+    dataAccess.getAllRecipes().then ((recipes) => {
         res.status(200);
         res.contentType('application/json');
         res.send(recipes);
     }).catch((err) => {
         res.status(500);
+        res.send(err);
     });
  
 }
@@ -45,50 +71,38 @@ module.exports.getAll = (req,res) =>{
 // get all recipes of a user's cookbook. done
 module.exports.getCookbook = (req,res) => {
     
-    user_id = req.body.user_id;
-    console.log(`LOG: in getCookbook, user_id = ${user_id}`);
-    recipesDataAccess.fetchCookbook(user_id).then ((recipes_ids) => {
-        let idsArray = recipes_ids.map(item => item.recipe_id);
-        recipesDataAccess.fetchRecipesByIDs(idsArray).then((rawRecipes) => {
-            recipes = utilParser.parseToRecipe(rawRecipes);
-            res.status(200);
-            res.contentType('application/json');
-            res.send(recipes);
-        }).catch((err) => {
-            res.status(500);
-        });
-
+    email = req.body.email;
+    dataAccess.getCookbookByUser(email)
+    .then((recipes) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send(recipes);
+    }).catch((err) => {
+        res.status(500);
+        res.send(err);
     });
+
 }
+
+    
 
 
 // remove a recipe by a given id from the db
+/* Gets: {id:}
+    Returns:{}
+*/
 module.exports.removeByID = (req,res) =>{
-    id = req.body.recipe_id;
-    recipesDataAccess.removeRecord(id,RECIPES_TABLE).then((data) => {
-            console.log(`LOG: Deleted recipe_id (${id}) from table ${RECIPES_TABLE}`);
-    }).catch((err) => {
-        reject(err);
+
+    id = req.body.id;
+    dataAccess.zombifyRecipe(id).then((data) => {
+        res.status(200);
+        res.send({status: "ok", message: data});
+    })
+    .catch((err) => {
+        res.status(401);
+        res.send({status: "error", message: err});
     });
 
-    recipesDataAccess.removeRecord(id,RECIPE_INGREDIENT_TABLE).then((data) => {
-        console.log(`LOG: Deleted recipe_id (${id}) from table ${RECIPE_INGREDIENT_TABLE}`);
-    }).catch((err) => {
-        reject(err);
-    });
-
-    recipesDataAccess.removeInstructionsRecordsOfRecipeID(id).then((data) => {
-        console.log(`LOG: Deleted recipe_id (${id}) from table ${RECIPE_INSTRUCTIONS_TABLE} JOIN ${INSTRUCTIONS_TABLE}`);
-    }).catch((err) => {
-        reject(err);
-    });
-
-    recipesDataAccess.removeRecord(id,COOKBOOK_TABLE).then((data) => {
-        console.log(`LOG: Deleted recipe_id (${id}) from table ${COOKBOOK_TABLE}`);
-        resolve(data);
-    }).catch((err) => {
-        reject(err);
-    });
 }
 
 
@@ -117,7 +131,6 @@ const create = (inputData) => {
            // Insert to Recipes table
     let recipeDetailsRecord = generateRecipeDetailsJSON(inputData);
     recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
@@ -127,12 +140,10 @@ const create = (inputData) => {
     
     let ingredientObjDetails = generateIngredientsObjectWithIDs(inputData.ingredients,recipeDetailsRecord.recipeID);
     recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientObjDetails.ingredients).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
     recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientObjDetails.ingredients).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
@@ -141,12 +152,10 @@ const create = (inputData) => {
     let instructionsObjDetails = generateInstructionsObjectWithIDs(inputData.recipe_instructions,recipeDetailsRecord.recipeID);
     
     recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
     recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
@@ -155,23 +164,47 @@ const create = (inputData) => {
          user_id:recipeDetailsRecord.ownerID
     }
     recipesDataAccess.insertNewRecord(Tables.Tables.COOKBOOK_TABLE,obj).then((data) => {
-        console.log(data);
         resolve(data);
     }).catch((err) => {
         reject(err);
     })
     });
 }
-// insert new recipe to db -- Should be moved to Scraper API entry points.
+
+
+// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:}
 module.exports.createNewRecipe = (req,res) =>{
-    recipe = JSON.parse(req.body.body)
-    create(recipe).then((data) =>{
-        res.status(200);
-        res.send({status:"OK"});
+    recipe = req.body;
+    recipe.upload_date = Date.now();
+    recipe.recipeID = randomUUID();
+    recipe.active = true;
+    
+    
+    dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
+    .then((data) => {
+        let params = {
+            collection: 'cookbooks',
+            queryField: 'userEmail',
+            queryVal: recipe.ownerEmail,
+            arrayToUpdate: 'recipes',
+            pushVal: recipe.recipeID
+        }
+        
+        dataAccess.pushValueToArrayField(params)
+        .then((data) => {
+            res.status(200);
+            res.send({status:"ok", message: data});
+        })
+        .catch((err) => {
+        res.status(400);
+        res.send({status:"error",message: err});
+        })
+
     }).catch((err) => {
         res.status(400);
-        res.send({status:"ERROR",error: err});
-    }); 
+        res.send({status:"error",message: err});
+    });
+    
 }
 
 

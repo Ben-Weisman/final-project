@@ -1,11 +1,14 @@
 const { randomUUID } = require('crypto');
 const userDataAccess = require('./../data-access/userDataAccess');
 
+
+// IN USE
 module.exports.validate = (req,res) => {
     console.log('LOG: in validate')
     let password = req.body.password;
     let email = req.body.email;
 
+    console.log(`email is ${email}, password is ${password}`)
     userDataAccess.fetchUserByEmail(email).then((user) => {
         resJson = validateUser(user,password);
         if (resJson){
@@ -24,23 +27,24 @@ module.exports.validate = (req,res) => {
     })
 }
 
+
+// IN USE
 module.exports.createUser = (req,res) => {
+    
     user = req.body;
+    console.log('LOG: in createUser');
     if (validateParams(user)){
-        email = user.email;
-        password = user.password;
-        cookbook_id = randomUUID();
-        fullName = user.name;
+        console.log(`LOG: passed validation`)
 
         userRecord = {
-            email:email,
-            user_password: password,
-            full_name:fullName,
-            cookbook_id:cookbook_id,
-            profile_picture_id:null,
-            is_admin: false
+            name:user.name,
+            email:user.email,
+            password: user.password,
+            cookbookID:randomUUID(),
+            isAdmin: false,
+            active: true
         }
-        
+        console.log('LOG: userRecord is: %j', userRecord)
         userDataAccess.insertUser(userRecord).then(() => {
             res.status(200);
             res.contentType('application/json');
@@ -48,27 +52,37 @@ module.exports.createUser = (req,res) => {
         }).catch((err) => {
             res.status(400);
             res.contentType('application/json');
-            res.send(err);
+            res.send({status: "error", message: err});
         })
     }
     else {
         res.status(400);
-        res.send({status:"ERROR"});
+        res.contentType('application/json');
+        res.send({status:"error"});
     }
 }
 
 module.exports.removeUser = (req,res) => {
     user = req.body;
-    resJson = userDataAccess.deleteUser(user);
-    res.status(200);
-    res.send(resJson);
+    userDataAccess.deActivateUser(user).then(() => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status:"ok"});
+    }).catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status:"ERROR"});
+    });
 }
 
+// IN USE
 const validateParams = (user) =>{
+    console.log(`LOG: in validateParams`);
     if (user.name.length < 1 || user.password.length < 1 || !validateEmail(user.email))
         return false;
     return true;
 }
+
 
 
 const validateUser = (user,pass) => {
@@ -114,9 +128,7 @@ const validateUser = (user,pass) => {
 // }
 
 const isAdmin = (user) => {
-    if (user.is_admin)
-        return true;
-    return false;
+    return user.isAdmin;
 }
 const validateEmail = (email) => {
     return String(email)

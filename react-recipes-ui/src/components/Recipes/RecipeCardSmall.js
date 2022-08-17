@@ -131,7 +131,7 @@ export default function RecipeCardSmall(props) {
             <DeleteOutlined onClick={handelDelete} />
           </IconButton>
         }
-        title={props.recipe.recipe_name}
+        title={props.recipe.name}
       ></CardHeader>
       {/* <CardMedia
         className="recipe-image"
@@ -141,7 +141,7 @@ export default function RecipeCardSmall(props) {
       /> */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {props.recipe.recipe_description}
+          {props.recipe.description}
         </Typography>
       </CardContent>
       <IconButton aria-label="open full recipe">
@@ -166,7 +166,7 @@ export default function RecipeCardSmall(props) {
           </Fade>
         </Dialog> */}
       <Popup
-        title={props.recipe.recipe_title}
+        title={props.recipe.name}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
