@@ -6,6 +6,44 @@ const queries = require('./../data-access/queries/queries');
 const { resolve } = require('path');
 const Tables = require('../utils/dbEnums');
 const { randomUUID } = require('crypto');
+const Recipes = require('../utils/models/recipes')
+const Users = require('../utils/models/user')
+const usersDataAccessModule = require('../data-access/userDataAccess')
+const cookbookDataAccess = require('../data-access/cookbookDataAccess')
+
+module.exports.findByName = (name) => {
+    return Recipes.find({'name': {$regex: name, $options: 'i'}})
+    .then((data) => {
+        resolve.apply(data);
+    }).catch((err) => {
+        reject(err);
+    });
+}
+module.exports.updateField = (searchField,targetVal,field,newVal) => {
+    return Recipes.findOneAndUpdate({searchField: targetVal},{field:newVal}).then((data) => {
+        resolve(data);
+    })
+    .catch((err) => {
+        reject(err);
+    });
+}
+module.exports.fetchRecipesByOwner = (email) => {
+    return Recipes.find({ownerEmail: email}).exec();
+}
+
+
+module.exports.insertNewRecipe = (recipe) => {
+    const recipeDoc = new Recipes({recipe});
+    return new Promise ((resolve,reject) => {
+        Recipes.recipeDoc.save()
+        .then((result) => {
+            resolve(result);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    })   
+}
 
 
 module.exports.removeInstructionsRecordsOfRecipeID = (id) => {
@@ -178,38 +216,34 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 
 
 module.exports.fetchAll = () => {
-    return new Promise((resolve,reject) =>{
-        let res = {};
-        worker.executeQuery(queries.getAllRecipesDetails).then( (data) => {
-            console.log(`LOG: fetched ====> ${JSON.stringify(data,null,4)}`);
-            res.recipes = data;
-        }).catch( (err) => {
-            reject(err);
-        });
-        worker.executeQuery(queries.getAllRecipesIngredients).then( (data) => {
-            console.log(`LOG: fetched ====> ${JSON.stringify(data,null,4)}`);
-            res.ingredients = data;
-        }).catch((err) => {
-            reject(err);
-        });
-        worker.executeQuery (queries.getAllRecipesInstructions).then((data) => {
-            console.log(`LOG: fetched ====> ${JSON.stringify(data,null,4)}`);
-            res.instructions = data;
-            resolve(res);
-        }).catch((err) => {
-            reject(err);
-        });
-    });
+
+        return Recipes.find({active:true}).exec();
 }
 
-module.exports.fetchCookbook = (id) => {
-    return new Promise((resolve,reject) => {
-        worker.executeQuery(queries.getCookbookByUserID(id)).then((data) => {
-            resolve(data);
-        }).catch((err) => {
+module.exports.fetchCookbookByUserID = (email) => {
+    
+    return new Promise ((resolve,reject) => {
+        cookbookDataAccess.getRecipesIDsByUserEmail(email)
+        .then((recipesIDs) => {
+
+            rawUserRecipes = recipesIDs[0].recipes;
+            filtered = [];
+            rawUserRecipes.forEach(recipe => {
+                filtered.push(recipe.id);
+            });
+            Recipes.find({'recipeID': {$in: filtered}})
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((err) => {
+                console.log('ERRORRRRR')
+                reject(err);
+            });
+        })
+        .catch((err) => {
             reject(err);
         });
-    });
+    })
 }
 
 module.exports.fetchRecipesByIDs = (ids_arr) => {
@@ -238,30 +272,30 @@ module.exports.fetchRecipesByIDs = (ids_arr) => {
     
 }
 
-module.exports.fetchRecipesByOwner = (email) =>{
-    return new Promise ((resolve,reject) => {
-        let recipesIDs = {};
-        let userID = {};
-        worker.executeQuery(queries.getUserByEmail("ben.weisman15@gmail.com")).then((data) => {
-            userID = data[0].user_id;
+// module.exports.fetchRecipesByOwner = (email) =>{
+//     return new Promise ((resolve,reject) => {
+//         let recipesIDs = {};
+//         let userID = {};
+//         worker.executeQuery(queries.getUserByEmail("ben.weisman15@gmail.com")).then((data) => {
+//             userID = data[0].user_id;
 
-            worker.executeQuery(queries.getAllRecipesIDsByOwner(userID)).then((data) => {
-                let idsArray = data.map(item => item.recipe_id);
-                this.fetchRecipesByIDs(idsArray).then((data) => {
-                    // console.log(data);
-                }).catch((err) => {
-                    reject(err);
-                });
-            }).catch((err) => {
-                reject(err);
-            });
+//             worker.executeQuery(queries.getAllRecipesIDsByOwner(userID)).then((data) => {
+//                 let idsArray = data.map(item => item.recipe_id);
+//                 this.fetchRecipesByIDs(idsArray).then((data) => {
+//                     // console.log(data);
+//                 }).catch((err) => {
+//                     reject(err);
+//                 });
+//             }).catch((err) => {
+//                 reject(err);
+//             });
 
 
-        }).catch((err) => {
-            reject(err);
-        });
+//         }).catch((err) => {
+//             reject(err);
+//         });
 
-    });
+//     });
     
-}
+// }
 

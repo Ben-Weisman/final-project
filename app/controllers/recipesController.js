@@ -6,32 +6,59 @@ const utilParser = require('./../utils/parser');
 const Tables = require('./../utils/dbEnums');
 const e = require('express');
 const { resolve } = require('path');
+
+
+module.exports.getByName = (name) => {
+    dataAccess.fetchRecipeByName(name)
+    .then((data) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status: "ok", message: data});
+    })
+    .catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status: "error", message: err});
+    });
+}
+
+module.exports.addExistingRecipeToCookbook = (recipeID) => {
+    dataAccess.addRecipeToCookbook(recipeID)
+    .then((result) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send(result);
+    }).catch((err) => {
+        res.status(401);
+        res.contentType('application/json');
+        res.send(err);
+    });
+}
+
+
+
 // Get a recipe per user(email)
 module.exports.getAllRecipesByOwner = (req,res) =>{
-
     email = req.body.email;
-    recipesDataAccess.fetchRecipesByOwner(email).then((data) => {
-        recipes = utilParser.parseToRecipe(data);
-        console.log('LOG: recipes => ' + recips);
-    })
     
-    if (recipeRecord){
+    console.log(`LOG: in getAllRecipesByOwner, email = ${email}`);
+
+    dataAccess.getRecipesByOwner(email).then((recipes) => {
         res.status(200);
-        resJson = recipeRecord;
         res.contentType('application/json');
-        res.send(resJson);
-    }
-    else{
+        res.send(recipes);
+    }).catch((err) => {
         res.status(401);
-    }
+        res.send({status: "error", message: err});
+    });
     
 }
 
 // get all recipes from db - done
 module.exports.getAll = (req,res) =>{
     console.log('LOG: in getAll');
-    recipesDataAccess.fetchAll().then ((data) => {
-        recipes = utilParser.parseToRecipe(data);
+    dataAccess.getAllRecipes().then ((recipes) => {
+        console.log(`${recipes.length} recipes returned`)
         res.status(200);
         res.contentType('application/json');
         res.send(recipes);
