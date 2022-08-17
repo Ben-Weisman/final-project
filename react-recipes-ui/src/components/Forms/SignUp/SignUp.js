@@ -67,7 +67,7 @@ const handleSubmit = async event => {
     password,
     name
   });
-  if (response.status === "Success") {
+  if (response.status === "ok") {
     window.location.href = "/login";
   } else {
     Swal.fire("Failed", response.message, "error");
