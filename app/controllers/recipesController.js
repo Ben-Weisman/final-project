@@ -55,8 +55,8 @@ module.exports.getAllRecipesByOwner = (req,res) =>{
 // get all recipes from db - done
 module.exports.getAll = (req,res) =>{
     console.log('LOG: in getAll');
-    dataAccess.getAllRecipes().then ((data) => {
-        console.log(`LOG: recipes returned ==>\n\n${data}`);
+    dataAccess.getAllRecipes().then ((recipes) => {
+        console.log(`LOG: recipes returned ==>\n\n${recipes}`);
         res.status(200);
         res.contentType('application/json');
         res.send(recipes);
