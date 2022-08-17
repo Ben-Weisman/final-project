@@ -1,3 +1,8 @@
+
+// TO DELETE //
+
+
+
 module.exports.parseToRecipe = (data) =>{
     res = {};
     res['recipes'] = [];

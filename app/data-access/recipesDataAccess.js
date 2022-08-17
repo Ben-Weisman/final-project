@@ -6,6 +6,44 @@ const queries = require('./../data-access/queries/queries');
 const { resolve } = require('path');
 const Tables = require('../utils/dbEnums');
 const { randomUUID } = require('crypto');
+const Recipes = require('../utils/models/recipes')
+const Users = require('../utils/models/user')
+const usersDataAccessModule = require('../data-access/userDataAccess')
+const cookbookDataAccess = require('../data-access/cookbookDataAccess')
+
+module.exports.findByName = (name) => {
+    return Recipes.find({'name': {$regex: name, $options: 'i'}})
+    .then((data) => {
+        resolve.apply(data);
+    }).catch((err) => {
+        reject(err);
+    });
+}
+module.exports.updateField = (searchField,targetVal,field,newVal) => {
+    return Recipes.findOneAndUpdate({searchField: targetVal},{field:newVal}).then((data) => {
+        resolve(data);
+    })
+    .catch((err) => {
+        reject(err);
+    });
+}
+module.exports.fetchRecipesByOwner = (email) => {
+    Recipes.find({'owner': email}).exec();
+}
+
+
+module.exports.insertNewRecipe = (recipe) => {
+    const recipeDoc = new Recipes({recipe});
+    return new Promise ((resolve,reject) => {
+        Recipes.recipeDoc.save()
+        .then((result) => {
+            resolve(result);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    })   
+}
 
 
 module.exports.removeInstructionsRecordsOfRecipeID = (id) => {
@@ -178,38 +216,35 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 
 
 module.exports.fetchAll = () => {
-    return new Promise((resolve,reject) =>{
-        let res = {};
-        worker.executeQuery(queries.getAllRecipesDetails).then( (data) => {
-            console.log(`LOG: fetched ====> ${JSON.stringify(data,null,4)}`);
-            res.recipes = data;
-        }).catch( (err) => {
-            reject(err);
-        });
-        worker.executeQuery(queries.getAllRecipesIngredients).then( (data) => {
-            console.log(`LOG: fetched ====> ${JSON.stringify(data,null,4)}`);
-            res.ingredients = data;
-        }).catch((err) => {
-            reject(err);
-        });
-        worker.executeQuery (queries.getAllRecipesInstructions).then((data) => {
-            console.log(`LOG: fetched ====> ${JSON.stringify(data,null,4)}`);
-            res.instructions = data;
-            resolve(res);
-        }).catch((err) => {
-            reject(err);
-        });
-    });
+
+        const all = Recipes.find({active:true}).exec();
+        return all;
 }
 
-module.exports.fetchCookbook = (id) => {
-    return new Promise((resolve,reject) => {
-        worker.executeQuery(queries.getCookbookByUserID(id)).then((data) => {
-            resolve(data);
-        }).catch((err) => {
+module.exports.fetchCookbookByUserID = (email) => {
+    
+    return new Promise ((resolve,reject) => {
+        cookbookDataAccess.getRecipesIDsByUserEmail(email)
+        .then((recipesIDs) => {
+
+            rawUserRecipes = recipesIDs[0].recipes;
+            filtered = [];
+            rawUserRecipes.forEach(element => {
+                filtered.push(element.id);
+            });
+            Recipes.find({'recipeID': {$in: filtered}})
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((err) => {
+                console.log('ERRORRRRR')
+                reject(err);
+            });
+        })
+        .catch((err) => {
             reject(err);
         });
-    });
+    })
 }
 
 module.exports.fetchRecipesByIDs = (ids_arr) => {
