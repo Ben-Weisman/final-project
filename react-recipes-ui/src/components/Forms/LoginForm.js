@@ -23,6 +23,7 @@ import Swal from "sweetalert2";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 //import axios from "axios";
 // import FormLable from '@mui/material/core/FormLable'
+
 const useStyles = makeStyles(theme => ({
   field: {
     marginTop: 20,
@@ -86,7 +87,7 @@ async function loginUser(email, password) {
     });
 }
 
-const LoginForm = () => {
+const LoginForm = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

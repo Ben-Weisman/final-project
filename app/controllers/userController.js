@@ -84,7 +84,7 @@ const validateParams = (user) =>{
 }
 
 
-// IN USE
+
 const validateUser = (user,pass) => {
     console.log(`LOG: user email: ${user.email}`)
     res = null;
@@ -105,6 +105,27 @@ const validateUser = (user,pass) => {
     }
     return res;
 }
+
+
+// const validateUser = (user,pass) => {
+//     res = null;
+//     if (user){
+//         console.log('LOG: validateUser user: ' + user[0].user_password);
+//         console.log('LOG: pass = ' + pass);
+//         if (user[0].user_password == pass){
+//             console.log('LOG: valid')
+//             is_admin = isAdmin(user[0]);
+//             res = {
+//                 name:user[0].full_name,
+//                 email:user[0].email,
+//                 admin: is_admin,
+//                 status: "Success",
+//                 userID: user[0].user_id
+//             }
+//         }
+//     }
+//     return res;
+// }
 
 const isAdmin = (user) => {
     return user.isAdmin;

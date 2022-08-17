@@ -2,6 +2,7 @@ import React from "react";
 import LoginForm from "../components/Forms/LoginForm";
 import { makeStyles } from "@mui/styles";
 import { border, borderColor } from "@mui/system";
+import SignIn from "../components/Forms/SignIn/SignIn";
 // import RecipeCardSmall from '..components/Recipes'
 // const useStyles = makeStyles({
 //     form:{
@@ -16,11 +17,12 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover"
   }
 }));
-const Login = () => {
+const Login = props => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <LoginForm></LoginForm>
+      {/* <LoginForm ServerURL={props.ServerURL}></LoginForm> */}
+      <SignIn ServerURL={props.ServerURL}></SignIn>
     </div>
   );
 };
