@@ -86,10 +86,10 @@
             },
             "ingredients":{
                 "lookFor": "li",
-                "className": "simple-list__item js-checkbox-trigger ingredient text-passage"
+                "className": "structured-ingredients__list-item"
             },"method":{
-                    "lookFor": "li",
-                    "className": "comp mntl-sc-block-group--LI mntl-sc-block mntl-sc-block-startgroup"
+                    "lookFor": "p",
+                    "className": "comp mntl-sc-block mntl-sc-block-html"
             },"image":{
                 "lookFor": "div",
                 "className": "figure__media js-figure-media figure__media--portrait"
