@@ -13,11 +13,9 @@ module.exports.addRecipe = (recipeID, email) => {
         let update = {$push: {"recipes":  {id:recipeID}}};
         Cookbook.findOneAndUpdate(filter,update)
         .then((data) => {
-            console.log(`LOG: found and pushed`)
             resolve(data);
         })
         .catch((err) => {
-            console.log(err)
             reject(err);
         });
     })
