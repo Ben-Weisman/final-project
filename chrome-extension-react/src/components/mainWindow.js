@@ -44,17 +44,17 @@ export default function MainWindow() {
       setData(recipe_data);
   };
 
-  // function logingHandler() {
-  //   if (!localStorage.getItem("user")) {
-  //     window.open("http://localhost:8000/login")
-  //   }
+  function logingHandler() {
+    if (!localStorage.getItem("user")) {
+      window.open("http://localhost:8000/login")
+    }
 
 
-  // }
+  }
 
-  // useEffect(() => {
-  //   logingHandler()
-  // }, []);
+  useEffect(() => {
+    logingHandler()
+  }, []);
 
 
   function goToCookBook() {

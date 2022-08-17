@@ -34,7 +34,23 @@ const useStyles = makeStyles(theme => ({
     padding: theme.spacing(2, 4, 3),
     top: "30px",
     marginTop: 40,
+    marginBottom: 40,
     width: 700
+  },
+  typography: {
+    fontFamily: ['Lora', 'Georgia', 'serif'],
+    fontSize: '1.2rem',
+    fontStyle: 'italic',
+    marginBottom: 30
+
+  },
+
+  img: {
+    display: 'block',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 20,
+    marginBottom: 40
   },
   modal: {
     // display: "flex",
@@ -91,14 +107,14 @@ const RecipeCardBig = ({ recipe, page }) => {
         alt={recipe.recipe_name}
       /> */}
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {recipe.description}
-        </Typography>
+        <typography className={classes.typography}>{recipe.description}</typography>       
+        <img className={classes.img} src={recipe.image} />
         {/* <ElementList
           ItemsArray={recipe.instructions}
           title="Ingredients"
         ></ElementList> */}
-        <Grid item xs={12} md={6}>
+        <Grid container spacing={2}>
+        <Grid item xs={4} md={6}>
           <Typography variant="h6" className={"classes.title"}>
             {recipe.ingredients.title}
           </Typography>
@@ -112,7 +128,7 @@ const RecipeCardBig = ({ recipe, page }) => {
             </List>
           </div>
         </Grid>
-        <Grid>
+        <Grid item xs={4} md={6}>
           <Typography variant="h6" className={classes.title}>
             {recipe.instructions.title}
           </Typography>
@@ -125,6 +141,7 @@ const RecipeCardBig = ({ recipe, page }) => {
               ))}
             </List>
           </div>
+          </Grid>
         </Grid>
       </CardContent>
       <IconButton aria-label="add to favorites">

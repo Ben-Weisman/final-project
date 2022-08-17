@@ -139,6 +139,7 @@ export default function RecipeCardSmall(props) {
         height="194"
         alt={recipe.name_name}
       /> */}
+      <img src={props.recipe.image} alt={props.recipe.name_name} width="300" />;
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.recipe.description}
