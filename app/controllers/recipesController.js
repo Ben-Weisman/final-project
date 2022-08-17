@@ -94,7 +94,6 @@ module.exports.getCookbook = (req,res) => {
 module.exports.removeByID = (req,res) =>{
 
     id = req.body.id;
-    console.log(`LOG: id = ${id}`);
     dataAccess.zombifyRecipe(id).then((data) => {
         res.status(200);
         res.send({status: "ok", message: data});
@@ -141,12 +140,10 @@ const create = (inputData) => {
     
     let ingredientObjDetails = generateIngredientsObjectWithIDs(inputData.ingredients,recipeDetailsRecord.recipeID);
     recipesDataAccess.insertNewRecord(Tables.Tables.INGREDIENTS_TABLE,ingredientObjDetails.ingredients).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
     recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INGREDIENT_TABLE,ingredientObjDetails.ingredients).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
@@ -155,12 +152,10 @@ const create = (inputData) => {
     let instructionsObjDetails = generateInstructionsObjectWithIDs(inputData.recipe_instructions,recipeDetailsRecord.recipeID);
     
     recipesDataAccess.insertNewRecord(Tables.Tables.INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
     recipesDataAccess.insertNewRecord(Tables.Tables.RECIPE_INSTRUCTIONS_TABLE,instructionsObjDetails.instructions).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
@@ -169,7 +164,6 @@ const create = (inputData) => {
          user_id:recipeDetailsRecord.ownerID
     }
     recipesDataAccess.insertNewRecord(Tables.Tables.COOKBOOK_TABLE,obj).then((data) => {
-        console.log(data);
         resolve(data);
     }).catch((err) => {
         reject(err);
@@ -178,7 +172,7 @@ const create = (inputData) => {
 }
 
 
-// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:}
+// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:}
 module.exports.createNewRecipe = (req,res) =>{
     recipe = req.body;
     recipe.upload_date = Date.now();
@@ -202,13 +196,11 @@ module.exports.createNewRecipe = (req,res) =>{
             res.send({status:"ok", message: data});
         })
         .catch((err) => {
-            console.log('\n\nLOG: error in insertNewDocument')
         res.status(400);
         res.send({status:"error",message: err});
         })
 
     }).catch((err) => {
-        console.log('\n\nLOG: error in insertNewDocument')
         res.status(400);
         res.send({status:"error",message: err});
     });

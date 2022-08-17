@@ -31,6 +31,10 @@ const recipesSchema = new Schema ({
     ownerEmail: {
         type: String,
         required: true
+    },
+    image: {
+        type: String,
+        required: false
     }
 }, {timestamps:true});
 

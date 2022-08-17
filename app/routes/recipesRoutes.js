@@ -15,6 +15,8 @@ router.delete('/remove', recipesController.removeByID); // done migrating --> Ge
 
 router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook); // done migrating --> // Gets: {email:,id:}
 
+router.delete('/remove-from-cookbook', recipesController.removeRecipeFromCookbook); // --> // Gets: {email:,id:}
+
 router.post('/get-by-name', recipesController.getByName);
 
 module.exports = router;
