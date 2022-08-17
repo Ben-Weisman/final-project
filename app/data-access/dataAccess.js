@@ -24,7 +24,6 @@ const handleCookbook = (params) => {
                 resolve(data);
             })
             .catch((err) => {
-                console.log(`LOG: error in pushValueToArrayField`)
                 reject(err);
             });
     })
@@ -62,8 +61,10 @@ updateField = (collection,searchField,targetVal,field,newVal) => {
 
 
 module.exports.zombifyRecipe = (id) => {
+    console.log(`LOG: in zombifyRecipe`);
+
     return new Promise((resolve,reject) => {
-        updateField('recipes','recipeID',id,'active',false).then((data)=> {
+        updateField('recipes',recipeID,id,active,false).then((data)=> {
             resolve(data);
         }).catch((err) => {
             reject(err);
@@ -75,7 +76,6 @@ module.exports.zombifyRecipe = (id) => {
 module.exports.addRecipeToCookbook = (recipeID,email) => {
     
     return new Promise ((resolve,reject) => {
-        console.log(`LOG: in addRecipeToCookbook, adding recipeID ${recipeID} to user ${email}`);
         cookbookDataAccess.addRecipe(recipeID,email)
         .then((data) => {
             resolve(data);
@@ -104,7 +104,6 @@ module.exports.fetchRecordsFromTable = (tableName,columns,callback) => {
 
 module.exports.executeQuery = (query) => {
     return new Promise((resolve,reject) => {
-        console.log(`LOG: executing query: ${query}`)
         db.query(query,(err,result) => {
             if (err)
                 reject(err);

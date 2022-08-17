@@ -216,9 +216,7 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 
 
 module.exports.fetchAll = () => {
-
-        const all = Recipes.find({active:true}).exec();
-        return all;
+        return Recipes.find({active:true}).exec();
 }
 
 module.exports.fetchCookbookByUserID = (email) => {
@@ -232,13 +230,11 @@ module.exports.fetchCookbookByUserID = (email) => {
             rawUserRecipes.forEach(element => {
                 filtered.push(element.id);
             });
-            console.log(filtered);
             Recipes.find({recipeID: {$in: filtered}})
             .then((data) => {
                 resolve(data);
             })
             .catch((err) => {
-                console.log('ERRORRRRR')
                 reject(err);
             });
         })

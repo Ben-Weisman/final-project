@@ -23,9 +23,8 @@ module.exports.getByName = (name) => {
 }
 
 module.exports.addExistingRecipeToCookbook = (req,res) => {
-    const recipeID = req.id;
-    const email = req.email;
-    console.log(`LOG: in addExistingRecipeToCookbook, adding recipeID = ${recipeID}`);
+    const recipeID = req.body.id;
+    const email = req.body.email;
     dataAccess.addRecipeToCookbook(recipeID,email)
     .then((result) => {
         res.status(200);
@@ -57,9 +56,7 @@ module.exports.getAllRecipesByOwner = (req,res) =>{
 
 // get all recipes from db - done
 module.exports.getAll = (req,res) =>{
-    console.log('LOG: in getAll');
     dataAccess.getAllRecipes().then ((recipes) => {
-        console.log(`LOG: recipes returned ==>\n\n${recipes}`);
         res.status(200);
         res.contentType('application/json');
         res.send(recipes);
@@ -75,7 +72,6 @@ module.exports.getAll = (req,res) =>{
 module.exports.getCookbook = (req,res) => {
     
     email = req.body.email;
-    console.log(`LOG: in getCookbook, email = ${email}`);
     dataAccess.getCookbookByUser(email)
     .then((recipes) => {
         res.status(200);
@@ -135,7 +131,6 @@ const create = (inputData) => {
            // Insert to Recipes table
     let recipeDetailsRecord = generateRecipeDetailsJSON(inputData);
     recipesDataAccess.insertNewRecord(Tables.Tables.RECIPES_TABLE,recipeDetailsRecord).then((data) => {
-        console.log(data);
     }).catch((err) => {
         reject(err);
     });
