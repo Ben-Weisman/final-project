@@ -50,6 +50,8 @@ module.exports.fetchRecipeByName = (name) => {
         })
     });
 }
+
+
 updateField = (collection,searchField,targetVal,field,newVal) => {
     switch(collection){
         case 'recipes': return Recipes.findOneAndUpdate({searchField: targetVal},{field:newVal});
@@ -73,7 +75,7 @@ module.exports.zombifyRecipe = (id) => {
 module.exports.addRecipeToCookbook = (recipeID,email) => {
     
     return new Promise ((resolve,reject) => {
-        console.log(`LOG: in addRecipeToCookbook`);
+        console.log(`LOG: in addRecipeToCookbook, adding recipeID ${recipeID} to user ${email}`);
         cookbookDataAccess.addRecipe(recipeID,email)
         .then((data) => {
             resolve(data);

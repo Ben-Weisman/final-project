@@ -22,8 +22,11 @@ module.exports.getByName = (name) => {
     });
 }
 
-module.exports.addExistingRecipeToCookbook = (recipeID) => {
-    dataAccess.addRecipeToCookbook(recipeID)
+module.exports.addExistingRecipeToCookbook = (req,res) => {
+    const recipeID = req.id;
+    const email = req.email;
+    console.log(`LOG: in addExistingRecipeToCookbook, adding recipeID = ${recipeID}`);
+    dataAccess.addRecipeToCookbook(recipeID,email)
     .then((result) => {
         res.status(200);
         res.contentType('application/json');

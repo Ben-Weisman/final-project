@@ -7,7 +7,7 @@ const usersController = require('./../controllers/userController');
 //
 router.post('/login',usersController.validate); // migrated to mongo - done --> Gets {email:,password:}
 
-router.post('/add',usersController.createUser); // migrated to mongo - done --> Gets: {email:,password:,name:,isAdmin:}
+router.post('/add',usersController.createUser); // migrated to mongo - done --> Gets: {email:,password:,name:}
 
 router.delete('/remove',usersController.removeUser); // migrated to mongo - done --> Gets: {email}
 

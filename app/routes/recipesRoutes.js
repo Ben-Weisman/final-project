@@ -3,7 +3,7 @@ const router = express.Router();
 const recipesController = require('./../controllers/recipesController')
 
 
-router.get('/get-by-owner', recipesController.getAllRecipesByOwner); // done migrating
+router.post('/get-by-owner', recipesController.getAllRecipesByOwner); // done migrating
 
 router.get('/get-all', recipesController.getAll); // done migrating
 
@@ -13,8 +13,8 @@ router.post('/add-new', recipesController.createNewRecipe); // done migrating --
 
 router.delete('/remove', recipesController.removeByID); // done migrating
 
-router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook);
+router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook); // --> // Gets: {id:}
 
-router.get('/get-by-name', recipesController.getByName);
+router.post('/get-by-name', recipesController.getByName);
 
 module.exports = router;

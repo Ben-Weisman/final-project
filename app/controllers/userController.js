@@ -41,7 +41,7 @@ module.exports.createUser = (req,res) => {
             email:user.email,
             password: user.password,
             cookbookID:randomUUID(),
-            isAdmin: user.isAdmin,
+            isAdmin: false,
             active: true
         }
         console.log('LOG: userRecord is: %j', userRecord)
