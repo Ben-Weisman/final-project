@@ -13,7 +13,7 @@ router.post('/add-new', recipesController.createNewRecipe); // done migrating --
 
 router.delete('/remove', recipesController.removeByID); // done migrating
 
-router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook);
+router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook); // --> // Gets: {id:}
 
 router.post('/get-by-name', recipesController.getByName);
 

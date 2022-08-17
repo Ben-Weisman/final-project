@@ -6,13 +6,14 @@ module.exports.getRecipesIDsByUserEmail = (email) => {
 }
 
 
-module.exports.addRecipe = (queryVal, pushVal) => {
+module.exports.addRecipe = (recipeID, email) => {
 
     return new Promise((resolve,reject) => {
-        let filter = { 'userEmail' :queryVal};
-        let update = {$push: {"recipes":  {id:pushVal}}};
+        let filter = { userEmail :email};
+        let update = {$push: {"recipes":  {id:recipeID}}};
         Cookbook.findOneAndUpdate(filter,update)
         .then((data) => {
+            console.log(`LOG: found and pushed`)
             resolve(data);
         })
         .catch((err) => {
