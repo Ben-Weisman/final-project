@@ -69,7 +69,7 @@ export default function SignIn(props) {
       url
     });
     console.log(response);
-    if (response.status === "Success") {
+    if (response.status === "ok") {
       Swal.fire("Success", "Hello " + response.name, "success", {
         buttons: false,
         timer: 2000
