@@ -51,22 +51,15 @@ module.exports.fetchRecipeByName = (name) => {
 }
 
 
-updateField = (collection,searchField,targetVal,field,newVal) => {
-    switch(collection){
-        case 'recipes': return Recipes.findOneAndUpdate({searchField: targetVal},{field:newVal});
-        break;
-    }
-
-}
-
 
 module.exports.zombifyRecipe = (id) => {
-    console.log(`LOG: in zombifyRecipe`);
 
     return new Promise((resolve,reject) => {
-        updateField('recipes',recipeID,id,active,false).then((data)=> {
+        Recipes.findOneAndUpdate({recipeID:id}, {active:false})
+        .then((data) => {
             resolve(data);
-        }).catch((err) => {
+        })
+        .catch((err) => {
             reject(err);
         });
     }); 
