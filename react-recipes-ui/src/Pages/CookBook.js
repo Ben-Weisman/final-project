@@ -1,3 +1,4 @@
+import { ConstructionOutlined } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import RecipesArray from "../components/Recipes/RecipesArray";
@@ -9,11 +10,11 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover"
   }
 }));
-function getUserName() {
+function getUserID() {
   const user = localStorage.getItem("user");
   const userJson = JSON.parse(user);
   console.log(userJson.userID);
-  return userJson["userID"];
+  return userJson.userID;
 }
 
 const CookBook = () => {
@@ -21,21 +22,22 @@ const CookBook = () => {
   const [userID, setUserID] = useState("");
   const classes = useStyles();
 
-
-
-
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ user_id: userID })
-};
-
-
-
+  // const requestOptions = {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  //   body: JSON.stringify({ user_id: userID })
+  // };
 
   useEffect(() => {
-    setUserID(JSON.stringify(getUserName()));
-    fetch("http://localhost:3000/api/v1/recipes/cookbook/", requestOptions)
+    // setUserID(JSON.stringify(getUserName()));
+    // setUserID(localStorage.getItem("user").userID);
+    let userID = getUserID();
+    console.log(userID);
+    fetch("http://localhost:3000/api/v1/recipes/cookbook/", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userID })
+    })
       .then(res => res.json())
       .then(data => {
         console.log(data);

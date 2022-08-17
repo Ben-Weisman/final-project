@@ -1,6 +1,88 @@
 
 const { query } = require('express');
 const db = require('./../db/db');
+const dbAccess = db.connection;
+const recipesDataAccess = require ('./recipesDataAccess');
+const cookbookDataAccess = require ('./cookbookDataAccess')
+const Recipes = require('../utils/models/recipes')
+
+
+/*
+params = {
+        collection: ,
+        queryField: ,
+        queryVal: ,
+        arrayToUpdate: ,
+        pushVal: 
+    }
+*/
+const handleCookbook = (params) => {
+    switch (params.arrayToUpdate){
+        case 'recipes': return new Promise((resolve,reject) => {
+            cookbookDataAccess.addRecipe(params.queryVal, params.pushVal)
+            .then((data) => {
+                resolve(data);
+            })
+            .catch((err) => {
+                console.log(`LOG: error in pushValueToArrayField`)
+                reject(err);
+            });
+    })
+}
+}
+
+module.exports.pushValueToArrayField = (params) => {
+
+    switch (params.collection){
+        case 'cookbooks': return handleCookbook(params);
+    }
+
+}
+
+module.exports.fetchRecipeByName = (name) => {
+    return new Promise((resolve,reject) => {
+        recipesDataAccess.findByName(name)
+        .then((data) => {
+            resolve(data);
+        })
+        .catch((err) => {
+            reject(err);
+        })
+    });
+}
+updateField = (collection,searchField,targetVal,field,newVal) => {
+    switch(collection){
+        case 'recipes': return Recipes.findOneAndUpdate({searchField: targetVal},{field:newVal});
+        break;
+    }
+
+}
+
+
+module.exports.zombifyRecipe = (id) => {
+    return new Promise((resolve,reject) => {
+        updateField('recipes','recipeID',id,'active',false).then((data)=> {
+            resolve(data);
+        }).catch((err) => {
+            reject(err);
+        });
+    }); 
+}
+
+
+module.exports.addRecipeToCookbook = (recipeID,email) => {
+    
+    return new Promise ((resolve,reject) => {
+        console.log(`LOG: in addRecipeToCookbook`);
+        cookbookDataAccess.addRecipe(recipeID,email)
+        .then((data) => {
+            resolve(data);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
 
 
 module.exports.fetchRecordsFromTable = (tableName,columns,callback) => {
@@ -31,3 +113,34 @@ module.exports.executeQuery = (query) => {
     })
 
 }
+
+
+
+// ======================================= //
+
+
+module.exports.insertNewDocument = (doc,collectionName) => {
+    return dbAccess.collection(collectionName).insertOne(doc);
+}
+
+module.exports.getCookbookByUser = (email) => {
+    return new Promise ((resolve,reject) => {
+        recipesDataAccess.fetchCookbookByUserID(email)
+        .then((data) => {
+            resolve(data);
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+}
+
+module.exports.getAllRecipes = () => {
+    return recipesDataAccess.fetchAll();
+}
+
+module.exports.getRecipesByOwner = (email) => {
+    return recipesDataAccess.fetchRecipesByOwner(email);
+}
+
+

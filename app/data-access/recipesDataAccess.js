@@ -28,7 +28,7 @@ module.exports.updateField = (searchField,targetVal,field,newVal) => {
     });
 }
 module.exports.fetchRecipesByOwner = (email) => {
-    return Recipes.find({ownerEmail: email}).exec();
+    Recipes.find({'owner': email}).exec();
 }
 
 
@@ -217,7 +217,8 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 
 module.exports.fetchAll = () => {
 
-        return Recipes.find({active:true}).exec();
+        const all = Recipes.find({active:true}).exec();
+        return all;
 }
 
 module.exports.fetchCookbookByUserID = (email) => {
@@ -228,8 +229,8 @@ module.exports.fetchCookbookByUserID = (email) => {
 
             rawUserRecipes = recipesIDs[0].recipes;
             filtered = [];
-            rawUserRecipes.forEach(recipe => {
-                filtered.push(recipe.id);
+            rawUserRecipes.forEach(element => {
+                filtered.push(element.id);
             });
             Recipes.find({'recipeID': {$in: filtered}})
             .then((data) => {

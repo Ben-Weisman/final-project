@@ -11,6 +11,11 @@ import { purple } from "@mui/material/colors";
 import InsertRecipeManualForm from "./components/Forms/InsertRecipeManualForm";
 import Landing from "./Pages/Landing";
 import CookBook from "./Pages/CookBook";
+import SignUp from "./components/Forms/SignUp/SignUp";
+import ForgotPassword from "./components/Forms/ForgetPassword/ForgotPassword";
+import AddRecipePage from "./Pages/AddRecipePage";
+
+const ServerURL = "http://localhost:3000/api/v1/";
 
 const theme = createTheme({
   palette: {
@@ -34,17 +39,20 @@ function App() {
             <Landing />
           </Route>
           <Route exact path="/login">
-            <Login />
+            <Login ServerURL={ServerURL} />
           </Route>
           <Route exact path="/signup">
-            <SignupForm />
+            <SignUp ServerURL={ServerURL} />
+          </Route>
+          <Route exact path="/reset-password">
+            <ForgotPassword />
           </Route>
           <Layout>
             <Route exact path="/home">
-              <Home />
+              <Home ServerURL={ServerURL} />
             </Route>
             <Route exact path="/create">
-              <InsertRecipeManualForm />
+              <AddRecipePage />
             </Route>
             <Route exact path="/cookbook">
               <CookBook />

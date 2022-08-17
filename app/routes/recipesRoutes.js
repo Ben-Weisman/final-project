@@ -3,9 +3,9 @@ const router = express.Router();
 const recipesController = require('./../controllers/recipesController')
 
 
-router.get('/get-by-owner', recipesController.getAllRecipesByOwner); // done migrating --> Gets: {email:}
+router.get('/get-by-owner', recipesController.getAllRecipesByOwner); // done migrating
 
-router.get('/get-all', recipesController.getAll); // done migrating --> no params in req body. 
+router.get('/get-all', recipesController.getAll); // done migrating
 
 router.get('/cookbook',recipesController.getCookbook); // done migrating --> Gets: {email:}
 
@@ -15,6 +15,6 @@ router.delete('/remove', recipesController.removeByID); // done migrating
 
 router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook);
 
-router.delete('/remove', recipesController.removeByID);
+router.get('/get-by-name', recipesController.getByName);
 
 module.exports = router;

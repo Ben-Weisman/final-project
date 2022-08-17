@@ -9,7 +9,7 @@ import {
   InputAdornment,
   Paper,
   TextField,
-  Typography,
+  Typography
 } from "@mui/material";
 import { positions } from "@mui/system";
 import { Modal } from "@mui/material";
@@ -23,23 +23,24 @@ import Swal from "sweetalert2";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 //import axios from "axios";
 // import FormLable from '@mui/material/core/FormLable'
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles(theme => ({
   field: {
     marginTop: 20,
     marginBottom: 20,
     display: "block",
-    padding: 5,
+    padding: 5
   },
   btn: {
     marginTop: 30,
     marginBottom: 20,
     width: 210,
-    padding: 5,
+    padding: 5
   },
   modal: {
     display: "flex",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   paper: {
     // padding: 20,
@@ -52,19 +53,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2, 4, 3),
     height: "50vh",
     top: "30px",
-    marginTop: 40,
+    marginTop: 40
   },
   root: {
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "center"
   },
   form: {},
   input: {
-    padding: 20,
+    padding: 20
   },
   btnWrapper: {
-    marginTop: 100,
-  },
+    marginTop: 100
+  }
 }));
 
 // const [usernameError, setUsernameError] = useState(false)
@@ -75,35 +76,35 @@ async function loginUser(email, password) {
   return fetch("http://localhost:3000/api/v1/users/login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify(email, password),
+    body: JSON.stringify(email, password)
   })
-    .then((data) => data.json())
-    .then((data) => {
+    .then(data => data.json())
+    .then(data => {
       console.log(data);
       return data;
     });
 }
 
-const LoginForm = () => {
+const LoginForm = props => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     const response = await loginUser({
       email,
-      password,
+      password
     });
 
     console.log(response.name);
     if (response.status === "Success") {
       Swal.fire("Success", "Hello " + response.name, "success", {
         buttons: false,
-        timer: 2000,
+        timer: 2000
       }).then(() => {
         localStorage.setItem("user", JSON.stringify(response));
         window.location.href = "/home";
@@ -142,7 +143,7 @@ const LoginForm = () => {
                 id="outlined-basic"
                 label="Email"
                 name="email"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={e => setEmail(e.target.value)}
                 value={email}
               />
             </div>
@@ -155,7 +156,7 @@ const LoginForm = () => {
                 name="password"
                 value={password}
                 type={showPassword ? "text" : "password"}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={e => setPassword(e.target.value)}
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -197,7 +198,7 @@ const LoginForm = () => {
                   closeAfterTransition
                   BackdropComponent={Backdrop}
                   BackdropProps={{
-                    timeout: 500,
+                    timeout: 500
                   }}
                 >
                   <Fade in={open}>

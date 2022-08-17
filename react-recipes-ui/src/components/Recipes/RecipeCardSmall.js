@@ -1,4 +1,9 @@
-import { DeleteOutlined, Transform, Translate } from "@mui/icons-material";
+import {
+  ConstructionOutlined,
+  DeleteOutlined,
+  Transform,
+  Translate
+} from "@mui/icons-material";
 import {
   Backdrop,
   Card,
@@ -20,6 +25,7 @@ import React, { useEffect, useState } from "react";
 import RecipeCardBig from "./RecipeCardBig";
 import { Dialog } from "@mui/material";
 import Popup from "../Tools/Popup";
+import Swal from "sweetalert2";
 
 const useStyles = makeStyles(theme => ({
   field: {
@@ -51,8 +57,54 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   }
 }));
+async function deletFromDBServer(recipe_id) {
+  //need to change the static url
+  console.log(recipe_id);
+  return fetch("http://localhost:3000/api/v1/recipes/remove", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(recipe_id)
+  })
+    .then(data => data.json())
+    .then(data => {
+      console.log(data);
+      return data;
+    });
+}
 
-const RecipeCardSmall = ({ recipe, page }) => {
+async function deletFromDB(recipe_id) {
+  const response = await deletFromDBServer({
+    recipe_id
+  });
+  console.log(response.name);
+  if (response.status === "Success") {
+    Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    window.location.reload();
+  } else {
+    Swal.fire("Failed", response.message, "error");
+  }
+}
+
+export default function RecipeCardSmall(props) {
+  const handelDelete = async e => {
+    e.preventDefault();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then(result => {
+      const recipe_id = props.recipe.recipe_id;
+      if (result.isConfirmed) {
+        deletFromDB(recipe_id);
+      }
+    });
+  };
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
@@ -68,7 +120,7 @@ const RecipeCardSmall = ({ recipe, page }) => {
     if (page === "Home") return "none";
   };
   useEffect(() => {
-    checkPage(page);
+    checkPage(props.page);
   }, []);
 
   return (
@@ -76,10 +128,10 @@ const RecipeCardSmall = ({ recipe, page }) => {
       <CardHeader
         action={
           <IconButton className={classes.style} aria-label="delete">
-            <DeleteOutlined />
+            <DeleteOutlined onClick={handelDelete} />
           </IconButton>
         }
-        title={recipe.recipe_name}
+        title={props.recipe.recipe_name}
       ></CardHeader>
       {/* <CardMedia
         className="recipe-image"
@@ -89,7 +141,7 @@ const RecipeCardSmall = ({ recipe, page }) => {
       /> */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {recipe.recipe_description}
+          {props.recipe.recipe_description}
         </Typography>
       </CardContent>
       <IconButton aria-label="open full recipe">
@@ -114,17 +166,15 @@ const RecipeCardSmall = ({ recipe, page }) => {
           </Fade>
         </Dialog> */}
       <Popup
-        title={recipe.recipe_title}
+        title={props.recipe.recipe_title}
         openPopup={openPopup}
         setOpenPopup={setOpenPopup}
       >
-        <RecipeCardBig recipe={recipe}></RecipeCardBig>
+        <RecipeCardBig recipe={props.recipe}></RecipeCardBig>
       </Popup>
       <IconButton aria-label="add to favorites">
         <FavoriteIcon />
       </IconButton>
     </Card>
   );
-};
-
-export default RecipeCardSmall;
+}

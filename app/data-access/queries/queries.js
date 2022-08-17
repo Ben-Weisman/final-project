@@ -1,13 +1,21 @@
 
+
+// TO DELETE //
+
+
 const Tables = require('../../utils/dbEnums');
 
 module.exports = {
     getAllRecipesDetails:"SELECT Recipes.recipe_id,recipe_name,recipe_description,category,uploaded_date FROM Recipes;",
-    getAllRecipesIngredients:"SELECT Recipes.recipe_id, Ingredients.ingredient_name FROM (Recipes INNER JOIN Recipe_Ingredients ON Recipes.recipe_id = Recipe_Ingredients.recipe_id) INNER JOIN Ingredients ON Recipe_Ingredients.ingredient_id = Ingredients.id;",
+    getAllRecipesIngredients:"INNER JOIN Ingredients i ON ri.ingredient_id = i.id INNER JOIN measurement_qty mq ON ri.measurement_qty_id = mq.measurement_qty_id INNER JOIN measurement_units mu ON mu.measurement_id = ri.measurement_id;",
     getAllRecipesInstructions:"SELECT Recipes.recipe_id,Instructions.instruction_description,Instructions.step FROM (Recipes INNER JOIN Recipe_Instructions ON Recipes.recipe_id = Recipe_Instructions.recipe_id) INNER JOIN Instructions ON Recipe_Instructions.instruction_id = Instructions.instruction_id;",
     getAllIngredients:"select id,ingredient_name from Ingredients;"
 }
 
+
+module.exports.deActivateUser = (email) => {
+    return `UPDATE User SET active = ${false} WHERE email = '${email}';`;
+}
 
 module.exports.deleteRecipeInstructionsQueryBuilder = (id) => {
     return `DELETE ri,ins FROM ${Tables.Tables.RECIPE_INSTRUCTIONS_TABLE} ri JOIN ${Tables.Tables.INSTRUCTIONS_TABLE} ins ON ri.instruction_id = ins.instruction_id WHERE recipe_id = ${id};`;
@@ -62,11 +70,11 @@ module.exports.getRecipeComponentsByIDsQueryBuilder = (ids_array,record_type) =>
 
 
 module.exports.getUserByEmail = (email) => {
-    return `SELECT user_id, email,user_password,is_admin,full_name FROM User WHERE email = '${email}';`
+    return `SELECT email,user_password,is_admin,full_name FROM User WHERE email = '${email}';`
 }
 
 
 module.exports.insertNewUser = (userRecord) => {
-    return `INSERT INTO User VALUES ('${userRecord.email}','${userRecord.user_password}','${userRecord.full_name}','${userRecord.cookbook_id}','${userRecord.profile_picture_id}','${userRecord.is_admin}');`;
+    return `INSERT INTO User VALUES ('${userRecord.email}','${userRecord.user_password}','${userRecord.full_name}','${userRecord.cookbook_id}','${userRecord.profile_picture_id}','${userRecord.is_admin}','${active}');`;
 }
 
