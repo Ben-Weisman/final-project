@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Home = props => {
+  // function handleRecipes(recipes) {
+  //   setRecipes(recipes);
+  // }
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -21,9 +24,10 @@ const Home = props => {
       .then(res => res.json())
       .then(data => {
         console.log(data);
-        setRecipes(data.recipes);
+        setRecipes(data);
+        console.log(recipes);
       });
-  }, []);
+  }, [setRecipes]);
 
   const classes = useStyles();
   const page = "Home";

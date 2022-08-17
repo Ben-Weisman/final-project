@@ -7,7 +7,7 @@ router.get('/get-by-owner', recipesController.getAllRecipesByOwner); // done mig
 
 router.get('/get-all', recipesController.getAll); // done migrating
 
-router.get('/cookbook',recipesController.getCookbook); // done migrating --> Gets: {email:}
+router.post('/cookbook',recipesController.getCookbook); // done migrating --> Gets: {email:}
 
 router.post('/add-new', recipesController.createNewRecipe); // done migrating --> // Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:}
 

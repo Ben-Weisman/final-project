@@ -82,7 +82,7 @@ const RecipeCardBig = ({ recipe, page }) => {
             <DeleteOutlined />
           </IconButton>
         }
-        title={recipe.recipe_name}
+        title={recipe.name}
       ></CardHeader>
       {/* <CardMedia
         component="img"
@@ -92,7 +92,7 @@ const RecipeCardBig = ({ recipe, page }) => {
       /> */}
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {recipe.recipe_description}
+          {recipe.description}
         </Typography>
         {/* <ElementList
           ItemsArray={recipe.instructions}
@@ -106,7 +106,7 @@ const RecipeCardBig = ({ recipe, page }) => {
             <List>
               {recipe.ingredients.map(item => (
                 <ListItem>
-                  <ListItemText primary={item.ingredient_name} />
+                  <ListItemText primary={item.description} />
                 </ListItem>
               ))}
             </List>
@@ -120,7 +120,7 @@ const RecipeCardBig = ({ recipe, page }) => {
             <List dense={true}>
               {recipe.instructions.map(item => (
                 <ListItem>
-                  <ListItemText primary={item.instruction_description} />
+                  <ListItemText primary={item.description} />
                 </ListItem>
               ))}
             </List>
