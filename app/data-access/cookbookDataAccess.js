@@ -2,7 +2,7 @@ const Cookbook = require('../utils/models/cookbook');
 
 
 module.exports.getRecipesIDsByUserEmail = (email) => {
-    return Cookbook.find({'userEmail':email},'recipes').select('recipes').exec();
+    return Cookbook.find({userEmail:email},'recipes').select('recipes').exec();
 }
 
 

@@ -226,13 +226,14 @@ module.exports.fetchCookbookByUserID = (email) => {
     return new Promise ((resolve,reject) => {
         cookbookDataAccess.getRecipesIDsByUserEmail(email)
         .then((recipesIDs) => {
-
+            
             rawUserRecipes = recipesIDs[0].recipes;
             filtered = [];
             rawUserRecipes.forEach(element => {
                 filtered.push(element.id);
             });
-            Recipes.find({'recipeID': {$in: filtered}})
+            console.log(filtered);
+            Recipes.find({recipeID: {$in: filtered}})
             .then((data) => {
                 resolve(data);
             })
