@@ -57,6 +57,13 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   }
 }));
+
+function getUserEmail() {
+  const user = localStorage.getItem("user");
+  const userJson = JSON.parse(user);
+  return userJson["email"];
+}
+
 async function deletFromDBServer(recipe_id) {
   //need to change the static url
   console.log(recipe_id);
@@ -79,11 +86,28 @@ async function deletFromDB(id) {
     id
   });
   if (response.status === "ok") {
-    Swal.fire("Deleted!", "Your file has been deleted.", "success");
+    Swal.fire("Deleted!", "The recipe has been deleted.", "success");
     // window.location.reload();
   } else {
     Swal.fire("Failed", response.message, response.status);
   }
+}
+async function addToCookbook(id, email) {
+  return fetch(
+    "http://localhost:3000/api/v1/recipes/add-existing-to-cookbook",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(id, email)
+    }
+  )
+    .then(data => data.json())
+    .then(data => {
+      console.log(data);
+      return data;
+    });
 }
 
 export default function RecipeCardSmall(props) {
@@ -105,6 +129,18 @@ export default function RecipeCardSmall(props) {
       }
     });
   };
+
+  const AddToCookbookHandler = async e => {
+    e.preventDefault();
+    const id = props.recipe.recipeID;
+    console.log("recipeID: " + id);
+    const email = getUserEmail();
+    const response = await addToCookbook({ id, email });
+    if (response.status === "ok") {
+      Swal.fire("Added!", "Your recipe was Added.", "success");
+    }
+  };
+
   const [open, setOpen] = React.useState(false);
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
@@ -174,7 +210,7 @@ export default function RecipeCardSmall(props) {
         <RecipeCardBig recipe={props.recipe}></RecipeCardBig>
       </Popup>
       <IconButton aria-label="add to favorites">
-        <FavoriteIcon />
+        <FavoriteIcon onClick={AddToCookbookHandler} />
       </IconButton>
     </Card>
   );

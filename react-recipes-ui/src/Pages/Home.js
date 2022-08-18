@@ -4,6 +4,8 @@ import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import RecipeCardSmall from "../components/Recipes/RecipeCardSmall";
 import RecipesArray from "../components/Recipes/RecipesArray";
+import { Typography } from "@mui/material";
+
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: "100vh",
@@ -33,6 +35,7 @@ const Home = props => {
   const page = "Home";
   return (
     <div className={classes.root}>
+      {/* <Typography variant="h2"> Explore all our recipes!</Typography> */}
       <RecipesArray ServerURL={props.ServerURL} recipes={recipes} page={page} />
       {/* <Button className='btn' /> */}
     </div>
