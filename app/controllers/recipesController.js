@@ -29,11 +29,11 @@ module.exports.addExistingRecipeToCookbook = (req,res) => {
     .then((result) => {
         res.status(200);
         res.contentType('application/json');
-        res.send(result);
+        res.send({status: "ok", message: data});
     }).catch((err) => {
         res.status(401);
         res.contentType('application/json');
-        res.send(err);
+        res.send({status: "error", message: err});
     });
 }
 
@@ -62,7 +62,7 @@ module.exports.getAll = (req,res) =>{
         res.send(recipes);
     }).catch((err) => {
         res.status(500);
-        res.send(err);
+        res.send({status:"error",message:err});
     });
  
 }
