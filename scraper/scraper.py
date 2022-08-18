@@ -21,11 +21,10 @@ def getUrl():
 def receiveJson():
     if request.method == 'POST':
         updatedJson = request.data
-    #updatedJson=json.dumps(updatedJson)
-   
-    #newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-    req = requests.post('http://localhost:3000/api/v1/recipes/add-new',data=updatedJson )
-    return(req)
+ 
+    req = requests.post('http://localhost:3000/api/v1/recipes/add-new', data=updatedJson, headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+
+    return('d')
 
 
 
@@ -57,7 +56,7 @@ def getIngredients(soup, recipeIndexJson):
     ingredientsList = soup.find_all(recipeIndexJson['ingredients']['lookFor'],class_=recipeIndexJson['ingredients']['className'])
     ingredients = []
     for ingredientEl in ingredientsList:
-        ingredients.append("description:"+ingredientEl.text)
+        ingredients.append(ingredientEl.text)
     return ingredients
 
 
@@ -65,7 +64,7 @@ def getMethod(soup, recipeIndexJson):
     methodList = soup.find_all(recipeIndexJson['method']['lookFor'],class_=recipeIndexJson['method']['className'])
     methods = []
     for method in methodList:
-        methods.append("description:"+method.text)
+        methods.append(method.text)
     return methods
 
 def getImage(soup, recipeIndexJson): 
@@ -115,9 +114,7 @@ def main(url):
         recipeJson = createRecipeJson(soup, recipeIndexJson)
 
         print(recipeJson) # test log
-        #key = "body"
-        #newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
-        #req = requests.post('http://localhost:3000/api/v1/recipes/add-new', json={key:recipeJson},headers=newHeaders)
+
 
         #print(req)
         return recipeJson
