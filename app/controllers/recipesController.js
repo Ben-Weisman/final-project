@@ -29,11 +29,11 @@ module.exports.addExistingRecipeToCookbook = (req,res) => {
     .then((result) => {
         res.status(200);
         res.contentType('application/json');
-        res.send(result);
+        res.send({status: "ok", message: result});
     }).catch((err) => {
         res.status(401);
         res.contentType('application/json');
-        res.send(err);
+        res.send({status: "error", message: err});
     });
 }
 
@@ -62,7 +62,7 @@ module.exports.getAll = (req,res) =>{
         res.send(recipes);
     }).catch((err) => {
         res.status(500);
-        res.send(err);
+        res.send({status:"error",message:err});
     });
  
 }
@@ -179,9 +179,12 @@ module.exports.createNewRecipe = (req,res) =>{
     recipe.recipeID = randomUUID();
     recipe.active = true;
     
+    console.log('LOG: recipe is ===> \n');
+    console.log(recipe);
     
     dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
     .then((data) => {
+
         let params = {
             collection: 'cookbooks',
             queryField: 'userEmail',

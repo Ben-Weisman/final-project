@@ -19,7 +19,7 @@ params = {
 const handleCookbook = (params) => {
     switch (params.arrayToUpdate){
         case 'recipes': return new Promise((resolve,reject) => {
-            cookbookDataAccess.addRecipe(params.queryVal, params.pushVal)
+            cookbookDataAccess.addRecipe(params.pushVal,params.queryVal)
             .then((data) => {
                 resolve(data);
             })
