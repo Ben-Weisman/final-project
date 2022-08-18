@@ -179,9 +179,12 @@ module.exports.createNewRecipe = (req,res) =>{
     recipe.recipeID = randomUUID();
     recipe.active = true;
     
+    console.log('LOG: recipe is ===> \n');
+    console.log(recipe);
     
     dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
     .then((data) => {
+
         let params = {
             collection: 'cookbooks',
             queryField: 'userEmail',
