@@ -29,7 +29,7 @@ module.exports.addExistingRecipeToCookbook = (req,res) => {
     .then((result) => {
         res.status(200);
         res.contentType('application/json');
-        res.send({status: "ok", message: data});
+        res.send({status: "ok", message: result});
     }).catch((err) => {
         res.status(401);
         res.contentType('application/json');
