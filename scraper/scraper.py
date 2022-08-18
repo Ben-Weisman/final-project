@@ -10,43 +10,24 @@ app = Flask(__name__)
 
 
 @app.route("/getUrl")
+#get the url of thw recipe from the chrome extension
 def getUrl():
     url = request.args['url']
     return main(url)
 
 
 @app.route("/receiveJson", methods=['GET', 'POST'])
+#recieve json from the chrome extension and send it to the app
 def receiveJson():
     if request.method == 'POST':
         updatedJson = request.data
-    
-    print(updatedJson)
-    return("f")
+    #updatedJson=json.dumps(updatedJson)
+   
+    #newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+    req = requests.post('http://localhost:3000/api/v1/recipes/add-new',data=updatedJson )
+    return(req)
 
 
-
-#from utils.validations import validateRecipe
-# url = "https://www.bbc.co.uk/food/recipes/healthier_coconut_38904"
-
-
-# content = res.text
-
-
-# lookFor= "li"
-# lis = soup.find_all(lookFor,class_="recipe-ingredients__list-item")
-# print(len(lis))
-# for li in lis:
-#     print(li.text)
-# print(res)
-# print(res.status_code==200)
-
-
-# index = (content.index("Coconut chicken curry"))
-# print(content[index:index+200])
-
-# def createRecipeJson(soap,url):
-
-    # title = getTitle(soap)    
 
 def getJsonFromDB(url):
     try: 
@@ -76,7 +57,7 @@ def getIngredients(soup, recipeIndexJson):
     ingredientsList = soup.find_all(recipeIndexJson['ingredients']['lookFor'],class_=recipeIndexJson['ingredients']['className'])
     ingredients = []
     for ingredientEl in ingredientsList:
-        ingredients.append(ingredientEl.text)
+        ingredients.append("description:"+ingredientEl.text)
     return ingredients
 
 
@@ -84,7 +65,7 @@ def getMethod(soup, recipeIndexJson):
     methodList = soup.find_all(recipeIndexJson['method']['lookFor'],class_=recipeIndexJson['method']['className'])
     methods = []
     for method in methodList:
-        methods.append(method.text)
+        methods.append("description:"+method.text)
     return methods
 
 def getImage(soup, recipeIndexJson): 
@@ -131,11 +112,10 @@ def main(url):
     try: 
        recipeIndexJson = getJsonFromDB(url)
        if recipeIndexJson != NULL:
-        # print(recipeIndexJson)
         recipeJson = createRecipeJson(soup, recipeIndexJson)
 
         print(recipeJson) # test log
-        key = "body"
+        #key = "body"
         #newHeaders = {'Content-type': 'application/json', 'Accept': 'text/plain'}
         #req = requests.post('http://localhost:3000/api/v1/recipes/add-new', json={key:recipeJson},headers=newHeaders)
 

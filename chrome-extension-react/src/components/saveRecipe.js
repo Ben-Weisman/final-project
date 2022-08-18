@@ -8,11 +8,11 @@ export default function SaveRecipe(props) {
 
     //create new updated json of the recipe
     const newJson = {
-        "owner_id": "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0",
-        "recipe_name": props.recipe_name,
-        "recipe_description": props.description,
+        "ownerEmail": "ben.weisman15@gmail.com",
+        "name": props.recipe_name,
+        "description": props.description,
         "category": "italian",
-        "recipe_instructions": props.instructions,
+        "instructions": props.instructions,
         "ingredients": props.ingredients,
         "image": props.image
     }
