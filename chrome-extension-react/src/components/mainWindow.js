@@ -43,6 +43,23 @@ export default function MainWindow() {
       const recipe_data = await response.json(); 
       setData(recipe_data);
   };
+
+  function logingHandler() {
+    if (!localStorage.getItem("user")) {
+      window.open("http://localhost:8000/login")
+    }
+
+
+  }
+
+  useEffect(() => {
+    logingHandler()
+  }, []);
+
+
+  function goToCookBook() {
+    window.open("http://localhost:8000/cookbook")
+  }
   
 
 
@@ -53,7 +70,7 @@ export default function MainWindow() {
          <Wrapper>
            <ExtensionButton onClick={() =>{setOpen(true); getUrl();}}>Add This Recipe</ExtensionButton>
            {Object.keys(data).length !== 0 && open && <ShowRecipe recipe={data}></ShowRecipe> }                    
-           <ExtensionButton className='button'>My Coockbook</ExtensionButton>
+           <ExtensionButton onClick={goToCookBook}>My Coockbook</ExtensionButton>
            </Wrapper>
         </ExtensionWrapper>
   );    

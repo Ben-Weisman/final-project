@@ -17,6 +17,7 @@ import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import ElementList from "./ElementList";
 
+
 const useStyles = makeStyles(theme => ({
   field: {
     marginTop: 20,
@@ -35,7 +36,8 @@ const useStyles = makeStyles(theme => ({
     top: "30px",
     marginTop: 40,
     marginBottom: 40,
-    width: 700
+    width: 700,
+
   },
   typography: {
     fontFamily: ['Lora', 'Georgia', 'serif'],
@@ -52,12 +54,17 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20,
     marginBottom: 40
   },
+
+
   modal: {
     // display: "flex",
     // alignItems: "center",
     // justifyContent: "center"
   },
-  title: {},
+  title: {
+
+    
+  },
 
   paper: {
     // backgroundColor: theme.palette.background.paper,
@@ -91,6 +98,7 @@ const RecipeCardBig = ({ recipe, page }) => {
     console.log(instructions);
   }, []);
   return (
+
     <Card className={classes.card} elevation={3}>
       <CardHeader
         action={
@@ -98,8 +106,9 @@ const RecipeCardBig = ({ recipe, page }) => {
             <DeleteOutlined />
           </IconButton>
         }
-        title={recipe.name}
+        title={recipe.recipe_name}
       ></CardHeader>
+      
       {/* <CardMedia
         component="img"
         height="194"
@@ -107,7 +116,7 @@ const RecipeCardBig = ({ recipe, page }) => {
         alt={recipe.recipe_name}
       /> */}
       <CardContent>
-        <typography className={classes.typography}>{recipe.description}</typography>       
+        <typography className={classes.typography}>{recipe.recipe_description}</typography>       
         <img className={classes.img} src={recipe.image} />
         {/* <ElementList
           ItemsArray={recipe.instructions}
@@ -116,38 +125,41 @@ const RecipeCardBig = ({ recipe, page }) => {
         <Grid container spacing={2}>
         <Grid item xs={4} md={6}>
           <Typography variant="h6" className={"classes.title"}>
-            {recipe.ingredients.title}
+            ingredients:
           </Typography>
           <div className={"classes.demo"}>
             <List>
               {recipe.ingredients.map(item => (
                 <ListItem>
-                  <ListItemText primary={item.description} />
+                  <ListItemText primary={item} />
                 </ListItem>
               ))}
             </List>
           </div>
-        </Grid>
+        </Grid >
         <Grid item xs={4} md={6}>
-          <Typography variant="h6" className={classes.title}>
-            {recipe.instructions.title}
+          <Typography variant="h6" className={"classes.title"}>
+            Instructions:
           </Typography>
           <div className={"classes.demo"}>
-            <List dense={true}>
+            <List >
               {recipe.instructions.map(item => (
                 <ListItem>
-                  <ListItemText primary={item.description} />
+                  <ListItemText primary={item} />
                 </ListItem>
               ))}
             </List>
           </div>
           </Grid>
         </Grid>
+        
       </CardContent>
+    
       <IconButton aria-label="add to favorites">
         <FavoriteIcon />
       </IconButton>
     </Card>
+
   );
 };
 

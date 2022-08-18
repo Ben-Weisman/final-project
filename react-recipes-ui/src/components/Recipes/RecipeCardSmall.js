@@ -61,11 +61,11 @@ async function deletFromDBServer(recipe_id) {
   //need to change the static url
   console.log(recipe_id);
   return fetch("http://localhost:3000/api/v1/recipes/remove", {
-    method: "POST",
+    method: "DELETE",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(recipe_id)
+    body: JSON.stringify({ id: recipe_id.id })
   })
     .then(data => data.json())
     .then(data => {
@@ -74,16 +74,15 @@ async function deletFromDBServer(recipe_id) {
     });
 }
 
-async function deletFromDB(recipe_id) {
+async function deletFromDB(id) {
   const response = await deletFromDBServer({
-    recipe_id
+    id
   });
-  console.log(response.name);
-  if (response.status === "Success") {
+  if (response.status === "ok") {
     Swal.fire("Deleted!", "Your file has been deleted.", "success");
-    window.location.reload();
+    // window.location.reload();
   } else {
-    Swal.fire("Failed", response.message, "error");
+    Swal.fire("Failed", response.message, response.status);
   }
 }
 
@@ -99,7 +98,8 @@ export default function RecipeCardSmall(props) {
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!"
     }).then(result => {
-      const recipe_id = props.recipe.recipe_id;
+      const recipe_id = props.recipe.recipeID;
+      console.log(recipe_id);
       if (result.isConfirmed) {
         deletFromDB(recipe_id);
       }
@@ -139,6 +139,7 @@ export default function RecipeCardSmall(props) {
         height="194"
         alt={recipe.name_name}
       /> */}
+      <img src={props.recipe.image} alt={props.recipe.name_name} width="300" />;
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.recipe.description}
