@@ -36,7 +36,13 @@ const Home = props => {
   return (
     <div className={classes.root}>
       {/* <Typography variant="h2"> Explore all our recipes!</Typography> */}
-      <RecipesArray ServerURL={props.ServerURL} recipes={recipes} page={page} />
+      <RecipesArray
+        ServerURL={props.ServerURL}
+        recipes={recipes}
+        page={page}
+        displayLike={false}
+        displayDelete={false}
+      />
       {/* <Button className='btn' /> */}
     </div>
   );

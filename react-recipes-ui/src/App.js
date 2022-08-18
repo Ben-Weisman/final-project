@@ -14,6 +14,7 @@ import CookBook from "./Pages/CookBook";
 import SignUp from "./components/Forms/SignUp/SignUp";
 import ForgotPassword from "./components/Forms/ForgetPassword/ForgotPassword";
 import AddRecipePage from "./Pages/AddRecipePage";
+import MyRecipesPage from "./Pages/MyRecipesPage";
 
 const ServerURL = "http://localhost:3000/api/v1/";
 
@@ -55,7 +56,7 @@ function App() {
               <AddRecipePage />
             </Route>
             <Route exact path="/cookbook">
-              <CookBook />
+              <MyRecipesPage />
             </Route>
           </Layout>
         </Switch>
