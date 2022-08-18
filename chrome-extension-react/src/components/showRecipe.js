@@ -3,8 +3,9 @@ import { useState, useEffect } from "react";
 import * as React from 'react';
 import NewWindow from "react-new-window";
 import SaveRecipe from './saveRecipe';
-import EditIngredients from './editIngredients'
-import EditInstructions from './editInstructions'
+import EditIngredients from './EditRecipe/editIngredients'
+import EditInstructions from './EditRecipe/editInstructions'
+import EditDescription from './EditRecipe/editDescription'
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 
@@ -36,6 +37,11 @@ export default function ShowRecipe({ recipe }) {
 
     const [editIng, setEditIng] = useState(false);
     const [editIns, setEditIns] = useState(false);
+    const [editDes, setEditDes] = useState(false);
+
+    const openEditDes = () => {
+        setEditDes(!editDes)
+    }
 
     const openEditIng = () => {
         setEditIng(!editIng)
@@ -49,13 +55,9 @@ export default function ShowRecipe({ recipe }) {
         setRecipeName(value)
     };
 
-    const changeDescription = ({ value}) => {
-        setDescription(value)
-    };
 
 
 
-    console.log("5")
     return (
         <NewWindow title="Recipe Preview" center="screen">   
             <RecipeWrapper> 
@@ -66,14 +68,14 @@ export default function ShowRecipe({ recipe }) {
                         onSave = {changeTitle}/>
                 </RecipeTitle>
                 <Description>
-                    {description? 
-                     <EditTextarea 
-                        defaultValue={description}
-                        onSave = {changeDescription}
-                        rows= "event.target.rows"
-                        /> : ""}
+                    {description}
                 </Description>               
-                <img src={image} alt="recpie img" width="300" height="auto" />               
+                <EditButton onClick={openEditDes}>Edit Description</EditButton>
+                {wait(1 * 1000) && editDes && 
+                <EditDescription description={description}  changeDes={description=>setDescription(description)}>
+                    </EditDescription>} 
+                <br></br>
+                <img src={image} alt="recpie img" width="300" style={{marginTop:'2rm'}} />               
                 <ParentDiv>
                     <ChildDiv>
                         <Title>Ingredients:</Title>
@@ -103,6 +105,7 @@ export default function ShowRecipe({ recipe }) {
                         description={description}
                         ingredients={ingredients}
                         instructions={instructions}
+                        image={image}
                     />}
             </RecipeWrapper>            
         </NewWindow>
