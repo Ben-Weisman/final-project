@@ -86,7 +86,12 @@ async function deletFromDB(id) {
     id
   });
   if (response.status === "ok") {
-    Swal.fire("Deleted!", "The recipe has been deleted.", "success");
+    Swal.fire("Deleted!", "The recipe has been deleted.", "success").then(
+      () => {
+        window.location.reload();
+      }
+    );
+
     // window.location.reload();
   } else {
     Swal.fire("Failed", response.message, response.status);
@@ -169,13 +174,7 @@ export default function RecipeCardSmall(props) {
         }
         title={props.recipe.name}
       ></CardHeader>
-      {/* <CardMedia
-        className="recipe-image"
-        image="public\salad.jpg"
-        height="194"
-        alt={recipe.name_name}
-      /> */}
-      <img src={props.recipe.image} alt={props.recipe.name_name} width="300" />
+      <img src={props.recipe.image} alt={props.recipe.name_name} width="300" />;
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.recipe.description}

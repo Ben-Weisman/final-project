@@ -150,10 +150,9 @@ export const Description = styled.p`
   font-size: 1.2rem;
   font-style: italic;
   margin: 1px auto;
-  /* margin-bottom: 2rem;
+  margin-bottom: 1px;
+  //padding: 0.25em 1em 8px 0px;
   text-align: left;
-  align-items: left; */
-  
 `
 
 
