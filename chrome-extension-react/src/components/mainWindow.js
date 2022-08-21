@@ -40,8 +40,17 @@ export default function MainWindow() {
   //send the url of the recipe to the scraper and get the json of the recipe
   async function addRecipeHandler(url) {
       const response = await fetch("http://localhost:5000/getUrl?url="+url);
-      const recipe_data = await response.json(); 
-      setData(recipe_data);
+      if (response.status===200){
+        const recipe_data = await response.json(); 
+        setData(recipe_data);
+    }
+
+
+    else {
+      console.log('ddd')
+      return false
+    }
+
   };
 
   function logingHandler() {
@@ -52,9 +61,9 @@ export default function MainWindow() {
 
   }
 
-  useEffect(() => {
-    logingHandler()
-  }, []);
+  // useEffect(() => {
+  //   logingHandler()
+  // }, []);
 
 
   function goToCookBook() {
