@@ -12,8 +12,8 @@ const useStyles = makeStyles({
     padding: 20,
     marginTop: 20,
     marginBottom: 20,
-    height: "70vh",
-    display: "block",
+    height: "60vh",
+    display: "flex",
     width: 280
   },
   container: {
@@ -44,6 +44,7 @@ const RecipesArray = props => {
             xs={12}
             md={6}
             lg={4}
+            style={{ display: "inline-flex" }}
           >
             <RecipeCardSmall
               className={classes.recipeCard}
