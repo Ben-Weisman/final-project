@@ -7,6 +7,7 @@ export const RecipeWrapper = styled.section`
     align-items: center;
     margin: 2rem;
     background-color: rgb(250, 250, 250);
+    
 `;
 
 export const EditButton = styled.button`

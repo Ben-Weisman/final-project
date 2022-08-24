@@ -38,29 +38,24 @@ const useStyles = makeStyles(theme => ({
     width: 700
   },
   typography: {
-    fontFamily: ['Lora', 'Georgia', 'serif'],
-    fontSize: '1.2rem',
-    fontStyle: 'italic',
+    fontFamily: ["Lora", "Georgia", "serif"],
+    fontSize: "1.2rem",
+    fontStyle: "italic",
     marginBottom: 30
   },
 
   img: {
-    display: 'block',
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    display: "block",
+    marginLeft: "auto",
+    marginRight: "auto",
     marginTop: 20,
     marginBottom: 40,
     width: 300
   },
-  
-  modal: {
-
-  },
+  modal: {},
   title: {},
 
-  paper: {
-
-  }
+  paper: {}
 }));
 
 const RecipeCardBig = ({ recipe, page }) => {
@@ -85,36 +80,38 @@ const RecipeCardBig = ({ recipe, page }) => {
         title={recipe.name}
       ></CardHeader>
       <CardContent>
-        <typography className={classes.typography}>{recipe.description}</typography>       
+        <typography className={classes.typography}>
+          {recipe.description}
+        </typography>
         <img className={classes.img} src={recipe.image} />
         <Grid container spacing={2}>
-        <Grid item xs={4} md={6}>
-          <Typography variant="h6" className={"classes.title"}>
-            Ingredients:
-          </Typography>
-          <div className={"classes.demo"}>
-            <List>
-              {recipe.ingredients.map(item => (
-                <ListItem>
-                  <ListItemText primary={item} />
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </Grid>
-        <Grid item xs={4} md={6}>
-          <Typography variant="h6" className={classes.title}>
-            Instructions:
-          </Typography>
-          <div className={"classes.demo"}>
-            <List dense={true}>
-              {recipe.instructions.map(item => (
-                <ListItem>
-                  <ListItemText primary={item} />
-                </ListItem>
-              ))}
-            </List>
-          </div>
+          <Grid item xs={4} md={6}>
+            <Typography variant="h6" className={"classes.title"}>
+              Ingredients:
+            </Typography>
+            <div className={"classes.demo"}>
+              <List>
+                {recipe.ingredients.map(item => (
+                  <ListItem>
+                    <ListItemText primary={item} />
+                  </ListItem>
+                ))}
+              </List>
+            </div>
+          </Grid>
+          <Grid item xs={4} md={6}>
+            <Typography variant="h6" className={classes.title}>
+              Instructions:
+            </Typography>
+            <div className={"classes.demo"}>
+              <List dense={true}>
+                {recipe.instructions.map(item => (
+                  <ListItem>
+                    <ListItemText primary={item} />
+                  </ListItem>
+                ))}
+              </List>
+            </div>
           </Grid>
         </Grid>
       </CardContent>
