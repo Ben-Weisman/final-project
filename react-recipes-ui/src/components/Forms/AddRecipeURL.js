@@ -14,13 +14,19 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Swal from "sweetalert2";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import RecipePreview from "../importRecipeUrl/RecipePreview";
+import { useState, useEffect } from "react";
+
+
 const theme = createTheme();
 
-const handleSubmit = async event => {
-  event.preventDefault();
-  const data = new FormData(event.currentTarget);
-  const recipeURL = data.get("recipe_url");
-  console.log(recipeURL);
+
+
+
+
+
+
+
   //   const email = data.get("email");
   //   const firstName = data.get("firstName");
   //   const lastName = data.get("lastName");
@@ -42,9 +48,43 @@ const handleSubmit = async event => {
   //     Swal.fire("Failed", response.message, "error");
   //     // data.delete;
   //   }
-};
+
 
 export default function AddRecipeURl() {
+
+  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+
+  const [recipeData, setData] = useState({});
+  const [open, setOpen] = useState(false);
+
+
+  async function handleSubmit(event) {
+  
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const recipeURL = data.get("recipe_url");
+    addRecipeHandler(recipeURL)
+  }
+
+  async function addRecipeHandler(RecipeURL) {
+    const response = await fetch("http://localhost:5000/getUrl?url="+RecipeURL);
+    if (response.status===200){
+      const recipe_data = await response.json(); 
+      //console.log(recipe_data)
+      setRecipeData(recipe_data)
+      console.log(recipeData)
+         
+  }
+
+  function setRecipeData(recipe_data){
+
+    setData(recipe_data)
+    setOpen(true)
+  }
+   
+    
+
+};
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -61,7 +101,7 @@ export default function AddRecipeURl() {
             <ShoppingCartOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Insert the recipe url
+            Paste URL to import recipe
           </Typography>
           <Box
             component="form"
@@ -86,9 +126,11 @@ export default function AddRecipeURl() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              
             >
               Add!
             </Button>
+            {open && <RecipePreview recipe={recipeData}></RecipePreview>}
             <Grid container justifyContent="flex-end"></Grid>
           </Box>
         </Box>
