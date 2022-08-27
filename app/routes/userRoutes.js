@@ -11,6 +11,7 @@ router.post('/add',usersController.createUser); // migrated to mongo - done --> 
 
 router.delete('/remove',usersController.removeUser); // migrated to mongo - done --> Gets: {email}
 
+router.post('/update', usersController.update) // Gets: {email:, fieldToUpdate:, newValue:}
 
 
 

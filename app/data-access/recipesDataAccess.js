@@ -11,6 +11,24 @@ const Users = require('../utils/models/user')
 const usersDataAccessModule = require('../data-access/userDataAccess')
 const cookbookDataAccess = require('../data-access/cookbookDataAccess')
 
+
+//return Cookbook.find({userEmail:email},'recipes').select('recipes').exec();
+
+module.exports.addLikes = async (recipe, addedLikes) => {
+    let filter = {recipeID:recipe};
+    let update = {$push: {"likes" : {$each : addedLikes}}};
+    return Recipes.findOneAndUpdate(filter,update,{upsert:true}).exec();
+}
+
+
+
+module.exports.addComments = async (recipe, comments) => {
+    let filter = {recipeID:recipe};
+    let update = {$push: {"comments": {$each: comments}}};
+    return Recipes.findOneAndUpdate(filter,update).exec();
+}
+
+
 module.exports.findByName = (name) => {
     return Recipes.find({'name': {$regex: name, $options: 'i'}})
     .then((data) => {
@@ -216,7 +234,7 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 
 
 module.exports.fetchAll = () => {
-        return Recipes.find({active:true}).exec();
+        return Recipes.find({active:true, public:true}).exec();
 }
 
 module.exports.fetchCookbookByUserID = (email) => {

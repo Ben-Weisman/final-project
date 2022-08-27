@@ -2,13 +2,33 @@ const { randomUUID } = require('crypto');
 const userDataAccess = require('./../data-access/userDataAccess');
 
 
+
+
+module.exports.update = (req,res) => {
+    const email = req.body.email;
+    const fieldToUpdate = req.body.fieldToUpdate;
+    const newValue = req.body.newValue;
+
+    userDataAccess.updateDetails(email,fieldToUpdate,newValue)
+    .then((data) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status:"ok", message: data});
+    })
+    .catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status:"error",message: err});
+    });
+}
+
+
+
 // IN USE
 module.exports.validate = (req,res) => {
-    console.log('LOG: in validate')
     let password = req.body.password;
     let email = req.body.email;
 
-    console.log(`email is ${email}, password is ${password}`)
     userDataAccess.fetchUserByEmail(email).then((user) => {
         resJson = validateUser(user,password);
         if (resJson){
@@ -23,7 +43,7 @@ module.exports.validate = (req,res) => {
     }).catch((err) => {
         res.status(401);
         res.contentType('application/json');
-        res.send({status:"error",message: "User isn't found"})
+        res.send({status:"error",message: err})
     })
 }
 

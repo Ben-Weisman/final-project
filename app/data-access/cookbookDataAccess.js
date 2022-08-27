@@ -20,3 +20,11 @@ module.exports.addRecipe = (recipeID, email) => {
         });
     })
 }
+
+module.exports.removeRecipeFromCookbook = async (email,recipeID) => {
+    return Cookbook.updateOne({ userEmail: email }, {
+        $pull: {
+            recipes: {id: recipeID},
+        },
+    }).exec();
+}
