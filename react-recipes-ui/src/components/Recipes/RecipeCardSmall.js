@@ -16,16 +16,18 @@ import {
   IconButton,
   Modal,
   Paper,
-  Typography
+  Typography,
+  Tooltip
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddIcon from '@mui/icons-material/Add';
 import OpenInFullIcon from "@mui/icons-material/OpenInFull";
 import React, { useEffect, useState } from "react";
 import RecipeCardBig from "./RecipeCardBig";
 import { Dialog } from "@mui/material";
 import Popup from "../Tools/Popup";
 import Swal from "sweetalert2";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 const useStyles = makeStyles(theme => ({
   field: {
@@ -57,6 +59,8 @@ const useStyles = makeStyles(theme => ({
     display: "flex"
   }
 }));
+
+
 
 function getUserEmail() {
   const user = localStorage.getItem("user");
@@ -135,6 +139,31 @@ export default function RecipeCardSmall(props) {
     });
   };
 
+  const handelLike = async e => {
+    const email = getUserEmail();
+
+    if (props.recipe.likes.includes(email) || addLike){
+      Swal.fire("you already like this recipe")
+
+    }
+
+    else{
+      setLikes(likes+1)
+      setAddLike(true)
+
+      return fetch("http://localhost:3000/api/v1/recipes/comment-likes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ recipeID: props.recipe.recipeID, likes: [email], comments:[] })
+      })
+
+    }
+
+
+  };
+
   const AddToCookbookHandler = async e => {
     e.preventDefault();
     const id = props.recipe.recipeID;
@@ -142,11 +171,12 @@ export default function RecipeCardSmall(props) {
     const email = getUserEmail();
     const response = await addToCookbook({ id, email });
     if (response.status === "ok") {
-      Swal.fire("Added!", "Your recipe was Added.", "success");
+      Swal.fire("Added!", "The recipe was added to your cookbook", "success");
     }
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [addLike, setAddLike] = React.useState(false);
+  const [likes,setLikes] = useState(props.recipe.likes.length)
   const classes = useStyles();
   const [openPopup, setOpenPopup] = useState(false);
   const [style, setStyle] = useState();
@@ -174,33 +204,24 @@ export default function RecipeCardSmall(props) {
         }
         title={props.recipe.name}
       ></CardHeader>
-      <img src={props.recipe.image} alt={props.recipe.name_name} width="300" />;
+          <Typography>
+          <IconButton aria-label="like">
+             <FavoriteIcon onClick={handelLike}/>
+          </IconButton> 
+            {likes} likes
+    
+          </Typography> 
+      <img src={props.recipe.image} alt={props.recipe.name_name} width="312" />
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.recipe.description}
         </Typography>
       </CardContent>
-      <IconButton aria-label="open full recipe">
-        <OpenInFullIcon onClick={handleOpen} />
-      </IconButton>
-      {/* <Dialog
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500
-          }}
-        >
-          <Fade in={open}>
-            <Paper>
-              <RecipeCardBig recipe={recipe} />
-            </Paper>
-          </Fade>
-        </Dialog> */}
+      <Tooltip title="Show recipe">
+        <IconButton aria-label="Show recipe">
+          <OpenInFullIcon onClick={handleOpen} />
+        </IconButton>
+      </Tooltip>
       <Popup
         title={props.recipe.name}
         openPopup={openPopup}
@@ -208,9 +229,11 @@ export default function RecipeCardSmall(props) {
       >
         <RecipeCardBig recipe={props.recipe}></RecipeCardBig>
       </Popup>
-      <IconButton aria-label="add to favorites">
-        <FavoriteIcon onClick={AddToCookbookHandler} />
-      </IconButton>
+      <Tooltip title="Add to cookbook">
+        <IconButton aria-label="add to cookbook">
+          <AddIcon onClick={AddToCookbookHandler} />
+        </IconButton>
+      </Tooltip>
     </Card>
   );
 }

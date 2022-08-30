@@ -10,12 +10,17 @@ import {
   List,
   ListItem,
   ListItemText,
-  Typography
+  Typography,
+  Tooltip
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from '@mui/icons-material/Comment';
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import ElementList from "./ElementList";
+import CommentsArray from "./comments/commentsArray"
+
+
 
 const useStyles = makeStyles(theme => ({
   field: {
@@ -64,9 +69,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RecipeCardBig = ({ recipe, page }) => {
+
+  console.log(recipe.likes.length+"likes")
+
   const classes = useStyles();
   const [instructions, setInstructions] = useState();
   const [ingredients, setIngredients] = useState([]);
+  const [showComments, setShowComments] = useState(false);
 
   useEffect(() => {
     console.log(recipe.instructions);
@@ -118,9 +127,13 @@ const RecipeCardBig = ({ recipe, page }) => {
           </Grid>
         </Grid>
       </CardContent>
-      <IconButton aria-label="add to favorites">
-        <FavoriteIcon />
-      </IconButton>
+      <Tooltip title="comments">
+        <IconButton aria-label="see comments">
+          <CommentIcon onClick={() => {setShowComments(true)}}/>
+        </IconButton>
+      </Tooltip>
+      {showComments && <CommentsArray recipe={recipe}/>}
+
     </Card>
   );
 };

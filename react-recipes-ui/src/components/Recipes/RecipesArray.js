@@ -30,16 +30,18 @@ const RecipesArray = props => {
   //     .then(data => {
   //       console.log(data);
   //       setRecipes(data.recipes);
-  //     });
+  //     }); 
   // }, []);
 
   return (
     <Container className="container">
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        {props.recipes.map(recipe => (
+        {props.recipes.sort((recipe1, recipe2) => (
+          recipe1.likes.length-recipe2.likes.length)).reverse().map(recipe =>(
           <Grid
             className="recipeCard"
-            item
+            item 
+            style={{display: 'inline-flex'}}
             key={recipe.key}
             xs={12}
             md={6}
