@@ -1,5 +1,7 @@
 const users = require('./routes/userRoutes');
 const recipes = require('./routes/recipesRoutes');
+const search = require('./routes/searchRoutes');
+
 const express = require('express');
 app = express();
 
@@ -17,7 +19,7 @@ app.use(express.json());
 
 app.use('/api/v1/users',users);
 app.use('/api/v1/recipes',recipes);
-
+app.use('/api/v1/search',search)
 
 const port = 3000;
 

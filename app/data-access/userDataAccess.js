@@ -6,7 +6,7 @@ const { resolve } = require('path');
 const Users = require('../utils/models/user');
 const { ensureIndexes } = require('../utils/models/user');
 const Cookbooks = require('../utils/models/cookbook');
-
+const elasticWorker = require('./../controllers/elasticWorker');
 
 module.exports.updateDetails = async (email,fieldToUpdate,newValue) => {
     console.log(`LOG: email = ${email}, fieldToUpdate = ${fieldToUpdate}, newValue = ${newValue}`)
@@ -61,13 +61,11 @@ module.exports.insertUser = (userRecord) =>{
 
 module.exports.deActivateUser = (user) =>{
     email = user.email;
-    console.log(`LOG: in deActivateUser, email is ${email}`)
     return new Promise ((resolve,reject) => {
-        console.log(`LOG: in deActivateUser`);
         Users.findOneAndUpdate({email:email},{$set:{active:false}},{new: true}, (err,data) => {
             if (err) reject(err);
             else{
-                console.log(`LOG: found user--> ${data}`);
+                elasticWorker.update('user','active',false,user.email);
                 resolve(data);
             } 
         })

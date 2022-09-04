@@ -17,8 +17,6 @@ router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCo
 
 router.delete('/remove-from-cookbook', recipesController.removeRecipeFromCookbook); // --> // Gets: {email:,recipeID:}
 
-router.post('/get-by-name', recipesController.getByName);
-
 // Gets: {recipeID:,comments:[{email:,name:,dateCreated:,content:}],likes:[name1,name2,name3,...]}
 // if no likes - assign likes to an empty list - []
 // if no comments assign it to an empty list - []
