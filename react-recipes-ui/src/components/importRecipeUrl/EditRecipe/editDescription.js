@@ -36,7 +36,7 @@ export default function EditDescription (props) {
                                 />                     
                          </Description>
                     </Wrapper>  
-                <SaveButton onClick={()=>props.changeDes(description)}>Save Description</SaveButton>
+                <SaveButton onClick={()=>{props.changeDes(description); props.closeWindow()}}>Save Description</SaveButton>
             </RecipeWrapper>          
         </NewWindow>
        

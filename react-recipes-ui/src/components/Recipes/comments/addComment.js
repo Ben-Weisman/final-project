@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Grid, List, Paper, TextareaAutosize, Button, Box } from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
-import Comments from "./comments";
+
 
 
 
@@ -40,11 +40,7 @@ export default function addComment(props) {
 
       const [isExpanded, setIsExpanded] = useState(false);
       const [commentValue, setCommentValue] = useState();
-
-      const [showComment, setShowComment] = useState(false);
-    
       const outerHeight = useRef(INITIAL_HEIGHT);
-      const textRef = useRef(null);
       const containerRef = useRef(null);
 
     
@@ -94,7 +90,6 @@ export default function addComment(props) {
           <Grid justifyContent="left" item xs zeroMinWidth>
             <h4 style={{ margin: 0, textAlign: "left" }}>{userName}</h4>
             <p style={{ textAlign: "left" }}>
-            {/* //<form onSubmit={addComment} > */}
             <TextareaAutosize
 
               ref={containerRef}
@@ -108,7 +103,6 @@ export default function addComment(props) {
               onFocus={onExpand}
               onChange={onChange}
               className="comment-field"
-              //placeholder="Write Comment..."
               value={commentValue}
               name="comment"
               id="comment"
@@ -122,7 +116,6 @@ export default function addComment(props) {
                  endIcon={<AddCommentIcon />}>
                 Post Comment
             </Button>
-            {/* //</form> */}
             </p>
 
             </Grid>
