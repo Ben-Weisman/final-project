@@ -4,7 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Tabs, useChromeTabs } from "@sinm/react-chrome-tabs";
 import ChromeTabs from "@sinm/react-chrome-tabs/dist/chrome-tabs";
 import ShowRecipe from './showRecipe';
-import image from "../images/icon.png"
+import Test from './test';
+import image from "../images/captaincook.png"
 import{
     ExtensionWrapper,
     RecipeCardTitle,
@@ -20,13 +21,13 @@ import{
     Description
 } from "./recpies.style";
 
-//import { getTextFieldUtilityClass } from "@mui/material";
 
 
 export default function MainWindow() {
 
   const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
+
  
 
   //get the url of the recipe
@@ -69,18 +70,22 @@ export default function MainWindow() {
   function goToCookBook() {
     window.open("http://localhost:8000/cookbook")
   }
-  
 
+
+
+  
 
     return (
       <ExtensionWrapper>
-         <RecipeCardTitle>Recipe Helper</RecipeCardTitle>
-         <img src={image} id="cookingGirl" width="120" height="140"/>
+         {/* <RecipeCardTitle>Recipe Helper</RecipeCardTitle> */}
+         <img src={image} id="captainCook" width="120" height="140"/>
          <Wrapper>
            <ExtensionButton onClick={() =>{setOpen(true); getUrl();}}>Add This Recipe</ExtensionButton>
-           {Object.keys(data).length !== 0 && open && <ShowRecipe recipe={data}></ShowRecipe> }                    
+           {Object.keys(data).length !== 0 && open && <ShowRecipe recipe={data} closeWindow={()=> setOpen(false)}></ShowRecipe> }                    
            <ExtensionButton onClick={goToCookBook}>My Coockbook</ExtensionButton>
-           </Wrapper>
+
+                 
+          </Wrapper>
         </ExtensionWrapper>
   );    
 }

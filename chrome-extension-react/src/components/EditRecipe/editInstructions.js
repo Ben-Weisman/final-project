@@ -38,7 +38,7 @@ export default function EditInstructions(props) {
                     </ul>
 
                 </Wrapper>
-                <SaveButton onClick={()=>{props.changeIns(instructions)}}>Save Instructions</SaveButton>
+                <SaveButton onClick={()=>{props.changeIns(instructions);  props.closeWindow()}}>Save Instructions</SaveButton>
             </RecipeWrapper>          
         </NewWindow>
        
