@@ -108,7 +108,7 @@ export default function SideBar({ children }) {
     }).then(result => {
       /* Read more about isConfirmed, isDenied below */
       if (result.isConfirmed) {
-        Swal.fire("Loging out", "");
+        Swal.fire("Logged Out", "");
         localStorage.removeItem("user");
         history.push("/");
       }

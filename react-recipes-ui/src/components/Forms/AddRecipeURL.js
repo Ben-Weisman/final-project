@@ -16,43 +16,12 @@ import Swal from "sweetalert2";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import RecipePreview from "../importRecipeUrl/RecipePreview";
 import { useState, useEffect } from "react";
+import { WindowRounded } from "@mui/icons-material";
 
 
 const theme = createTheme();
 
-
-
-
-
-
-
-
-  //   const email = data.get("email");
-  //   const firstName = data.get("firstName");
-  //   const lastName = data.get("lastName");
-  //   const password = data.get("password");
-  //   const name = firstName.trim() + " " + lastName.trim();
-  //   console.log({
-  //     email,
-  //     name,
-  //     password
-  //   });
-  //   const response = await CreateUser({
-  //     email,
-  //     password,
-  //     name
-  //   });
-  //   if (response.status === "Success") {
-  //     window.location.href = "/login";
-  //   } else {
-  //     Swal.fire("Failed", response.message, "error");
-  //     // data.delete;
-  //   }
-
-
 export default function AddRecipeURl() {
-
-  const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
 
   const [recipeData, setData] = useState({});
   const [open, setOpen] = useState(false);
@@ -70,7 +39,6 @@ export default function AddRecipeURl() {
     const response = await fetch("http://localhost:5000/getUrl?url="+RecipeURL);
     if (response.status===200){
       const recipe_data = await response.json(); 
-      //console.log(recipe_data)
       setRecipeData(recipe_data)
       console.log(recipeData)
          
@@ -125,12 +93,11 @@ export default function AddRecipeURl() {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              
+              sx={{ mt: 3, mb: 2 }}              
             >
-              Add!
+              Import recipe
             </Button>
-            {open && <RecipePreview recipe={recipeData}></RecipePreview>}
+            {open  && <RecipePreview recipe={recipeData} closeWindow={()=>setOpen(false)}></RecipePreview>}
             <Grid container justifyContent="flex-end"></Grid>
           </Box>
         </Box>

@@ -1,6 +1,6 @@
 import React from "react";
+import AddRecipeManual from "../components/Forms/addRecipeManual";
 import AddRecipeURl from "../components/Forms/AddRecipeURL";
-import InsertRecipeManualForm from "../components/Forms/InsertRecipeManualForm";
 
 const AddRecipePage = () => {
   return (
@@ -9,7 +9,7 @@ const AddRecipePage = () => {
         <AddRecipeURl></AddRecipeURl>
       </div>
       <div>
-        <InsertRecipeManualForm></InsertRecipeManualForm>
+        <AddRecipeManual></AddRecipeManual>
       </div>
     </div>
   );
