@@ -204,9 +204,6 @@ export default function RecipeCardSmall(props) {
         }
         title={props.recipe.name}
       ></CardHeader>
-<<<<<<< HEAD
-      <img src={props.recipe.image} alt={props.recipe.name_name} width="370" />
-=======
           <Typography>
           <IconButton aria-label="like">
              <FavoriteIcon onClick={handelLike}/>
@@ -215,7 +212,6 @@ export default function RecipeCardSmall(props) {
     
           </Typography> 
       <img src={props.recipe.image} alt={props.recipe.name_name} width="312" />
->>>>>>> tal-ui
       <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.recipe.description}
