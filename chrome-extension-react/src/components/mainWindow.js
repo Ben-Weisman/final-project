@@ -4,7 +4,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Tabs, useChromeTabs } from "@sinm/react-chrome-tabs";
 import ChromeTabs from "@sinm/react-chrome-tabs/dist/chrome-tabs";
 import ShowRecipe from './showRecipe';
-import Test from './test';
 import image from "../images/captaincook.png"
 import{
     ExtensionWrapper,
