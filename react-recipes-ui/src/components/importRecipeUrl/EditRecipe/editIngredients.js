@@ -8,7 +8,7 @@ import{
     SaveButton,
     RecipeHeader,
     Wrapper
-} from "../recpies.style";
+} from "../recipes.styles";
 
 
 export default function EditIngredients (props) {
@@ -39,7 +39,7 @@ export default function EditIngredients (props) {
                     </ul>
                     
                 </Wrapper>
-                <SaveButton onClick={()=>{props.changeIng(ingredients);  props.closeWindow()}}>Save Ingredients</SaveButton>
+                <SaveButton onClick={()=>{props.changeIng(ingredients); props.closeWindow()}}>Save Ingredients</SaveButton>
             </RecipeWrapper>          
         </NewWindow>
        

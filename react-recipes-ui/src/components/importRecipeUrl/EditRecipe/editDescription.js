@@ -10,7 +10,7 @@ import{
     Description,
     Wrapper
 
-} from "../recpies.style";
+} from "../recipes.styles";
 
 
 export default function EditDescription (props) {
