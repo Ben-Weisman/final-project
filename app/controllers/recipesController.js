@@ -1,11 +1,55 @@
 const { randomUUID } = require('crypto');
 const { send } = require('process');
 const recipesDataAccess = require('./../data-access/recipesDataAccess');
+const cookbookdataAccess = require('./../data-access/cookbookDataAccess')
 const dataAccess = require('./../data-access/dataAccess');
 const utilParser = require('./../utils/parser');
 const Collections = require('./../utils/dbEnums');
 const e = require('express');
 const { resolve } = require('path');
+
+
+
+
+module.exports.addComment = async (req,res) => {
+    const recipeID = req.body.recipeID;
+    const comments = req.body.comments;
+    const likes = Object.values(req.body.likes);
+
+
+    try{
+        if (comments.length > 0)
+            await recipesDataAccess.addComments(recipeID, comments);
+        if (likes.length > 0)
+            await recipesDataAccess.addLikes(recipeID,likes);
+        
+
+    } catch(err) {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status: "error", message: err});
+    }
+
+    res.status(200);
+    res.contentType('application/json');
+    res.send({status: "ok", message: "ok"});
+
+}
+
+module.exports.removeRecipeFromCookbook = async (req,res) => {
+    const userEmail = req.body.email;
+    const recipeID = req.body.recipeID;
+    console.log(`LOG: in removeRecipeFromCookbook, email = ${userEmail}, recipeID  = ${recipeID}`);
+    cookbookdataAccess.removeRecipeFromCookbook(userEmail,recipeID).then((data) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status: "ok", message: data});
+    }).catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status: "error", message: err});
+    });
+}
 
 
 module.exports.getByName = (name) => {
@@ -172,15 +216,14 @@ const create = (inputData) => {
 }
 
 
-// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:}
+// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:, public: BOOLEAN}
 module.exports.createNewRecipe = (req,res) =>{
     recipe = req.body;
     recipe.upload_date = Date.now();
     recipe.recipeID = randomUUID();
     recipe.active = true;
-    
-    console.log('LOG: recipe is ===> \n');
-    console.log(recipe);
+    recipe.comments = [];
+    recipe.likes = [];
     
     dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
     .then((data) => {
@@ -223,4 +266,3 @@ const generateRecipeDetailsJSON = (data) => {
         public: true
     }
 }
-

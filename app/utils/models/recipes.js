@@ -11,12 +11,10 @@ const recipesSchema = new Schema ({
         required: true
     },
     description: {
-        type: String,
-        required: true
+        type: String
     },
     category:{
-        type: String,
-        required: true
+        type: String
     },
     ingredients: [{type: String}],
     instructions: [{type: String}],
@@ -35,7 +33,18 @@ const recipesSchema = new Schema ({
     image: {
         type: String,
         required: false
-    }
+    },
+    public: {
+        type: Boolean,
+        required: true
+    },
+    likes: [{type: String}],
+    comments: [{
+        email: String,
+        name: String,
+        dateCreated: String,
+        content: String
+    }]
 }, {timestamps:true});
 
 
