@@ -3,7 +3,7 @@ const elasticWorker = require('./elasticWorker');
 /*
 Gets: 
 {
-    fieldName: name/category/owner,
+    fieldName: name/owner,
     value:,
 }
 */

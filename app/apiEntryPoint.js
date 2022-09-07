@@ -13,7 +13,6 @@ app.use(function (req, res, next) {
     next();
  });
  
-console.log("LOG: in apiEntryPoint");
 //middleware
 app.use(express.json());
 
