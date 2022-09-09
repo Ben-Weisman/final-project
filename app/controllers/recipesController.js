@@ -7,7 +7,7 @@ const utilParser = require('./../utils/parser');
 const Collections = require('./../utils/dbEnums');
 const e = require('express');
 const { resolve } = require('path');
-
+const elasticWorker = require('./elasticWorker')
 
 
 
@@ -15,7 +15,6 @@ module.exports.addComment = async (req,res) => {
     const recipeID = req.body.recipeID;
     const comments = req.body.comments;
     const likes = Object.values(req.body.likes);
-
 
     try{
         if (comments.length > 0)
@@ -41,6 +40,7 @@ module.exports.removeRecipeFromCookbook = async (req,res) => {
     const recipeID = req.body.recipeID;
     console.log(`LOG: in removeRecipeFromCookbook, email = ${userEmail}, recipeID  = ${recipeID}`);
     cookbookdataAccess.removeRecipeFromCookbook(userEmail,recipeID).then((data) => {
+        elasticWorker.removeFromArray('cookbook','recipes',recipeID,userEmail);
         res.status(200);
         res.contentType('application/json');
         res.send({status: "ok", message: data});
@@ -58,13 +58,13 @@ module.exports.getByName = (name) => {
         res.status(200);
         res.contentType('application/json');
         res.send({status: "ok", message: data});
-    })
-    .catch((err) => {
+    }).catch((err) => {
         res.status(400);
         res.contentType('application/json');
         res.send({status: "error", message: err});
     });
 }
+
 
 module.exports.addExistingRecipeToCookbook = (req,res) => {
     const recipeID = req.body.id;
@@ -100,9 +100,12 @@ module.exports.getAllRecipesByOwner = (req,res) =>{
 
 // get all recipes from db - done
 module.exports.getAll = (req,res) =>{
+    console.log('in getAll');
     dataAccess.getAllRecipes().then ((recipes) => {
         res.status(200);
         res.contentType('application/json');
+        consolot.lof('returning recipes:===>')
+        console.log(recipes);
         res.send(recipes);
     }).catch((err) => {
         res.status(500);
@@ -139,6 +142,7 @@ module.exports.removeByID = (req,res) =>{
 
     id = req.body.id;
     dataAccess.zombifyRecipe(id).then((data) => {
+        
         res.status(200);
         res.send({status: "ok", message: data});
     })
@@ -226,7 +230,7 @@ module.exports.createNewRecipe = (req,res) =>{
     recipe.likes = [];
     
     dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
-    .then((data) => {
+    .then((data) => {     
 
         let params = {
             collection: 'cookbooks',
@@ -238,6 +242,7 @@ module.exports.createNewRecipe = (req,res) =>{
         
         dataAccess.pushValueToArrayField(params)
         .then((data) => {
+            
             res.status(200);
             res.send({status:"ok", message: data});
         })

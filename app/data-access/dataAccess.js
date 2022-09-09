@@ -5,7 +5,7 @@ const dbAccess = db.connection;
 const recipesDataAccess = require ('./recipesDataAccess');
 const cookbookDataAccess = require ('./cookbookDataAccess')
 const Recipes = require('../utils/models/recipes')
-
+const elasticWorker = require('./../controllers/elasticWorker')
 
 /*
 params = {
@@ -35,7 +35,7 @@ module.exports.pushValueToArrayField = (params) => {
     switch (params.collection){
         case 'cookbooks': return handleCookbook(params);
     }
-
+    elasticWorker.appendToArray('cookbook','recipes',params.queryVal,params.pushVal);
 }
 
 module.exports.fetchRecipeByName = (name) => {
@@ -57,6 +57,7 @@ module.exports.zombifyRecipe = (id) => {
     return new Promise((resolve,reject) => {
         Recipes.findOneAndUpdate({recipeID:id}, {active:false})
         .then((data) => {
+            elasticWorker.update('recipe','active',false,id);
             resolve(data);
         })
         .catch((err) => {
@@ -71,6 +72,7 @@ module.exports.addRecipeToCookbook = (recipeID,email) => {
     return new Promise ((resolve,reject) => {
         cookbookDataAccess.addRecipe(recipeID,email)
         .then((data) => {
+            elasticWorker.appendToArray('cookbook','recipes',email,recipeID);
             resolve(data);
         })
         .catch((err) => {
@@ -114,6 +116,7 @@ module.exports.executeQuery = (query) => {
 
 
 module.exports.insertNewDocument = (doc,collectionName) => {
+    elasticWorker.insert('recipe',doc);
     return dbAccess.collection(collectionName).insertOne(doc);
 }
 
@@ -129,7 +132,8 @@ module.exports.getCookbookByUser = (email) => {
     });
 }
 
-module.exports.getAllRecipes = () => {
+module.exports.getAllRecipes = async () => {
+    console.log('in getAllRecipes');
     return recipesDataAccess.fetchAll();
 }
 

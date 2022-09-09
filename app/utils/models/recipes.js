@@ -13,9 +13,9 @@ const recipesSchema = new Schema ({
     description: {
         type: String
     },
-    category:{
+    category:[{
         type: String
-    },
+    }],
     ingredients: [{type: String}],
     instructions: [{type: String}],
     upload_date: {
@@ -44,7 +44,11 @@ const recipesSchema = new Schema ({
         name: String,
         dateCreated: String,
         content: String
-    }]
+    }],
+    url: {
+        type: String,
+        required: false
+    }
 }, {timestamps:true});
 
 

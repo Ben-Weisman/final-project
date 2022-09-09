@@ -231,6 +231,7 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 }
 
 
+
 module.exports.fetchAll = () => {
         return Recipes.find({active:true, public:true}).exec();
 }
