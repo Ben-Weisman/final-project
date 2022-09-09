@@ -127,28 +127,6 @@ const searchByMatch = async (theIndex,field, matcher) => {
 }
 
 
-const run = async () => {
 
-  // await client.update({
-  //   index: 'recipe',
-  //   id: 
-  // })
-  // await insert('recipe',recipe);
-  // let response = await searchByMatch('recipe','name','Marrow');
-
-  search('recipe','name','marr')
-  // update('user','active',false,'ben.weisman15@gmail.com');
-
-  // response.forEach(res => {
-  //   console.log(res._source.name)
-  // });
-  // console.log(response)
-  // const json = response.hits.hits;
-  // console.log(response.hits.hits[0]._source.likes)
-  // console.log(Object.keys(response.hits.hits[0]._source));
-
-}
-
-run();
 
 module.exports = {insert,update,appendToArray, search};
