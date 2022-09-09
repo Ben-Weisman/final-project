@@ -3,27 +3,27 @@ const { query } = require('express')
 const { removeRecipeFromCookbook } = require('./recipesController')
 // const config = require('config');
 
-const recipe = {
-    ownerEmail: "ben.weisman15@gmail.com",
-    name: "Marrow soupppppppppppppppppp",
-    description: "Make marrow the star of the show in this filling soup. Made with butter beans, coconut milk and curry powder, it has a delicate spiced flavour",
-    category: "italian",
-    instructions: ["STEP 1Heat the oil in a large pan over a medium heat and fry the onions with a pinch of salt for 6-8 mins until soft. Add the potatoes and cook for 2 mins more, then tip in the marrow and curry powder. Cook for 1 min. Pour in the stock, butter beans and most of the coconut milk (reserve a few tablespoons). Bring the mixture to the boil, then reduce the heat to medium-low and simmer for 20 mins until all the vegetables are tender.", "STEP 2Remove from the heat and leave to cool slightly, then transfer the mixture to a blender and blitz until smooth. Return the soup to the pan and warm through over a low heat, then spoon into bowls. Drizzle with the reserved coconut milk and scatter with the coriander."],
-    ingredients: ["1 tbsp vegetable oil", "2 onions, roughly chopped", "250g potatoes,  roughly chopped", "1 marrow (about 750g), peeled, deseeded and roughly chopped (see tip, below)", "1-2 tbsp curry powder, to taste", "500ml vegetable or chicken stock", "400g can butter beans, drained", "400ml can light coconut milk", "small handful of coriander leaves"],
-    image: "https://images.immediate.co.uk/production/volatile/sites/30/2022/07/marrow-soup-ccc3c5d.jpg?resize=960,872?quality=90&resize=556,505",
-    recipeID: "c1679bc5-d8ff-4a22-9b0e-20dead6a4cac",
-    active: false,
-    comments: [{
-      "email": "ben.weisman15@gmail.com",
-      "name": "Ben Weisman",
-      "dateCreated": "26.8.22",
-      "content": "This is an amazing recipe! Can't wait to make it again.",
-      "_id": {
-          "$oid": "63090b11148b55ee565b2ae1"
-      }
-  }],
-  likes: ["ben", "gal", "guy", "tal", "ben", "gal", "guy", "tal", "ben", "gal", "guy", "tal"]
-}
+// const recipe = {
+//     ownerEmail: "ben.weisman15@gmail.com",
+//     name: "Marrow soupppppppppppppppppp",
+//     description: "Make marrow the star of the show in this filling soup. Made with butter beans, coconut milk and curry powder, it has a delicate spiced flavour",
+//     category: "italian",
+//     instructions: ["STEP 1Heat the oil in a large pan over a medium heat and fry the onions with a pinch of salt for 6-8 mins until soft. Add the potatoes and cook for 2 mins more, then tip in the marrow and curry powder. Cook for 1 min. Pour in the stock, butter beans and most of the coconut milk (reserve a few tablespoons). Bring the mixture to the boil, then reduce the heat to medium-low and simmer for 20 mins until all the vegetables are tender.", "STEP 2Remove from the heat and leave to cool slightly, then transfer the mixture to a blender and blitz until smooth. Return the soup to the pan and warm through over a low heat, then spoon into bowls. Drizzle with the reserved coconut milk and scatter with the coriander."],
+//     ingredients: ["1 tbsp vegetable oil", "2 onions, roughly chopped", "250g potatoes,  roughly chopped", "1 marrow (about 750g), peeled, deseeded and roughly chopped (see tip, below)", "1-2 tbsp curry powder, to taste", "500ml vegetable or chicken stock", "400g can butter beans, drained", "400ml can light coconut milk", "small handful of coriander leaves"],
+//     image: "https://images.immediate.co.uk/production/volatile/sites/30/2022/07/marrow-soup-ccc3c5d.jpg?resize=960,872?quality=90&resize=556,505",
+//     recipeID: "c1679bc5-d8ff-4a22-9b0e-20dead6a4cac",
+//     active: false,
+//     comments: [{
+//       "email": "ben.weisman15@gmail.com",
+//       "name": "Ben Weisman",
+//       "dateCreated": "26.8.22",
+//       "content": "This is an amazing recipe! Can't wait to make it again.",
+//       "_id": {
+//           "$oid": "63090b11148b55ee565b2ae1"
+//       }
+//   }],
+//   likes: ["ben", "gal", "guy", "tal", "ben", "gal", "guy", "tal", "ben", "gal", "guy", "tal"]
+// }
 
 const client = new Client({
     cloud: {
