@@ -23,58 +23,30 @@
             }
 
         },
+        {
+            "url": "https://www.allrecipes.com/",
+            "title":{
+                "lookFor":"h1",
+                "className":"headline heading-content elementFont__display"
+           },
+           "description":{
+               "lookFor": "p",
+               "className": "margin-0-auto"
+           },
+           "ingredients":{
+               "lookFor": "li",
+               "className": "ingredients-item"
+           },"method":{
+                   "lookFor": "li",
+                   "className": "subcontainer instructions-section-item"
+           },"image":{
+               "lookFor": "div",
+               "className": {"class":"lead-media", "data-src": "True"}
+           }
 
-
+       },
 
         {
-             "url": "https://www.allrecipes.com/",
-             "title":{
-                 "lookFor":"h1",
-                 "className":"headline heading-content elementFont__display"
-            },
-            "description":{
-                "lookFor": "p",
-                "className": "margin-0-auto"
-            },
-            "ingredients":{
-                "lookFor": "li",
-                "className": "ingredients-item"
-            },"method":{
-                    "lookFor": "li",
-                    "className": "subcontainer instructions-section-item"
-            },"image":{
-                "lookFor": "img",
-                "className": "check-later"
-            }
-
-        },
-
-
-        {
-             "url": "https://www.bbcgoodfood.com/recipes",
-             "title":{
-                 "lookFor":"h1",
-                 "className":"heading-1"
-            },
-            "description":{
-                "lookFor": "p",
-                "className": ""
-            },
-            "ingredients":{
-                "lookFor": "li",
-                "className": "pb-xxs pt-xxs list-item list-item--separator"
-            },"method":{
-                    "lookFor": "li",
-                    "className": "pb-xs pt-xs list-item"
-            },"image":{
-                "lookFor": "div",
-                "className": "image chromatic-ignore post-header-image image--fluid image--scaled-up"
-            }
-
-        },
-
-
-                {
              "url": "https://www.simplyrecipes.com/",
              "title":{
                  "lookFor":"h1",
@@ -88,8 +60,8 @@
                 "lookFor": "li",
                 "className": "structured-ingredients__list-item"
             },"method":{
-                    "lookFor": "p",
-                    "className": "comp mntl-sc-block mntl-sc-block-html"
+                    "lookFor": "li",
+                    "className": "comp mntl-sc-block-group--LI mntl-sc-block mntl-sc-block-startgroup"
             },"image":{
                 "lookFor": "div",
                 "className": "figure__media js-figure-media figure__media--portrait"
@@ -97,54 +69,6 @@
 
         },
 
-        {
-            "url": "https://tophomerecipes.com/",
-            "title":{
-                "lookFor":"h1",
-                "className":"single-title entry-title"
-           },
-           "description":{
-               "lookFor": "div",
-               "className": "cooked-recipe-excerpt cooked-clearfix"
-           },
-           "ingredients":{
-               "lookFor": "div",
-               "className": "cooked-recipe-ingredients"
-           },"method":{
-                   "lookFor": "div",
-                   "className": "cooked-recipe-directions"
-           },
-           "image":{
-               "lookFor": "div",
-               "className": "single-feat"
-           }
-
-       },
-
-       {
-        "url": "https://www.foodnetwork.com/recipes/",
-        "title":{
-            "lookFor":"h1",
-            "className":"o-AssetTitle__a-Headline"
-       },
-       "description":{
-           "lookFor": "div",
-           "className": "o-AssetDescription__a-Description"
-       },
-       "ingredients":{
-           "lookFor": "p",
-           "className": "o-Ingredients__a-Ingredient"
-       },
-       "method":{
-               "lookFor": "li",
-               "className": "o-Method__m-Step"
-       },
-       "image":{
-           "lookFor": "div",
-           "className": "m-RecipeMedia__m-MediaBlock m-MediaBlock"
-       }
-
-    },
 
     {
         "url": "https://www.epicurious.com/recipes/",
@@ -170,200 +94,7 @@
 
     },
 
-    {
-        "url": "https://www.bestrecipes.com.au/recipes/",
-        "title":{
-            "lookFor":"h1",
-            "className":""
-       },
-       "description":{
-           "lookFor": "div",
-           "className": "single-asset-description-block"
-       },
-       "ingredients":{
-           "lookFor": "div",
-           "className": "ingredient-description"
-       },
-       "method":{
-               "lookFor": "div",
-               "className": "recipe-method-step-content"
-       },
-       "image":{
-           "lookFor": "figure",
-           "className": "lead-image-block"
-       }
-    },
 
-
-    {
-        "url": "https://www.budgetbytes.com/",
-        "title":{
-            "lookFor":"h2",
-            "className":"wprm-recipe-name wprm-block-text-bold"
-       },
-       "description":{
-           "lookFor": "div",
-           "className": "wprm-recipe-summary wprm-block-text-normal"
-       },
-       "ingredients":{
-           "lookFor": "li",
-           "className": "wprm-recipe-ingredient"
-       },
-       "method":{
-               "lookFor": "li",
-               "className": "wprm-recipe-instruction"
-       },
-       "image":{
-           "lookFor": "div",
-           "className": "wprm-recipe-image wprm-block-image-normal"
-       }
-    },
-
-    {
-        "url": "https://www.jamieoliver.com/recipes/",
-        "title":{
-            "lookFor":"h1",
-            "className":"hidden-xs"
-       },
-       "description":{
-           "lookFor": "div",
-           "className": "recipe-intro"
-       },
-       "ingredients":{
-           "lookFor": "div",
-           "className": "col-md-12 ingredient-wrapper"
-       },
-       "method":{
-               "lookFor": "ol",
-               "className": "recipeSteps"
-       },
-       "image":{
-           "lookFor": "div",
-           "className": "hero-wrapper"
-       }
-    },
-
-
-    {
-        "url": "https://www.food.com/recipe/",
-        "title":{
-            "lookFor":"h1",
-            "className":"layout__item layout__item--wide title svelte-1g0xnth"
-       },
-       "description":{
-           "lookFor": "",
-           "className": ""
-       },
-       "ingredients":{
-           "lookFor": "li",
-           "className": "ingredient svelte-1g0xnth"
-       },
-       "method":{
-               "lookFor": "li",
-               "className": "direction svelte-1g0xnth"
-       },
-       "image":{
-           "lookFor": "div",
-           "className": "recipe-default-image recipe-hero__item gradient-bg svelte-sazwk7"
-       }
-    },
-
-    {
-        "url": "https://www.thepioneerwoman.com/",
-        "title":{
-            "lookFor":"h1",
-            "className":"content-hed recipe-hed"
-       },
-       "description":{
-           "lookFor": "div",
-           "className": "content-dek recipe-dek"
-       },
-       "ingredients":{
-           "lookFor": "div",
-           "className": "ingredient-item"
-       },
-       "method":{
-               "lookFor": "div",
-               "className": "direction-lists"
-       },
-       "image":{
-           "lookFor": "div",
-           "className": "content-lede-image-wrap custom-lede-crop-mobile-only aspect-ratio-1x1"
-       }
-    },
-
-
-    {
-        "url": "https://www.bonappetit.com/recipe/",
-        "title":{
-            "lookFor":"h1",
-            "className":"BaseWrap-sc-UABmB BaseText-fETRLB SplitScreenContentHeaderHed-fxqeFA hkSZSE dZbKMs imKTgC"
-       },
-       "description":{
-           "lookFor": "div",
-           "className": "container--body-inner"
-       },
-       "ingredients":{
-           "lookFor": "div",
-           "className": "BaseWrap-sc-UABmB BaseText-fETRLB Description-dTsUqb hkSZSE kBLSTT gmvWnL"
-       },
-       "method":{
-               "lookFor": "div",
-               "className": "InstructionStepWrapper-gatRTQ ldfkJy"
-       },
-       "image":{
-           "lookFor": "picture",
-           "className": "ResponsiveImagePicture-jJpQhK jEPxaV SplitScreenContentHeaderLede-dfWTJB fEaaVJ responsive-image"
-       }
-    },
-
-    {
-        "url": "https://www.bhg.com/recipe/",
-        "title":{
-            "lookFor":"h1",
-            "className":"comp type--lion article-heading mntl-text-block"
-       },
-       "description":{
-           "lookFor": "h2",
-           "className": "comp type--dog article-subheading"
-       },
-       "ingredients":{
-           "lookFor": "li",
-           "className": "mntl-structured-ingredients__list-item"
-       },
-       "method":{
-               "lookFor": "li",
-               "className": "comp mntl-sc-block-group--LI mntl-sc-block mntl-sc-block-startgroup"
-       },
-       "image":{
-           "lookFor": "div",
-           "className": "primary-image__media"
-       }
-    },
-
-    {
-        "url": "https://www.pillsbury.com/recipes/",
-        "title":{
-            "lookFor":"h1",
-            "className":"rdpTitle"
-       },
-       "description":{
-           "lookFor": "span",
-           "className": "fullText"
-       },
-       "ingredients":{
-           "lookFor": "li",
-           "className": "ingredient"
-       },
-       "method":{
-               "lookFor": "li",
-               "className": "recipeStep"
-       },
-       "image":{
-           "lookFor": "picture",
-           "className": "rdpImage"
-       }
-    },
 
     {
         "url": "https://www.myfoodandfamily.com/recipe/",
@@ -388,6 +119,7 @@
            "className": "rdpWidget"
        }
     }
+
 
     ]
         

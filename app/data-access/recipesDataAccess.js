@@ -1,4 +1,3 @@
-
 const { query } = require('express');
 const db = require('./../db/db');
 const worker = require('./../data-access/dataAccess');
@@ -122,7 +121,6 @@ module.exports.getAllIngredients = () =>{
     name: '...',
     recipe_id: '...'
   },...
-
 ]
    */
 const generateRecipeIngredientsValues = (ingredientsArray) => {
@@ -233,9 +231,9 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 }
 
 
-module.exports.fetchAll = async () => {
-    console.log('in fetchAll');
-        return Recipes.find().exec();
+
+module.exports.fetchAll = () => {
+        return Recipes.find({active:true, public:true}).exec();
 }
 
 module.exports.fetchCookbookByUserID = (email) => {
@@ -315,4 +313,3 @@ module.exports.fetchRecipesByIDs = (ids_arr) => {
 //     });
     
 // }
-

@@ -24,6 +24,28 @@ module.exports.update = (req,res) => {
 
 
 
+
+
+module.exports.update = (req,res) => {
+    const email = req.body.email;
+    const fieldToUpdate = req.body.fieldToUpdate;
+    const newValue = req.body.newValue;
+
+    userDataAccess.updateDetails(email,fieldToUpdate,newValue)
+    .then((data) => {
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status:"ok", message: data});
+    })
+    .catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status:"error",message: err});
+    });
+}
+
+
+
 // IN USE
 module.exports.validate = (req,res) => {
     let password = req.body.password;
@@ -166,5 +188,3 @@ const validateEmail = (email) => {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
   };
-  
-

@@ -15,11 +15,10 @@ module.exports.addComment = async (req,res) => {
     const recipeID = req.body.recipeID;
     const comments = req.body.comments;
     const likes = Object.values(req.body.likes);
-    
 
     try{
         if (comments.length > 0)
-            await recipesDataAccess.addComments(recipeID,comments);
+            await recipesDataAccess.addComments(recipeID, comments);
         if (likes.length > 0)
             await recipesDataAccess.addLikes(recipeID,likes);
         
@@ -42,6 +41,20 @@ module.exports.removeRecipeFromCookbook = async (req,res) => {
     console.log(`LOG: in removeRecipeFromCookbook, email = ${userEmail}, recipeID  = ${recipeID}`);
     cookbookdataAccess.removeRecipeFromCookbook(userEmail,recipeID).then((data) => {
         elasticWorker.removeFromArray('cookbook','recipes',recipeID,userEmail);
+        res.status(200);
+        res.contentType('application/json');
+        res.send({status: "ok", message: data});
+    }).catch((err) => {
+        res.status(400);
+        res.contentType('application/json');
+        res.send({status: "error", message: err});
+    });
+}
+
+
+module.exports.getByName = (name) => {
+    dataAccess.fetchRecipeByName(name)
+    .then((data) => {
         res.status(200);
         res.contentType('application/json');
         res.send({status: "ok", message: data});
@@ -258,4 +271,3 @@ const generateRecipeDetailsJSON = (data) => {
         public: true
     }
 }
-

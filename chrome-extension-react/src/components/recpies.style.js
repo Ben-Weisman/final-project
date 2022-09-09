@@ -112,6 +112,7 @@ export const ExtensionWrapper = styled.section`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    //background-color: rgb(244, 246, 246);
 
 
 

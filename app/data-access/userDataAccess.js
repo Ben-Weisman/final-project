@@ -16,6 +16,14 @@ module.exports.updateDetails = async (email,fieldToUpdate,newValue) => {
     }
 }
 
+module.exports.updateDetails = async (email,fieldToUpdate,newValue) => {
+    console.log(`LOG: email = ${email}, fieldToUpdate = ${fieldToUpdate}, newValue = ${newValue}`)
+    switch (fieldToUpdate.toLowerCase()){
+        case "password": return Users.findOneAndUpdate({email:email}, {"password":newValue}).exec();
+        default: return "error";
+    }
+}
+
 
 module.exports.fetchUserByEmail = (email) => {
     return new Promise ((resolve,reject) => {
