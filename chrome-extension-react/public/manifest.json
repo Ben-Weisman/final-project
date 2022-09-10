@@ -1,12 +1,12 @@
 {
-  "name": "Recipe Helper",
+  "name": "Captain Cook",
   "description:": "Save and edit your favorite recpies",
   "version": "1.0",
   "manifest_version": 3,
-  "permissions": ["storage", "activeTab", "scripting","declarativeContent", "tabs", "webRequest"],
+  "permissions": ["storage", "activeTab", "scripting","declarativeContent", "tabs", "webRequest", "identify", "identify.email"],
   "host_permissions": ["https://*/","http://*/"],
   "action": {
-    "defalut_title": "Recipe Helper",
+    "defalut_title": "Captain Cook",
     "default_popup": "index.html",
     "default_icon": "newicon.png"
   }

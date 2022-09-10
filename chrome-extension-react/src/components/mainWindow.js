@@ -9,15 +9,7 @@ import{
     ExtensionWrapper,
     RecipeCardTitle,
     ExtensionButton,
-    Wrapper,
-    RecipeTitle,
-    SaveButton,
-    EditButton,
-    ParentDiv,
-    ChildDiv,
-    RecipeHeader,
-    Title,
-    Description
+    Wrapper
 } from "./recpies.style";
 
 
@@ -54,16 +46,33 @@ export default function MainWindow() {
   };
 
   function logingHandler() {
-    if (!localStorage.getItem("user")) {
+    // if (!localStorage.getItem("user")) {
+    //   window.open("http://localhost:8000/login")
+    // }
+
+    if(!chrome.storage.local.get("email")){
       window.open("http://localhost:8000/login")
     }
 
+    else{
+      console.log(chrome.storage.local.get("email"))
+      console.log(chrome.storage.sync.get())
+    }
 
-  }
+  //   chrome.identity.getProfileUserInfo(function(info) {
+  //     console.log(info.email);
+  //     //console.log(info)
+  // })
 
-  // useEffect(() => {
-  //   logingHandler()
-  // }, []);
+
+}
+
+
+  
+
+  useEffect(() => {
+    logingHandler()
+  }, []);
 
 
   function goToCookBook() {
@@ -71,13 +80,14 @@ export default function MainWindow() {
   }
 
 
-
   
+  
+
 
     return (
       <ExtensionWrapper>
          {/* <RecipeCardTitle>Recipe Helper</RecipeCardTitle> */}
-         <img src={image} id="captainCook" width="120" height="140"/>
+         <img src={image} id="captainCook" width="170"/>
          <Wrapper>
            <ExtensionButton onClick={() =>{setOpen(true); getUrl();}}>Add This Recipe</ExtensionButton>
            {Object.keys(data).length !== 0 && open && <ShowRecipe recipe={data} closeWindow={()=> setOpen(false)}></ShowRecipe> }                    

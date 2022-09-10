@@ -1,5 +1,7 @@
 import {
   AppBar,
+  Container,
+  Button,
   Collapse,
   IconButton,
   List,
@@ -8,6 +10,7 @@ import {
   ListItemIcon,
   ListItemText,
   Toolbar,
+  Grid,
   Typography
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -15,10 +18,12 @@ import React, { useEffect, useState } from "react";
 // import { Link as Scroll } from "react-scroll";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Link as Scroll } from "react-scroll";
-import { Button } from "react-scroll/modules";
+//import { Button } from "react-scroll/modules";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { color } from "@mui/system";
+import image from "./captainCook.png"
+import image2 from "./image.jpeg"
 
 const menuItems = [
   {
@@ -37,36 +42,42 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    fontFamily: "Nunito"
+    fontFamily: "Nunito",
+    
   },
   appbar: {
-    backgroundColor: "none"
+    backgroundColor : 'green'
   },
   appbarWrapper: {
-    width: "80%",
+    width: "90%",
+    backgroundColor: "F4F6F6",
     margin: "0 auto"
   },
   appbarTitle: {
     flexGrow: "1"
+
   },
   icon: {
     color: "#fff",
     fontSize: "2rem"
   },
   colorText: {
-    color: "#5AFF3D"
+    color: "black"
   },
   container: {
     textAlign: "center"
   },
   title: {
-    color: "#fff",
-    fontSize: "4.5rem"
+    //color: "#fff",
+    //fontSize: "2.625rem",
+    fontFamily: "Muli"
   },
   goDown: {
     color: "#5AFF3D",
     fontSize: "4rem"
   },
+  button: {variant:"contained", color:"secondary"},
+
   list: { display: "flex", flexDirection: "row", padding: 20 }
 }));
 
@@ -74,18 +85,16 @@ const LandingNavbar = () => {
   const history = useHistory();
   const location = useLocation();
   const classes = useStyles();
-  const [checked, setChecked] = useState(false);
-  useEffect(() => {
-    setChecked(true);
-  }, []);
+
   return (
     <div className={classes.root} id="header">
-      <AppBar className={classes.appbar} elevation={0}>
+      <AppBar className={classes.appbar} elevation={0} color='default'>
         <Toolbar className={classes.appbarWrapper}>
-          <h1 className={classes.appbarTitle}>
-            My<span className={classes.colorText}>Recipes.</span>
-          </h1>
-          <List className={classes.list}>
+          <div className={classes.appbarTitle}>
+            <img src={image} id="captainCook" width="170"/>
+          </div>
+          
+          <List className={classes.list} >
             {menuItems.map(item => (
               <ListItemButton
                 key={item.text}
@@ -100,8 +109,36 @@ const LandingNavbar = () => {
           </List>
         </Toolbar>
       </AppBar>
+      <Container>
+      <Grid container spacing={2} align="center">
+        <Grid item xs={4} md={6}>
+          <Typography align= "center" fontSize="2.625rem" fontFamily="Helvetica Neue" fontWeight="900" marginTop="0px">
+            The home for<br></br>all your recipes        
+         </Typography>
+         <Typography align= "center" fontSize="1.625rem"  >
+         Save your favorite recipes in one place.
+         <br></br> Import just the recipe from any website without the distractions or clutter.
+         </Typography >
+         <br></br>
+         <Button color="secondary" variant="contained" 
+                         onClick={() => history.push("/signup")}
+                         className={
+                           location.pathname == "/signup" ? classes.active : null
+                         }> Create an Account</Button>       
+        </Grid>
+          
+        <Grid item xs={6} md={6}>
+        <img src={image2} width="100%"/>
 
-      <Collapse
+
+        </Grid>
+
+
+
+      </Grid>
+      </Container>
+
+      {/* <Collapse
         in={checked}
         {...(checked ? { timeout: 1000 } : {})}
         collapsedHeight={50}
@@ -117,7 +154,7 @@ const LandingNavbar = () => {
             </IconButton>
           </Scroll>
         </div>
-      </Collapse>
+      </Collapse> */}
     </div>
   );
 };

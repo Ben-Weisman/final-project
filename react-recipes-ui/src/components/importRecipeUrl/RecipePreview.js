@@ -1,13 +1,11 @@
 import { useState, useEffect } from "react";
 import * as React from 'react';
-//import NewWindow from "react-new-window
 import NewWindow from 'rc-new-window';
 import EditIngredients from './EditRecipe/editIngredients'
 import EditInstructions from './EditRecipe/editInstructions'
 import EditDescription from './EditRecipe/editDescription'
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
-import Select from 'react-select'
 import{
     RecipeWrapper,
     RecipeTitle,
@@ -17,29 +15,30 @@ import{
     ChildDiv,
     RecipeHeader,
     Title,
-    Description
+    Description,
+
 } from "./recipes.styles";
 import Swal from "sweetalert2";
-
-const categories = [
-    {value: 'Breakfast', label: "Breakfast"},
-    {value: 'Lunch', label:"Lunch"},
-    {value: 'Dinner', label:'Dinner'},
-    {value: 'Beverages', label:'Beverages'},
-    {value: 'Appetizers', label:'Appetizers'},
-    {value: 'Soups', label:'Soups'},
-    {value: 'Salads', label:'Salads'},
-    {value: 'Main dishes', label:'Main dishes'},
-    {value: 'Side dishes', label:'Side dishes'},
-    {value: 'Vegetarian', label:'Vegetarian'},
-    {value: 'Desserts', label:'Desserts'},
-    {value: 'Breads', label:'Breads'},
-    {value: 'Holidays', label:'Holidays'},
-    {value: 'Other', label:'Other'}
-
-]
+import { Checkbox, FormGroup, FormLabel,FormControlLabel, FormControl } from "@mui/material";
 
 
+const foodTipes = [
+    'Vegetarian',
+    "Vegan",
+    "Sweet",
+    "Assian",
+    "Italian",
+    "Mexican",
+    'Breakfast',
+    'Lunch',
+    'Dinner',
+    'Beverages',
+    'Appetizers',
+    'Soups',
+    'Salads',
+    'Breads',
+    'Other'
+  ];
 
 
 
@@ -52,6 +51,23 @@ export default function RecipePreview({recipe, closeWindow}) {
     const [instructions, setInstructions] = useState(recipe.recipe_instructions);
     const image = recipe.image;
     const email = getUserEmail();
+    const [foodType, setFoodType] = React.useState({
+        Vegetarian: false,
+        Vegan: false,
+        Sweet: false,
+        Assian: false,
+        Italian: false,
+        Mexican: false,
+        Breakfast: false,
+        Lunch: false,
+        Dinner: false,
+        Beverages: false,
+        Appetizers: false,
+        Soups: false,
+        Salads: false,
+        Breads: false,
+        Other: false
+    });
 
     const [editIng, setEditIng] = useState(false);
     const [editIns, setEditIns] = useState(false);
@@ -79,6 +95,15 @@ export default function RecipePreview({recipe, closeWindow}) {
         return userJson["email"];
     }
 
+    const handleChange = event => {
+        setFoodType({
+          ...foodType,
+          [event.target.name]: event.target.checked
+        });
+      };
+
+      
+
 
     async function setPrivacy() {
         await Swal.fire({
@@ -100,21 +125,30 @@ export default function RecipePreview({recipe, closeWindow}) {
         
     }
 
-    
+        
 
   
     //send the updated json to the scraper
     const sendJson = async(privacy) => {
+
+        var categories = [];
+
+        Object.entries(foodType).forEach(function(key) {
+            if (key[1]){                
+                categories.push(key[0]);
+            }            
+          });
        
         const newJson = {
             "ownerEmail": email,
             "name": recipe_name,
             "description": description,
-            "category": "italian",
+            "category": categories,
             "instructions": instructions,
             "ingredients": ingredients,
             "image": image,
             "public": privacy
+            
         }
 
    
@@ -159,7 +193,7 @@ export default function RecipePreview({recipe, closeWindow}) {
                 <ParentDiv>
                     <ChildDiv>
                         <Title>Ingredients:</Title>
-                        <EditButton onClick={()=> setEditIng(true)}>Edit Ingredients</EditButton>
+                        <EditButton onClick={openEditIng}>Edit Ingredients</EditButton>
                         {wait(1 * 1000) && editIng && 
                         <EditIngredients ingredients={ingredients}  changeIng={ingredients=>setIngredients(ingredients)} closeWindow={()=>setEditIng(false)}>
                             </EditIngredients>} 
@@ -178,7 +212,18 @@ export default function RecipePreview({recipe, closeWindow}) {
                             ))}
                     </ChildDiv>
                 </ParentDiv>
-                <Select options={categories}> </Select>                          
+                <FormControl>
+                    <FormLabel>Choose categories</FormLabel>
+                    <FormGroup row>
+                    {foodTipes.map(item => (
+                        <FormControlLabel
+                        control={<Checkbox onChange={handleChange} name={item} />}
+                        label={item}
+                        ></FormControlLabel>
+                    ))}
+                    </FormGroup>
+                </FormControl>
+                <br></br>                       
                 <SaveButton onClick={()=> {setPrivacy(); closeWindow()}}>Save Recipe</SaveButton>
             </RecipeWrapper>            
         </NewWindow>
