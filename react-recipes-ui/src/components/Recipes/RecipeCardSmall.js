@@ -7,6 +7,8 @@ import {
 import {
   Backdrop,
   Card,
+  Chip,
+  Container,
   CardActions,
   CardContent,
   CardHeader,
@@ -217,6 +219,12 @@ export default function RecipeCardSmall(props) {
           {props.recipe.description}
         </Typography>
       </CardContent>
+      <Container>
+      {props.recipe.category.map(category=> (
+        <Chip label={category}/>
+      ))}
+      </Container>
+    
       <Tooltip title="Show recipe">
         <IconButton aria-label="Show recipe">
           <OpenInFullIcon onClick={handleOpen} />

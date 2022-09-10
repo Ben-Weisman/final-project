@@ -2,6 +2,7 @@ import { DeleteOutlined } from "@mui/icons-material";
 import {
   Card,
   CardActions,
+  Button,
   CardContent,
   CardHeader,
   CardMedia,
@@ -83,6 +84,12 @@ const RecipeCardBig = ({ recipe, page }) => {
     setIngredients(recipe.ingredients);
     console.log(instructions);
   }, []);
+
+  function openSource(){
+    if (recipe.url){
+      window.open(recipe.url)
+    }
+  }
   return (
     <Card className={classes.card} elevation={3}>
       <CardHeader
@@ -127,6 +134,7 @@ const RecipeCardBig = ({ recipe, page }) => {
           </Grid>
         </Grid>
       </CardContent>
+      <Button onClick={openSource}>Go to source</Button>
       <Tooltip title="comments">
         <IconButton aria-label="see comments">
           <CommentIcon onClick={() => {setShowComments(true)}}/>
