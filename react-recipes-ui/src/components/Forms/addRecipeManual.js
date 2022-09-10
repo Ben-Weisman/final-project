@@ -16,18 +16,28 @@ import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from '@mui/icons-material/Clear';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import RecipePreview from "../importRecipeUrl/RecipePreview";
+import Select from 'react-select'
 
 
 
-const foodTipes = [
-  "veggie",
-  "vegan",
-  "sweet",
-  "asian",
-  "italian",
-  "mexican",
-  "burger"
-]; 
+
+const categories = [
+  {value: 'Breakfast', label: "Breakfast"},
+  {value: 'Lunch', label:"Lunch"},
+  {value: 'Dinner', label:'Dinner'},
+  {value: 'Beverages', label:'Beverages'},
+  {value: 'Appetizers', label:'Appetizers'},
+  {value: 'Soups', label:'Soups'},
+  {value: 'Salads', label:'Salads'},
+  {value: 'Main dishes', label:'Main dishes'},
+  {value: 'Side dishes', label:'Side dishes'},
+  {value: 'Vegetarian', label:'Vegetarian'},
+  {value: 'Desserts', label:'Desserts'},
+  {value: 'Breads', label:'Breads'},
+  {value: 'Holidays', label:'Holidays'},
+  {value: 'Other', label:'Other'}
+
+]
 const useStyles = makeStyles({
     field: {
       marginTop: 20,

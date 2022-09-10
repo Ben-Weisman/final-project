@@ -8,6 +8,8 @@ import { ListItem } from "@mui/material";
 import { ListItemIcon } from "@mui/material";
 import { ListItemText } from "@mui/material";
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@mui/icons-material";
+import SearchIcon from '@mui/icons-material/Search';
+import CategoryIcon from '@mui/icons-material/Category';
 import { AppBar } from "@mui/material";
 import { Toolbar } from "@mui/material";
 import { Avatar } from "@mui/material";
@@ -16,6 +18,9 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import PermIdentityOutlinedIcon from "@mui/icons-material/PermIdentityOutlined";
 import Swal from "sweetalert2";
+import image from "./captainCook.png";
+
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles(theme => {
@@ -73,15 +78,27 @@ export default function SideBar({ children }) {
       path: "/home"
     },
     {
+      text: "Categories",
+      icon: <CategoryIcon color="primary" />,
+      path: "/categories"
+    },
+    {
       text: "Add Recipe",
       icon: <AddCircleOutlineOutlined color="primary" />,
       path: "/create"
     },
     {
-      text: "My Recipes",
+      text: "My Cookbook",
       icon: <SubjectOutlined color="primary" />,
       path: "/cookbook"
+    },
+    {
+      text: "Search",
+      icon: <SearchIcon color="primary" />,
+      path: "/search"
     }
+
+    
   ];
   //need to check how to insert a function inside an array list
   //like there
@@ -125,11 +142,9 @@ export default function SideBar({ children }) {
       classes={{ paper: classes.drawerPaper }}
       anchor="left"
     >
-      <div>
-        <Typography variant="h5" className={classes.title}>
-          Recipes
-        </Typography>
-      </div>
+    <div alignItems="center">
+      <img src={image} id="captainCook" width="170" align='center'/>
+    </div>
 
       {/* links/list section */}
       <List>
@@ -146,12 +161,12 @@ export default function SideBar({ children }) {
         ))}
       </List>
       <List className="secondMenuItems">
-        <ListItem button key="Edit profile" onClick={() => handleEditProfile()}>
+        {/* <ListItem button key="Edit profile" onClick={() => handleEditProfile()}>
           <ListItemIcon>
             <PermIdentityOutlinedIcon color="primary"></PermIdentityOutlinedIcon>
           </ListItemIcon>
           <ListItemText primary="Edit profile" />
-        </ListItem>
+        </ListItem> */}
         <ListItem button key="Logout" onClick={() => handleLogout()}>
           <ListItemIcon>
             <LogoutOutlinedIcon color="primary" />,

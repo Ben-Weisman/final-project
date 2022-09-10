@@ -1,7 +1,6 @@
-
+/*global chrome*/
 import { useState, useEffect } from "react";
 import * as React from 'react';
-//import NewWindow from "react-new-window";
 import NewWindow from 'rc-new-window';
 import SaveRecipe from './saveRecipe';
 import EditIngredients from './EditRecipe/editIngredients'
@@ -10,9 +9,7 @@ import EditDescription from './EditRecipe/editDescription'
 import { EditText, EditTextarea } from 'react-edit-text';
 import 'react-edit-text/dist/index.css';
 import Swal from "sweetalert2";
-
-
-
+import { Checkbox, FormGroup, FormLabel,FormControlLabel, FormControl } from "@mui/material";
 import{
     RecipeWrapper,
     RecipeTitle,
@@ -26,17 +23,51 @@ import{
 } from "./recpies.style";
 
 
+const foodTipes = [
+    'Vegetarian',
+    "Vegan",
+    "Sweet",
+    "Assian",
+    "Italian",
+    "Mexican",
+    'Breakfast',
+    'Lunch',
+    'Dinner',
+    'Beverages',
+    'Appetizers',
+    'Soups',
+    'Salads',
+    'Breads',
+    'Other'
+  ];
+
+
 export default function ShowRecipe({ recipe, closeWindow }) {
 
 
     const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-    const [save, setSave] = useState(false);
     const [recipe_name, setRecipeName] = useState(recipe.recipe_name);
     const [description, setDescription] = useState(recipe.recipe_description);
     const [ingredients, setIngredients] = useState(recipe.ingredients);
     const [instructions, setInstructions] = useState(recipe.recipe_instructions);
     const image = recipe.image;
+    const [foodType, setFoodType] = React.useState({
+        Vegetarian: false,
+        Vegan: false,
+        Sweet: false,
+        Assian: false,
+        Italian: false,
+        Mexican: false,
+        Breakfast: false,
+        Lunch: false,
+        Dinner: false,
+        Beverages: false,
+        Appetizers: false,
+        Soups: false,
+        Salads: false,
+        Breads: false,
+        Other: false
+    });
 
     const [editIng, setEditIng] = useState(false);
     const [editIns, setEditIns] = useState(false);
@@ -58,11 +89,20 @@ export default function ShowRecipe({ recipe, closeWindow }) {
         setRecipeName(value)
     };
 
+    const handleChange = event => {
+        setFoodType({
+          ...foodType,
+          [event.target.name]: event.target.checked
+        });
+      };
+
     async function setPrivacy() {
+
         await Swal.fire({
             
             title: 'Would you like to make this recipe public?',
             icon: 'question',
+            toast: true,
             showDenyButton: true,
             confirmButtonText: 'Yes',
             denyButtonText: `No`,
@@ -83,12 +123,20 @@ export default function ShowRecipe({ recipe, closeWindow }) {
   
     //send the updated json to the scraper
     const sendJson = async(privacy) => {
+
+        var categories = [];
+
+        Object.entries(foodType).forEach(function(key) {
+            if (key[1]){                
+                categories.push(key[0]);
+            }            
+          });
        
         const newJson = {
             "ownerEmail": "talfl@mta.ac.il",
             "name": recipe_name,
             "description": description,
-            "category": "italian",
+            "category": categories,
             "instructions": instructions,
             "ingredients": ingredients,
             "image": image,
@@ -103,7 +151,11 @@ export default function ShowRecipe({ recipe, closeWindow }) {
         })
 
         if (response.status===200){
-            Swal.fire("Added!", "Your recipe was Added.", "success")            
+            Swal.fire({
+                toast: true,
+                title: "The recipe was added",
+                icon: "success"
+            })            
         }
 
 
@@ -118,7 +170,9 @@ export default function ShowRecipe({ recipe, closeWindow }) {
 
 
     return (
-        <NewWindow title="Recipe Preview" center="screen">   
+        
+
+        <NewWindow title="Recipe Preview" center="center">
             <RecipeWrapper> 
                 <RecipeHeader>Recipe Preview</RecipeHeader>         
                 <RecipeTitle>
@@ -156,18 +210,23 @@ export default function ShowRecipe({ recipe, closeWindow }) {
                                 <li>{item}</li>
                             ))}
                     </ChildDiv>
-                </ParentDiv>              
-                <SaveButton onClick={()=> {setPrivacy(); closeWindow()}}>Save Recipe</SaveButton>
-                    {/* {wait(1 * 1000) && save &&
-                    <SaveRecipe
-                        recipe_name={recipe_name}
-                        description={description}
-                        ingredients={ingredients}
-                        instructions={instructions}
-                        image={image}
-                    />} */}
-            </RecipeWrapper>            
+                </ParentDiv>
+                <FormControl>
+                    <FormLabel>Choose categories</FormLabel>
+                    <FormGroup row>
+                    {foodTipes.map(item => (
+                        <FormControlLabel
+                        control={<Checkbox onChange={handleChange} name={item} />}
+                        label={item}
+                        ></FormControlLabel>
+                    ))}
+                    </FormGroup>
+                </FormControl>
+                <br></br>                
+                <SaveButton onClick = {()=> {setPrivacy(); closeWindow()}}>Save Recipe</SaveButton>
+            </RecipeWrapper>        
         </NewWindow>
+        
     );
 }
 

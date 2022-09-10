@@ -46,7 +46,7 @@ const RecipesArray = props => {
             xs={12}
             md={6}
             lg={4}
-            style={{ display: "inline-flex" }}
+
           >
             <RecipeCardSmall
               className={classes.recipeCard}

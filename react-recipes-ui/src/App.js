@@ -7,20 +7,24 @@ import MainNavbar from "./components/Navbars/MainNavbar";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { purple } from "@mui/material/colors";
-import InsertRecipeManualForm from "./components/Forms/InsertRecipeManualForm";
+import { deepPurple } from "@mui/material/colors";
+// import InsertRecipeManualForm from "./components/Forms/InsertRecipeManualForm";
 import Landing from "./Pages/Landing";
 import CookBook from "./Pages/CookBook";
 import SignUp from "./components/Forms/SignUp/SignUp";
 import ForgotPassword from "./components/Forms/ForgetPassword/ForgotPassword";
 import AddRecipePage from "./Pages/AddRecipePage";
 import MyRecipesPage from "./Pages/MyRecipesPage";
+import Search from "./Pages/Search";
+import Categories from "./Pages/Categories";
 
 const ServerURL = "http://localhost:3000/api/v1/";
 
 const theme = createTheme({
+
   palette: {
-    secondary: purple
+    secondary: deepPurple
+
   },
   typography: {
     fontFamily: "Quicksand",
@@ -57,6 +61,12 @@ function App() {
             </Route>
             <Route exact path="/cookbook">
               <MyRecipesPage />
+            </Route>
+            <Route exact path="/categories">
+              <Categories />
+            </Route>
+            <Route exact path="/search">
+              <Search />
             </Route>
           </Layout>
         </Switch>
