@@ -134,7 +134,7 @@ module.exports.getCookbookByUser = (email) => {
 
 module.exports.getAllRecipes = async () => {
     console.log('in getAllRecipes');
-    return recipesDataAccess.fetchAll();
+    return await recipesDataAccess.fetchAll();
 }
 
 module.exports.getRecipesByOwner = (email) => {

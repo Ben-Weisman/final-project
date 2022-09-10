@@ -6,6 +6,10 @@ const recipesSchema = new Schema ({
         type: String,
         required: true
     },
+    ownerName: {
+        type: String,
+        required: true
+    },
     name: {
         type: String,
         required: true
