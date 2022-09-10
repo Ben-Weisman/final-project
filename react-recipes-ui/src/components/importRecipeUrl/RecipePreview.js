@@ -52,6 +52,7 @@ export default function RecipePreview({recipe, closeWindow}) {
     const image = recipe.image;
     const url = recipe.url;
     const email = getUserEmail();
+    const name = getUserName();
     const [foodType, setFoodType] = React.useState({
         Vegetarian: false,
         Vegan: false,
@@ -95,6 +96,13 @@ export default function RecipePreview({recipe, closeWindow}) {
         const userJson = JSON.parse(user);
         return userJson["email"];
     }
+
+    function getUserName() {
+        const user = localStorage.getItem("user");
+        const userJson = JSON.parse(user);
+        console.log(userJson);
+        return userJson["name"];
+      }
 
     const handleChange = event => {
         setFoodType({
@@ -142,6 +150,7 @@ export default function RecipePreview({recipe, closeWindow}) {
        
         const newJson = {
             "ownerEmail": email,
+            "ownerName": name,
             "name": recipe_name,
             "description": description,
             "category": categories,

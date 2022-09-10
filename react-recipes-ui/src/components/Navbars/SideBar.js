@@ -10,6 +10,7 @@ import { ListItemText } from "@mui/material";
 import { AddCircleOutlineOutlined, SubjectOutlined } from "@mui/icons-material";
 import SearchIcon from '@mui/icons-material/Search';
 import CategoryIcon from '@mui/icons-material/Category';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import { AppBar } from "@mui/material";
 import { Toolbar } from "@mui/material";
 import { Avatar } from "@mui/material";
@@ -89,7 +90,7 @@ export default function SideBar({ children }) {
     },
     {
       text: "My Cookbook",
-      icon: <SubjectOutlined color="primary" />,
+      icon: <MenuBookIcon color="primary" />,
       path: "/cookbook"
     },
     {

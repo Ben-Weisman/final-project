@@ -33,6 +33,8 @@ const RecipesArray = props => {
   //     }); 
   // }, []);
 
+  console.log(props.recipes)
+
   return (
     <Container className="container">
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
