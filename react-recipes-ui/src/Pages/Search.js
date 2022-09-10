@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   FormControl,
@@ -17,6 +17,8 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function Search(){
 
+  const [ingredients, setIngredients] = useState([])
+
 
     return(
       <Grid align="center">
@@ -25,7 +27,8 @@ export default function Search(){
         </Typography>
         <br></br>
         <TextField 
-          placeholder="title, ingredient, category..."
+          label="serach by ingredients"
+          //placeholder="title, ingredient, category..."
 
         />
         <IconButton>

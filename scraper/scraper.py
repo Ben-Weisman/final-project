@@ -80,7 +80,7 @@ def getCategory(soup, recipeIndexJson):
         return category[0].text
 
 
-def createRecipeJson(soup, recipeIndexJson):
+def createRecipeJson(soup, recipeIndexJson, url):
     try:
         title = getTitle(soup, recipeIndexJson)
         description = getDescription(soup, recipeIndexJson)
@@ -100,6 +100,7 @@ def createRecipeJson(soup, recipeIndexJson):
         dic["recipe_instructions"] = method
         dic["ingredients"] = ingredients
         dic["image"] = image
+        dic["url"] = url
 
         return json.dumps(dic)
 
@@ -114,7 +115,7 @@ def main(url):
     try: 
        recipeIndexJson = getJsonFromDB(url)
        if recipeIndexJson != NULL:
-        recipeJson = createRecipeJson(soup, recipeIndexJson)
+        recipeJson = createRecipeJson(soup, recipeIndexJson, url)
 
         print(recipeJson) # test log
 

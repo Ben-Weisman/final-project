@@ -50,7 +50,9 @@ export default function RecipePreview({recipe, closeWindow}) {
     const [ingredients, setIngredients] = useState(recipe.ingredients);
     const [instructions, setInstructions] = useState(recipe.recipe_instructions);
     const image = recipe.image;
+    const url = recipe.url;
     const email = getUserEmail();
+    const name = getUserName();
     const [foodType, setFoodType] = React.useState({
         Vegetarian: false,
         Vegan: false,
@@ -94,6 +96,13 @@ export default function RecipePreview({recipe, closeWindow}) {
         const userJson = JSON.parse(user);
         return userJson["email"];
     }
+
+    function getUserName() {
+        const user = localStorage.getItem("user");
+        const userJson = JSON.parse(user);
+        console.log(userJson);
+        return userJson["name"];
+      }
 
     const handleChange = event => {
         setFoodType({
@@ -141,12 +150,14 @@ export default function RecipePreview({recipe, closeWindow}) {
        
         const newJson = {
             "ownerEmail": email,
+            "ownerName": name,
             "name": recipe_name,
             "description": description,
             "category": categories,
             "instructions": instructions,
             "ingredients": ingredients,
             "image": image,
+            "url": url,
             "public": privacy
             
         }
@@ -223,7 +234,7 @@ export default function RecipePreview({recipe, closeWindow}) {
                     ))}
                     </FormGroup>
                 </FormControl>
-                <br></br>                       
+                <br></br>                    
                 <SaveButton onClick={()=> {setPrivacy(); closeWindow()}}>Save Recipe</SaveButton>
             </RecipeWrapper>            
         </NewWindow>
