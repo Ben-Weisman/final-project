@@ -23,7 +23,7 @@ const recipesSchema = new Schema ({
     ingredients: [{type: String}],
     instructions: [{type: String}],
     upload_date: {
-        type: String,
+        type: Date,
         required: true
     },
     active: {
