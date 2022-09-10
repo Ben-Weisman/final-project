@@ -146,8 +146,8 @@ const generateIngredientsInsertionValues = (ingredientArray) => {
 
 
 
-module.exports.fetchAll = () => {
-        return Recipes.find({active:true, public:true}).exec();
+module.exports.fetchAll = async () => {
+    return await Recipes.find({active:true, public:true}).exec();
 }
 
 module.exports.fetchCookbookByUserID = (email) => {

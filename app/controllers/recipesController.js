@@ -104,7 +104,6 @@ module.exports.getAll = (req,res) =>{
     dataAccess.getAllRecipes().then ((recipes) => {
         res.status(200);
         res.contentType('application/json');
-        consolot.lof('returning recipes:===>')
         console.log(recipes);
         res.send(recipes);
     }).catch((err) => {
@@ -220,7 +219,7 @@ const create = (inputData) => {
 }
 
 
-// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:, public: BOOLEAN}
+// Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:, public: BOOLEAN, url:}
 module.exports.createNewRecipe = (req,res) =>{
     recipe = req.body;
     recipe.upload_date = Date.now();
