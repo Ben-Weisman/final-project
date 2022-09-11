@@ -214,11 +214,12 @@ export default function RecipeCardSmall(props) {
     
           </Typography> 
       <img src={props.recipe.image} alt={props.recipe.name_name} width="312" />
-      <CardContent>
+      {/* <CardContent>
         <Typography variant="body2" color="text.secondary">
           {props.recipe.description}
         </Typography>
-      </CardContent>
+      </CardContent> */}
+      <br></br>
       <Container>
       {props.recipe.category.map(category=> (
         <Chip label={category}/>

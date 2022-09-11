@@ -100,7 +100,9 @@ const RecipeCardBig = ({ recipe, page }) => {
         }
         title={recipe.name}
       ></CardHeader>
+      
       <CardContent>
+      <p>{recipe.ownerName} {recipe.upload_date}</p>
         <typography className={classes.typography}>{recipe.description}</typography>       
         <img className={classes.img} src={recipe.image} />
         <Grid container spacing={2}>

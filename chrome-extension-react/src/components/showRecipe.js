@@ -134,7 +134,8 @@ export default function ShowRecipe({ recipe, closeWindow }) {
           });
        
         const newJson = {
-            "ownerEmail": "talfl@mta.ac.il",
+            "ownerEmail": "tal@gmail.com",
+            "ownerName": "Robert Sheldman",
             "name": recipe_name,
             "description": description,
             "category": categories,

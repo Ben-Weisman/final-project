@@ -7,6 +7,7 @@ import {
   FormLabel,
   Grid,
   IconButton,
+  Box,
   List,
   TextField,
   Typography
@@ -17,7 +18,15 @@ import SearchIcon from '@mui/icons-material/Search';
 
 export default function Search(){
 
-  const [ingredients, setIngredients] = useState([])
+  const [category, setCategory] = useState()
+
+  function handleSubmit(e){
+    if(e.keyCode == 13){
+      setCategory(e.target.value)
+      console.log(category)
+    }
+
+  }
 
 
     return(
@@ -27,10 +36,14 @@ export default function Search(){
         </Typography>
         <br></br>
         <TextField 
-          label="serach by ingredients"
+          label="serach by category"
+          value={category}
+          onChange={(e)=> setCategory(e.target.value)}
+          onKeyDown={handleSubmit}
           //placeholder="title, ingredient, category..."
 
         />
+
         <IconButton>
           <SearchIcon></SearchIcon>
         </IconButton>
