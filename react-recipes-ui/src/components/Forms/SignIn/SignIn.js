@@ -35,7 +35,7 @@ async function loginUser(email, password, url) {
   console.log(email, password, url);
   // console.log(url + "users/login");
   //need to fix it to work with url from the parameter
-  return fetch("http://localhost:3000/api/v1/users/login", {
+  return fetch("http://35.171.9.94:3000/api/v1/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
