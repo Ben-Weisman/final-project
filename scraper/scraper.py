@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from unicodedata import category
 import requests
 from bs4 import BeautifulSoup
@@ -38,7 +37,7 @@ def getJsonFromDB(url):
             for site in data["webSitesUrl"]:
                 if url.find(site['url']) != -1:
                     return site
-            return NULL
+            return None
     except:
         print("something went wrong")
     finally:
@@ -114,7 +113,7 @@ def main(url):
     soup = BeautifulSoup(content, features="html.parser")
     try: 
        recipeIndexJson = getJsonFromDB(url)
-       if recipeIndexJson != NULL:
+       if recipeIndexJson is not None:
         recipeJson = createRecipeJson(soup, recipeIndexJson, url)
 
         print(recipeJson) # test log

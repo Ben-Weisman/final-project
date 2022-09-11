@@ -43,7 +43,7 @@ Gets: {
 }
 */
 const searchIngredients = async (req,res) => {
-    let searchObj = {
+    let searchOBJ = {
         query: {
             bool: {
                 should: []
@@ -52,20 +52,23 @@ const searchIngredients = async (req,res) => {
     }
 
     const values = req.body.ingredients;
+    
     values.forEach(ingredient => {
         let wildcard = {
-            ingredients: {
-                case_insensitive: true
+            wildcard: {
+                ingredients: {
+                    case_insensitive: true,
+                    value: ingredient + '*'
+                }
             }
-        }
-        wildcard.ingredients[value] = ingredient+'*';
-        searchObj.should.push(wildcard);
-    }); 
 
+        }
+        searchOBJ.query.bool.should.push(wildcard);
+    });     
     res.contentType('application/json');
 
     try {
-        const data = await elasticWorker.search(searchObj);
+        const data = await elasticWorker.search(searchOBJ);
         res.status(200);
         res.send({status:"ok", message: data});
     } catch(err) {
@@ -90,18 +93,6 @@ const searchByCategory = async (req,res) => {
             }
         }
     }
-    
-    // searchOBJ.query.wildcard = {};
-    // searchOBJ.query.wildcard[fieldName] = {
-    //     case_insensitive:true,
-    //     value: searchValue
-    // }
-
-
-
-
-    // ======================================
-  
 
     values.forEach(category => {
         let wildcard = {
@@ -113,7 +104,6 @@ const searchByCategory = async (req,res) => {
             }
 
         }
-        // wildcard.category[value] = category+'*';
         searchOBJ.query.bool.should.push(wildcard);
     }); 
 
