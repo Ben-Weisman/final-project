@@ -3,7 +3,7 @@ const elasticWorker = require('./elasticWorker');
 /*
 Gets: 
 {
-    fieldName: name/owner,
+    fieldName: name/ownerName,
     value:,
 }
 */
@@ -14,14 +14,13 @@ const searchRecipes = async (req,res) => {
     let searchOBJ = {
         index: 'recipe',
         query:{
+            match:{}
         }
     }
     
-    searchOBJ.query.wildcard = {};
-    searchOBJ.query.wildcard[fieldName] = {
-        case_insensitive:true,
-        value: searchValue
-    }
+    
+    searchOBJ.query.match[fieldName] = searchValue;
+    console.log(JSON.stringify(searchOBJ))
     res.contentType('application/json');
 
     try{

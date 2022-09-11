@@ -222,11 +222,17 @@ const create = (inputData) => {
 // Gets: {name:,description:,category:,ingredients:,instructions:,ownerEmail:, image:, public: BOOLEAN, url:}
 module.exports.createNewRecipe = (req,res) =>{
     recipe = req.body;
-    recipe.upload_date = Date.now();
     recipe.recipeID = randomUUID();
     recipe.active = true;
     recipe.comments = [];
     recipe.likes = [];
+
+
+    let dateObj = new Date();
+    let month = dateObj.getUTCMonth() + 1; //months from 1-12
+    let day = dateObj.getUTCDate();
+    let year = dateObj.getUTCFullYear();
+    recipe.upload_date = day + "/" + month + "/" + year;
     
     dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
     .then((data) => {     
