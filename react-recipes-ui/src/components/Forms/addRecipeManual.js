@@ -19,25 +19,6 @@ import RecipePreview from "../importRecipeUrl/RecipePreview";
 import Select from 'react-select'
 
 
-
-
-const categories = [
-  {value: 'Breakfast', label: "Breakfast"},
-  {value: 'Lunch', label:"Lunch"},
-  {value: 'Dinner', label:'Dinner'},
-  {value: 'Beverages', label:'Beverages'},
-  {value: 'Appetizers', label:'Appetizers'},
-  {value: 'Soups', label:'Soups'},
-  {value: 'Salads', label:'Salads'},
-  {value: 'Main dishes', label:'Main dishes'},
-  {value: 'Side dishes', label:'Side dishes'},
-  {value: 'Vegetarian', label:'Vegetarian'},
-  {value: 'Desserts', label:'Desserts'},
-  {value: 'Breads', label:'Breads'},
-  {value: 'Holidays', label:'Holidays'},
-  {value: 'Other', label:'Other'}
-
-]
 const useStyles = makeStyles({
     field: {
       marginTop: 20,
@@ -102,7 +83,6 @@ export default function AddRecipeManual(){
 
         "recipe_name": title,
         "recipe_description": description,
-        "category": "italian",
         "recipe_instructions": instructions,
         "ingredients": ingredients,
         "image": imageURL
@@ -225,7 +205,7 @@ export default function AddRecipeManual(){
                 </Grid>
               </div>
   
-              <Button onClick={()=>{openWindow(); updateData()}} className={classes.btn}  variant="contained">
+              <Button onClick={()=>{openWindow(); updateData()}} className={classes.btn}  variant="contained" color="secondary">
                 Add Recipe
               </Button>
               {open  && <RecipePreview recipe={recipeData} closeWindow={()=>openWindow()}></RecipePreview>}
