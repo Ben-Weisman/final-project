@@ -73,7 +73,7 @@ const useStyles = makeStyles(theme => ({
 
 async function loginUser(email, password) {
   console.log(email, password);
-  return fetch("http://localhost:3000/api/v1/users/login", {
+  return fetch("http://172.31.94.94:3000/api/v1/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

@@ -8,18 +8,20 @@ Gets:
 }
 */
 const searchRecipes = async (req,res) => {
-    fieldName = req.body.field;
+    fieldName = req.body.fieldName;
     searchValue = req.body.value;
 
-
-    let searchOBJ = {};
-    searchOBJ.index = 'recipe';
-    searchOBJ.wildcard = {};
-    searchOBJ.wildcard[fieldName] = {
-      case_insensitive: true
+    let searchOBJ = {
+        index: 'recipe',
+        query:{
+        }
     }
-    searchOBJ.wildcard[fieldName].value = searchValue+'*';
-
+    
+    searchOBJ.query.wildcard = {};
+    searchOBJ.query.wildcard[fieldName] = {
+        case_insensitive:true,
+        value: searchValue
+    }
     res.contentType('application/json');
 
     try{
@@ -78,29 +80,48 @@ Gets: {
 }
 */
 const searchByCategory = async (req,res) => {
-    let searchObj = {
-        query: {
-            bool: {
+    const values = req.body.categories;
+
+    let searchOBJ = {
+        index: 'recipe',
+        query:{
+            bool:{
                 should: []
             }
         }
     }
-    const values = req.body.categories;
+    
+    // searchOBJ.query.wildcard = {};
+    // searchOBJ.query.wildcard[fieldName] = {
+    //     case_insensitive:true,
+    //     value: searchValue
+    // }
+
+
+
+
+    // ======================================
+  
 
     values.forEach(category => {
         let wildcard = {
-            category: {
-                case_insensitive: true
+            wildcard: {
+                category: {
+                    case_insensitive: true,
+                    value: category + '*'
+                }
             }
+
         }
-        wildcard.category[value] = category+'*';
-        searchObj.should.push(wildcard);
+        // wildcard.category[value] = category+'*';
+        searchOBJ.query.bool.should.push(wildcard);
     }); 
 
+    console.log(JSON.stringify(searchOBJ))
     res.contentType('application/json');
 
     try {
-        const data = await elasticWorker.search(searchObj);
+        const data = await elasticWorker.search(searchOBJ);
         res.status(200);
         res.send({status:"ok", message: data});
     } catch(err) {

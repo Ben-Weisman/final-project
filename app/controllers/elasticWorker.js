@@ -40,8 +40,14 @@ const client = new Client({
 
 
 const search = async (searchOBJ) => {
-  const res =  await client.search(searchOBJ);
-  return res.hits.hits;
+  console.log('in search')
+  const raw =  await client.search(searchOBJ);
+  console.log(raw)
+  let res = [];
+  raw.hits.hits.forEach(elem => {
+    res.push(elem._source)
+  });
+  return res;
 }
 
 //.removeFromArray('cookbook','recipes',recipeID,userEmail);
