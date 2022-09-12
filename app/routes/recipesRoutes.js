@@ -11,7 +11,7 @@ router.post('/cookbook',recipesController.getCookbook); // done migrating --> Ge
 
 router.post('/add-new', recipesController.createNewRecipe); // done migrating --> // Gets: {name:,description:,category:,ingredients:[{description:}],instructions:[{description:}],ownerEmail:,image:}
 
-router.delete('/remove', recipesController.removeByID); // done migrating --> Gets: {id:}
+router.post('/remove', recipesController.removeByID); // done migrating --> Gets: {id:}
 
 router.post('/add-existing-to-cookbook', recipesController.addExistingRecipeToCookbook); // done migrating --> // Gets: {email:,id:}
 

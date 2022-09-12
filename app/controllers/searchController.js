@@ -13,6 +13,7 @@ const searchRecipes = async (req,res) => {
 
     let searchOBJ = {
         index: 'recipe',
+        size: 10000,
         query:{
             match:{}
         }
@@ -43,6 +44,7 @@ Gets: {
 */
 const searchIngredients = async (req,res) => {
     let searchOBJ = {
+        size:10000,
         query: {
             bool: {
                 should: []
@@ -86,6 +88,7 @@ const searchByCategory = async (req,res) => {
 
     let searchOBJ = {
         index: 'recipe',
+        size:10000,
         query:{
             bool:{
                 should: []

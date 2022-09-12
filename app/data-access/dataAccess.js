@@ -55,9 +55,14 @@ module.exports.fetchRecipeByName = (name) => {
 module.exports.zombifyRecipe = (id) => {
 
     return new Promise((resolve,reject) => {
+        console.log(`LOG: in zombifyRecipe, id is ${id}`);
         Recipes.findOneAndUpdate({recipeID:id}, {active:false})
         .then((data) => {
-            elasticWorker.update('recipe','active',false,id);
+            console.log(`LOG: deactivated recipeID ${id}`)
+            elasticWorker.update('recipe','active',false,id).then((data) => {
+                elasticWorker.refresh();
+            });
+            
             resolve(data);
         })
         .catch((err) => {
@@ -73,6 +78,7 @@ module.exports.addRecipeToCookbook = (recipeID,email) => {
         cookbookDataAccess.addRecipe(recipeID,email)
         .then((data) => {
             elasticWorker.appendToArray('cookbook','recipes',email,recipeID);
+            elasticWorker.refresh();
             resolve(data);
         })
         .catch((err) => {

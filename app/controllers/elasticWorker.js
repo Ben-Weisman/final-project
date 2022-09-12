@@ -99,15 +99,33 @@ const insert = async (indexName,objectToAdd) => {
 const update = async (indexName,fieldToUpdate,newValue,idToSearch) => {
   let obj = {};
   obj.index = indexName;
-  obj.id = idToSearch;
+  obj.refresh = true;
+  // obj.id = idToSearch;
+  // let script = {
+  //   lang: "painless",
+  //   source: "ctx._source."+fieldToUpdate+"="+newValue
+  // }
+  obj.size = 1000;
   let script = {
     lang: "painless",
-    source: "ctx._source."+fieldToUpdate+"="+newValue
+    source: "ctx._source."+fieldToUpdate+"= params.value;",
+    params: {
+      value: newValue
+    }
   }
+  // script.params[value] = newValue;
   obj.script = script;
+  obj.query = {
+    match_phrase:{
+      recipeID: idToSearch
+    }
+  }
 
+  console.log(obj);
 
-  return await client.update(obj);
+  const res =  await client.updateByQuery(obj);
+  
+  return res;
 
 }
 
@@ -132,7 +150,10 @@ const searchByMatch = async (theIndex,field, matcher) => {
   return response.hits.hits;
 }
 
+const refresh = () => {
+  client.indices.refresh();
+}
 
 
 
-module.exports = {insert,update,appendToArray, search};
+module.exports = {insert,update,appendToArray, search,refresh};

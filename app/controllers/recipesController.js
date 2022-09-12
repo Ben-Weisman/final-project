@@ -140,6 +140,7 @@ module.exports.getCookbook = (req,res) => {
 module.exports.removeByID = (req,res) =>{
 
     id = req.body.id;
+    console.log(`LOG: in removeByID, recipeID is = ${id}`);
     dataAccess.zombifyRecipe(id).then((data) => {
         
         res.status(200);
