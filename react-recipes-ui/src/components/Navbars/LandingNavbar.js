@@ -23,7 +23,7 @@ import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { color } from "@mui/system";
 import image from "./captainCook.png"
-import image2 from "./image.jpeg"
+import image2 from "./image.png"
 
 const menuItems = [
   {

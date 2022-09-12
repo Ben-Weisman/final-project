@@ -151,8 +151,6 @@ export default function Search(){
   }
 
   async function getRecipesByOwnerName(){
-
-    console.log({ownerName})
     const response = await fetch("http://localhost:3000/api/v1/search/recipe",{
       method: "POST",
       headers: {
@@ -190,7 +188,7 @@ export default function Search(){
                 control={<Radio />} 
                 label={option.label}
                 onChange={(event)=> {setValue(event.target.value); setText(option.text)}}
-                onKeyDown={handleSubmitTitle}/>
+                />
                 
             ))}
           </RadioGroup>
@@ -200,7 +198,7 @@ export default function Search(){
           value=="title"? <TextField 
             value={title}
             onChange={(e)=> setTitle(e.target.value)}
-            onKeyDown={handleSubmitOwnerName}
+            onKeyDown={handleSubmitTitle}
             placeholder={text}
           />:value=="ingredients"?             
             <TextField 

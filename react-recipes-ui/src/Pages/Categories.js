@@ -81,6 +81,11 @@ const images = [
     url: 'https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/pan-roast_lime_feta_and_27230_16x9.jpg',
     title: 'Mexican',
     width: '33%',
+  },
+  {
+    url: 'https://www.familyfoodonthetable.com/wp-content/uploads/2018/03/Quick-chicken-recipes-category-collage.png',
+    title: 'Other',
+    width: '33%',
   }
   
   
@@ -211,7 +216,7 @@ export default function Categories() {
     </Box>}
     {!showAll &&
     <Container alignItems="center">
-         <Button variant="contained" color="secondary" onClick={()=> {setShowAll(true); setShowCategory(false)}}>Back to home page</Button>
+         <Button variant="contained" color="secondary" onClick={()=> {setShowAll(true); setShowCategory(false)}}>Back to categories page</Button>
     </Container>}
     {showCategory && <RecipesArray recipes={recipes} ServerURL="http://localhost:3000/api/v1/"/>}
 

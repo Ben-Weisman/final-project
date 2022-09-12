@@ -25,6 +25,7 @@ export default function AddRecipeURl() {
 
   const [recipeData, setData] = useState({});
   const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState("");
 
 
   async function handleSubmit(event) {
@@ -35,8 +36,8 @@ export default function AddRecipeURl() {
     addRecipeHandler(recipeURL)
   }
 
-  async function addRecipeHandler(RecipeURL) {
-    const response = await fetch("http://localhost:5000/getUrl?url="+RecipeURL);
+  async function addRecipeHandler(recipeURL) {
+    const response = await fetch("http://localhost:5000/getUrl?url="+recipeURL);
     if (response.status===200){
       const recipe_data = await response.json(); 
       setRecipeData(recipe_data)
@@ -48,7 +49,10 @@ export default function AddRecipeURl() {
 
     setData(recipe_data)
     setOpen(true)
+    //setUrl("");
   }
+
+  
    
     
 
@@ -82,10 +86,12 @@ export default function AddRecipeURl() {
                 <TextField
                   required
                   fullWidth
+                  //value={url}
+                  //onChange={(e)=> setUrl(e.target.value)}
                   id="recipe_url"
                   label="Recipe URL"
                   name="recipe_url"
-                  autoComplete="recipe_url"
+                  //autoComplete="recipe_url"
                 />
               </Grid>
             </Grid>
