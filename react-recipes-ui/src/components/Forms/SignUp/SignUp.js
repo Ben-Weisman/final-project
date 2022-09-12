@@ -36,7 +36,7 @@ const theme = createTheme();
 
 async function CreateUser(email, password, name) {
   //need to fix it to be working with URL
-  return fetch("http://localhost:3000/api/v1/users/add", {
+  return fetch("http://3.84.157.88:3000/api/v1/users/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

@@ -19,7 +19,7 @@ import Search from "./Pages/Search";
 import Categories from "./Pages/Categories";
 
 // const ServerURL = "http://localhost:3000/api/v1/";
-const ServerURL = "http://172.31.94.94:3000/api/v1/";
+const ServerURL = "http://3.84.157.88:3000/api/v1/";
 const theme = createTheme({
 
   palette: {
