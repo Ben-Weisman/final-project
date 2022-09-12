@@ -166,7 +166,7 @@ module.exports.fetchCookbookByUserID = (email) => {
                 resolve(data);
             })
             .catch((err) => {
-                reject(err);
+                reject(err);  
             });
         })
         .catch((err) => {
