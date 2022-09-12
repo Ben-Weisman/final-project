@@ -16,7 +16,7 @@ import {
   Typography
 } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
-
+import RecipesArray from "../components/Recipes/RecipesArray";
 
 
 export default function Search(){
@@ -24,10 +24,13 @@ export default function Search(){
   const [title, setTitle] = useState("");
   const [ingredients, setIngredients] = useState([]);
   const [ingredientsString, setIngredientsString] = useState("");
+  const [categoryString, setCategoryString] = useState("");
+  const [categories, setCategories] = useState([]);
   const [ownerName, setOwnerName] = useState("");
   const [recipes, setRecipes] = useState([]);
   const [value, setValue] = useState();
   const [text, setText] = useState();
+  const [massage, setMassage] = useState("");
 
   const searchOptions = [
     {
@@ -42,57 +45,131 @@ export default function Search(){
     },
     {
       value: "ownerName",
-      label: "owner name",
+      label: "Owner name",
       text: "owner name..."
+    },
+    {
+      value: "categories",
+      label: "Categories",
+      text: "category1, category2..."
     }
   ]
+
+  useEffect(()=> {
+    if(ingredients.length > 0){
+      getRecipesByIngredients()
+      }
+      if(categories.length > 0){
+        getRecipesByCategory()
+      }
+
+  },[categories, ingredients]);
 
 
   function handleSubmitTitle(e){
     if(e.keyCode == 13){
-      setTitle("")
+      getRecipesByTitle()
     }
 
   }
 
-function handleSubmitIngredients(e){
-    if(e.keyCode == 13){
-      var tempString = ingredientsString.replace(/\s+/g, ''); //remove spaces from the string
-      var tempArray = tempString.split(','); 
-      setIngredients(tempArray)      
-      setIngredients("");
-      //console.log(categoryArray)
-      // if(categoryArray.length>0){
-      //   getRecipes();
-      // }
+  function handleSubmitIngredients(e){
+      if(e.keyCode == 13){
+        var tempString = ingredientsString.replace(/\s+/g, ''); //remove spaces from the string
+        var tempArray = tempString.split(','); 
+        setIngredients(tempArray)      
+        setIngredientsString("");
+      }
     }
-  }
+    function handleSubmitCategories(e){
+      if(e.keyCode == 13){
+        var tempString = categoryString.replace(/\s+/g, ''); //remove spaces from the string
+        var tempArray = tempString.split(','); 
+        setCategories(tempArray)      
+        setCategoryString("");
+      }
+    }
 
   function handleSubmitOwnerName(e){
     if(e.keyCode == 13){
-      setOwnerName("")
+      getRecipesByOwnerName()
     }
 
   }
 
+  async function getRecipesByIngredients(){
+    const response = await fetch("http://localhost:3000/api/v1/search/ingredients",{
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json', 'Accept': 'application/json'
+      },
+      body: JSON.stringify({"ingredients":ingredients})
+    })
+    .then(res => res.json())
+    .then(data => {
+      setRecipes(data);
+      if(data.length<1){
+       setMassage("No recipes to show")
+      }
+    });
+  }
 
-  
+  async function getRecipesByCategory(){
+    const response = await fetch("http://localhost:3000/api/v1/search/category",{
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json', 'Accept': 'application/json'
+      },
+      body: JSON.stringify({"categories":categories})
+    })
+    .then(res => res.json())
+    .then(data => {
+       setRecipes(data);
+       if(data.length<1){
+        setMassage("No recipes to show")
+       }       
+    });
+  }
 
-//     async function getRecipes(){
-//       const response = await fetch("http://localhost:3000/api/v1/search/category",{
-//         method: "POST",
-//         headers: {
-//           'Content-type': 'application/json', 'Accept': 'application/json'
-//         },
-//         body: JSON.stringify({"categories":categoryArray})
-//       })
+  async function getRecipesByTitle(){
+    const response = await fetch("http://localhost:3000/api/v1/search/recipe",{
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json', 'Accept': 'application/json'
+      },
+      body: JSON.stringify({"fieldName": "name", "value":title})
+    })
+    .then(res => res.json())
+    .then(data => {
+      setRecipes(data);
+      if(data.length<1){
+       setMassage("No recipes to show")
+      }
+    });
 
-//       console.log(response)
+    setTitle("")
+  }
 
+  async function getRecipesByOwnerName(){
 
-//     }
+    console.log({ownerName})
+    const response = await fetch("http://localhost:3000/api/v1/search/recipe",{
+      method: "POST",
+      headers: {
+        'Content-type': 'application/json', 'Accept': 'application/json'
+      },
+      body: JSON.stringify({"fieldName": "ownerName", "value":ownerName})
+    })
+    .then(res => res.json())
+    .then(data => {
+      setRecipes(data);
+      if(data.length < 1){
+       setMassage("No recipes to show")
+      }
+    });
 
-
+    setOwnerName("")
+  }
 
     return(
       <Grid align="center">
@@ -112,8 +189,9 @@ function handleSubmitIngredients(e){
                 value={option.value} 
                 control={<Radio />} 
                 label={option.label}
-                onChange={(event)=> {setValue(event.target.value); setText(option.text)}}/>
-
+                onChange={(event)=> {setValue(event.target.value); setText(option.text)}}
+                onKeyDown={handleSubmitTitle}/>
+                
             ))}
           </RadioGroup>
         </FormControl>
@@ -126,24 +204,28 @@ function handleSubmitIngredients(e){
             placeholder={text}
           />:value=="ingredients"?             
             <TextField 
-            value={ingredients}
+            value={ingredientsString}
             onChange={(e)=> setIngredientsString(e.target.value)}
             onKeyDown={handleSubmitIngredients}
             placeholder={text}
             />: value=="ownerName"?
             <TextField 
-            //label={searchOptions.value===value}
             value={ownerName}
             onChange={(e)=> setOwnerName(e.target.value)}
             onKeyDown={handleSubmitOwnerName}
             placeholder={text}
-          />:""}
-          <IconButton>
-            <SearchIcon></SearchIcon>
-          </IconButton>
+          />:value=="categories"?
+          <TextField 
+          value={categoryString}
+          onChange={(e)=> setCategoryString(e.target.value)}
+          onKeyDown={handleSubmitCategories}
+          placeholder={text}
+        />:""
+        }
         </Container>
-
-
+        {recipes.length>0? <RecipesArray recipes={recipes} ServerURL="http://localhost:3000/api/v1/"/>:
+        <Container><h1>{massage}</h1></Container>
+        }
       </Grid>
 
     )
