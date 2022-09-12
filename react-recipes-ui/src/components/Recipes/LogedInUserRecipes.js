@@ -2,6 +2,7 @@ import { ConstructionOutlined } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import RecipesArray from "./RecipesArray";
+import {server} from "./../../constants"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,7 +35,7 @@ const LogedInUserRecipes = () => {
     // setUserID(localStorage.getItem("user").userID);
     let userEmail = getUserEmail();
     console.log(userEmail);
-    fetch("http://localhost:3000/api/v1/recipes/get-by-owner", {
+    fetch("http://"+server+":3000/api/v1/recipes/get-by-owner", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: userEmail })

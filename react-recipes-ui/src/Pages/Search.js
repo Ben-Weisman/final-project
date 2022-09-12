@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import SearchIcon from '@mui/icons-material/Search';
 import RecipesArray from "../components/Recipes/RecipesArray";
+import {server} from "./../constants"
 
 
 export default function Search(){
@@ -98,7 +99,7 @@ export default function Search(){
   }
 
   async function getRecipesByIngredients(){
-    const response = await fetch("http://localhost:3000/api/v1/search/ingredients",{
+    const response = await fetch("http://"+server+":3000/api/v1/search/ingredients",{
       method: "POST",
       headers: {
         'Content-type': 'application/json', 'Accept': 'application/json'
@@ -115,7 +116,7 @@ export default function Search(){
   }
 
   async function getRecipesByCategory(){
-    const response = await fetch("http://localhost:3000/api/v1/search/category",{
+    const response = await fetch("http://"+server+":3000/api/v1/search/category",{
       method: "POST",
       headers: {
         'Content-type': 'application/json', 'Accept': 'application/json'
@@ -132,7 +133,7 @@ export default function Search(){
   }
 
   async function getRecipesByTitle(){
-    const response = await fetch("http://localhost:3000/api/v1/search/recipe",{
+    const response = await fetch("http://"+server+":3000/api/v1/search/recipe",{
       method: "POST",
       headers: {
         'Content-type': 'application/json', 'Accept': 'application/json'
@@ -151,7 +152,7 @@ export default function Search(){
   }
 
   async function getRecipesByOwnerName(){
-    const response = await fetch("http://localhost:3000/api/v1/search/recipe",{
+    const response = await fetch("http://"+server+":3000/api/v1/search/recipe",{
       method: "POST",
       headers: {
         'Content-type': 'application/json', 'Accept': 'application/json'
@@ -221,7 +222,7 @@ export default function Search(){
         />:""
         }
         </Container>
-        {recipes.length>0? <RecipesArray recipes={recipes} ServerURL="http://localhost:3000/api/v1/"/>:
+        {recipes.length>0? <RecipesArray recipes={recipes} ServerURL={"http://"+server+":3000/api/v1/"}/>:
         <Container><h1>{massage}</h1></Container>
         }
       </Grid>

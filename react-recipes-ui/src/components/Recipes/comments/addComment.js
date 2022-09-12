@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Container, Grid, List, Paper, TextareaAutosize, Button, Box } from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
-
+import {server} from "./../../../constants"
 
 
 
@@ -69,7 +69,7 @@ export default function addComment(props) {
 
 
 
-        const response =  await fetch("http://localhost:3000/api/v1/recipes/comment-likes", {
+        const response =  await fetch("http://"+server+":3000/api/v1/recipes/comment-likes", {
           method: "POST",
           headers: {
             'Content-type': 'application/json', 'Accept': 'application/json'

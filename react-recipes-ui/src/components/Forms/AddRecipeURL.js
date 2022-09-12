@@ -17,6 +17,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import RecipePreview from "../importRecipeUrl/RecipePreview";
 import { useState, useEffect } from "react";
 import { WindowRounded } from "@mui/icons-material";
+import {server} from "./../../constants"
 
 
 const theme = createTheme();
@@ -37,7 +38,7 @@ export default function AddRecipeURl() {
   }
 
   async function addRecipeHandler(recipeURL) {
-    const response = await fetch("http://localhost:5000/getUrl?url="+recipeURL);
+    const response = await fetch("http://"+server+":5000/getUrl?url="+recipeURL);
     if (response.status===200){
       const recipe_data = await response.json(); 
       setRecipeData(recipe_data)

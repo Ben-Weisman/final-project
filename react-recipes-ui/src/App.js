@@ -17,8 +17,9 @@ import AddRecipePage from "./Pages/AddRecipePage";
 import MyRecipesPage from "./Pages/MyRecipesPage";
 import Search from "./Pages/Search";
 import Categories from "./Pages/Categories";
+import {server} from "./constants"
 
-const ServerURL = "http://localhost:3000/api/v1/";
+const ServerURL = "http://"+server+":3000/api/v1/";
 //const ServerURL = "http://3.84.157.88:3000/api/v1/";
 const theme = createTheme({
 

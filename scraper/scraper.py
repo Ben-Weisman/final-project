@@ -24,7 +24,7 @@ def receiveJson():
     if request.method == 'POST':
         updatedJson = request.data
  
-    req = requests.post('http://localhost:3000/api/v1/recipes/add-new', data=updatedJson, headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+    req = requests.post('http://44.204.147.28:3000/api/v1/recipes/add-new', data=updatedJson, headers={'Content-type': 'application/json', 'Accept': 'application/json'})
 
     return('d')
 
@@ -169,7 +169,7 @@ def main(url):
 
 
         #print(req)
-        return recipeJson
+       return recipeJson
        # validateRecipe(recipeJson)
     except:
         print("couldn't find json")

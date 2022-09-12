@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import RecipesArray from "../components/Recipes/RecipesArray";
+import {server} from "./../constants"
 
 
 
@@ -164,7 +165,7 @@ export default function Categories() {
 
     async function openCategory(category){
         var categoryArr=[category];
-        const response = await fetch("http://localhost:3000/api/v1/search/category",{
+        const response = await fetch("http://"+server+":3000/api/v1/search/category",{
             method: "POST",
             headers: {
               'Content-type': 'application/json', 'Accept': 'application/json'
@@ -218,7 +219,7 @@ export default function Categories() {
     <Container alignItems="center">
          <Button variant="contained" color="secondary" onClick={()=> {setShowAll(true); setShowCategory(false)}}>Back to categories page</Button>
     </Container>}
-    {showCategory && <RecipesArray recipes={recipes} ServerURL="http://localhost:3000/api/v1/"/>}
+    {showCategory && <RecipesArray recipes={recipes} ServerURL={"http://"+server+":3000/api/v1/"}/>}
 
     </Grid>
   );

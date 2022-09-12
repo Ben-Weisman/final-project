@@ -64,7 +64,7 @@ const searchIngredients = async (req,res) => {
             }
 
         }
-        searchOBJ.query.bool.should.push(wildcard);
+        searchOBJ.query.bool.must.push(wildcard);
     });     
     res.contentType('application/json');
 

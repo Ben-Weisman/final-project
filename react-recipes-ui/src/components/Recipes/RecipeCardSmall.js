@@ -30,6 +30,7 @@ import { Dialog } from "@mui/material";
 import Popup from "../Tools/Popup";
 import Swal from "sweetalert2";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import {server} from "./../../constants"
 
 const useStyles = makeStyles(theme => ({
   field: {
@@ -73,7 +74,7 @@ function getUserEmail() {
 async function deletFromDBServer(recipe_id) {
   //need to change the static url
   console.log(recipe_id);
-  return fetch("http://localhost:3000/api/v1/recipes/remove", {
+  return fetch("http://"+server+":3000/api/v1/recipes/remove", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -105,7 +106,7 @@ async function deletFromDB(id) {
 }
 async function addToCookbook(id, email) {
   return fetch(
-    "http://localhost:3000/api/v1/recipes/add-existing-to-cookbook",
+    "http://"+server+":3000/api/v1/recipes/add-existing-to-cookbook",
     {
       method: "POST",
       headers: {
@@ -153,7 +154,7 @@ export default function RecipeCardSmall(props) {
       setLikes(likes+1)
       setAddLike(true)
 
-      return fetch("http://localhost:3000/api/v1/recipes/comment-likes", {
+      return fetch("http://"+server+":3000/api/v1/recipes/comment-likes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

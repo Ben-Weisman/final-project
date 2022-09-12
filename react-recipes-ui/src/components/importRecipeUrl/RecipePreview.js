@@ -20,7 +20,7 @@ import{
 } from "./recipes.styles";
 import Swal from "sweetalert2";
 import { Checkbox, FormGroup, FormLabel,FormControlLabel, FormControl } from "@mui/material";
-
+import {server} from "./../../constants"
 
 const foodTipes = [
     'Vegetarian',
@@ -164,7 +164,7 @@ export default function RecipePreview({recipe, closeWindow}) {
 
    
 
-        const response =  await fetch("http://localhost:5000/receiveJson", {
+        const response =  await fetch("http://"+server+":5000/receiveJson", {
             method: "POST",
             body: JSON.stringify(newJson)
         })

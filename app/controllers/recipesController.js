@@ -73,6 +73,7 @@ module.exports.addExistingRecipeToCookbook = (req,res) => {
     .then((result) => {
         res.status(200);
         res.contentType('application/json');
+
         res.send({status: "ok", message: result});
     }).catch((err) => {
         res.status(401);
@@ -233,7 +234,7 @@ module.exports.createNewRecipe = (req,res) =>{
     let month = dateObj.getUTCMonth() + 1; //months from 1-12
     let day = dateObj.getUTCDate();
     let year = dateObj.getUTCFullYear();
-    recipe.upload_date = day + "/" + month + "/" + year;
+    //recipe.upload_date = day + "/" + month + "/" + year;
     
     dataAccess.insertNewDocument(recipe,Collections.Collections.RECIPE_COLLECTION)
     .then((data) => {     
@@ -250,7 +251,8 @@ module.exports.createNewRecipe = (req,res) =>{
         .then((data) => {
             
             res.status(200);
-            res.send({status:"ok", message: data});
+            res.send(data)
+            //res.send({status:"ok", message: data});
         })
         .catch((err) => {
         res.status(400);

@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Swal from "sweetalert2";
+import {server} from "./../../../constants"
 
 function Copyright(props) {
   return (
@@ -35,7 +36,7 @@ async function loginUser(email, password, url) {
   console.log(email, password, url);
   // console.log(url + "users/login");
   //need to fix it to work with url from the parameter
-  return fetch("http://localhost:3000/api/v1/users/login", {
+  return fetch("http://"+server+":3000/api/v1/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"

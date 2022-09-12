@@ -21,6 +21,7 @@ import{
     Title,
     Description
 } from "./recpies.style";
+import {server} from "./../constans"
 
 
 const foodTipes = [
@@ -148,7 +149,7 @@ export default function ShowRecipe({ recipe, closeWindow }) {
 
    
 
-        const response =  await fetch("http://localhost:5000/receiveJson", {
+        const response =  await fetch("http://"+server+":5000/receiveJson", {
             method: "POST",
             body: JSON.stringify(newJson)
         })

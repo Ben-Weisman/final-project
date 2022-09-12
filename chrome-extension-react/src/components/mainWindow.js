@@ -11,7 +11,7 @@ import{
     ExtensionButton,
     Wrapper
 } from "./recpies.style";
-
+import {server} from "./../constans"
 
 
 export default function MainWindow() {
@@ -31,7 +31,7 @@ export default function MainWindow() {
   
   //send the url of the recipe to the scraper and get the json of the recipe
   async function addRecipeHandler(url) {
-      const response = await fetch("http://localhost:5000/getUrl?url="+url);
+      const response = await fetch("http://"+server+":5000/getUrl?url="+url);
       if (response.status===200){
         const recipe_data = await response.json(); 
         setData(recipe_data);
@@ -70,13 +70,13 @@ export default function MainWindow() {
 
   
 
-  useEffect(() => {
-    logingHandler()
-  }, []);
+  // useEffect(() => {
+  //   logingHandler()
+  // }, []);
 
 
   function goToCookBook() {
-    window.open("http://localhost:8000/cookbook")
+    window.open("http://"+server+":8000/cookbook")
   }
 
 

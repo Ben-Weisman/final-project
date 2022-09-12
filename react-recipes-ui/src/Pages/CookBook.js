@@ -2,6 +2,9 @@ import { ConstructionOutlined } from "@mui/icons-material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
 import RecipesArray from "../components/Recipes/RecipesArray";
+import {server} from "./../constants"
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     minHeight: "100vh",
@@ -33,7 +36,7 @@ const CookBook = () => {
     // setUserID(localStorage.getItem("user").userID);
     let userEmail = getUserEmail();
     console.log(userEmail);
-    fetch("http://localhost:3000/api/v1/recipes/cookbook/", {
+    fetch("http://"+server+":3000/api/v1/recipes/cookbook/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: userEmail })
