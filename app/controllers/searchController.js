@@ -27,7 +27,7 @@ const searchRecipes = async (req,res) => {
     try{
         const data = await elasticWorker.search(searchOBJ);
         res.status(200);
-        res.send({status:"ok",message:data})
+        res.send(data)
     } catch (err) {
         res.status(400);
         res.send({status:"error",message: err});
@@ -47,7 +47,7 @@ const searchIngredients = async (req,res) => {
         size:10000,
         query: {
             bool: {
-                should: []
+                must: []
             }
         }
     }
@@ -71,7 +71,7 @@ const searchIngredients = async (req,res) => {
     try {
         const data = await elasticWorker.search(searchOBJ);
         res.status(200);
-        res.send({status:"ok", message: data});
+        res.send(data);
     } catch(err) {
         res.status(400);
         res.send({status:"error",message:err});
@@ -115,7 +115,7 @@ const searchByCategory = async (req,res) => {
     try {
         const data = await elasticWorker.search(searchOBJ);
         res.status(200);
-        res.send({status:"ok", message: data});
+        res.send(data);
     } catch(err) {
         res.status(400);
         res.send({status:"error",message:err});
