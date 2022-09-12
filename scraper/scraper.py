@@ -45,8 +45,8 @@ def getJsonFromDB(url):
 
 
 def getTitle(soup, recipeIndexJson):
-    title = soup.find_all(recipeIndexJson['title']['lookFor'],class_=recipeIndexJson['title']['className'])
-    return title[0].text
+    title = soup.find(recipeIndexJson['title']['lookFor'],class_=recipeIndexJson['title']['className'])
+    return title.text
 
 
 def getDescription(soup, recipeIndexJson):
@@ -95,7 +95,7 @@ def createRecipeJson(soup, recipeIndexJson, url):
         dic["owner_id"] = "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0"
         dic["recipe_name"] = title
         dic["recipe_description"] = description
-        dic["category"] = "italian"
+        #dic["category"] = "italian"
         dic["recipe_instructions"] = method
         dic["ingredients"] = ingredients
         dic["image"] = image
@@ -106,6 +106,38 @@ def createRecipeJson(soup, recipeIndexJson, url):
     except:
         print("error in createRecipeJson")
 
+def tryToCreactRecipe(soup, url):
+    title = soup.h1.text
+    if title is None:
+        title = ""
+
+    description = soup.p.text
+    if description is None:
+        description = ""
+
+    ingredientsList = soup.find_all("span","ingredient-description") or soup.find_all("div","ingredient-description")                          
+    if ingredientsList is None:
+        ingredients = [] 
+    else:
+        ingredients = []
+        for ingredientEl in ingredientsList:
+         ingredients.append(ingredientEl.text)
+         print(ingredientEl)
+
+
+    dic = {}
+    #dic["owner_id"] = "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0"
+    dic["recipe_name"] = title
+    dic["recipe_description"] = description
+    dic["recipe_instructions"] = []
+    dic["ingredients"] = ingredients
+    dic["image"] = ""
+    dic["url"] = url
+
+    return json.dumps(dic)
+
+
+
 
 def main(url):
     res = requests.get(url)
@@ -115,6 +147,9 @@ def main(url):
        recipeIndexJson = getJsonFromDB(url)
        if recipeIndexJson is not None:
         recipeJson = createRecipeJson(soup, recipeIndexJson, url)
+
+       else:
+        recipeJson = tryToCreactRecipe(soup, url) 
 
         print(recipeJson) # test log
 
@@ -128,3 +163,6 @@ def main(url):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+
