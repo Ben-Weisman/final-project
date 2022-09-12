@@ -176,7 +176,7 @@ def main(url):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='44.204.147.28', port=5000)
 
 
 
