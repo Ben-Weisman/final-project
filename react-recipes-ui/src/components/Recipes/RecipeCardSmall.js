@@ -74,7 +74,7 @@ async function deletFromDBServer(recipe_id) {
   //need to change the static url
   console.log(recipe_id);
   return fetch("http://localhost:3000/api/v1/recipes/remove", {
-    method: "DELETE",
+    method: "POST",
     headers: {
       "Content-Type": "application/json"
     },
