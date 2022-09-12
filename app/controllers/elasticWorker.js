@@ -6,11 +6,11 @@ const { removeRecipeFromCookbook } = require('./recipesController')
 
 
 const client = new Client({
-   cloud: {
-      id: 'captain_cook:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJGY5ZWY5N2Q4MWNmOTRlYmQ4OGFmMWNlYWNkNDFlMTA1JGUyZDI3MGMzMWFhNTRmNzdhN2Y2Y2JkMWQ0MTc3Yjg3'
+cloud: {
+      id: 'My_deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJGU1OTFlZGMxZjYyMjRkZGQ5MjAyZTQ3MTZmNzZhYThkJDk4YWVkNGM1MTg3NjQ3OWVhN2M4NGQ0NmZlMzcyODli'
     },
     auth: {
-      apiKey: 'bUlTYU1vTUJndy1TM0lLcWRJaFY6QXBrVXJUYlVSajJ1NEdJdjd0THFqQQ=='
+      apiKey: 'VTdTZzdvSUJYazJXalJ3c2lJcW06a005RXVPaTRUMnlEYktaSmhWYTZtZw=='
     }
   })
 
