@@ -5,18 +5,18 @@ const { removeRecipeFromCookbook } = require('./recipesController')
 
 
 
-const client = new Client({
-cloud: {
-      id: 'My_deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJGU1OTFlZGMxZjYyMjRkZGQ5MjAyZTQ3MTZmNzZhYThkJDk4YWVkNGM1MTg3NjQ3OWVhN2M4NGQ0NmZlMzcyODli'
-    },
-    auth: {
-      apiKey: 'VTdTZzdvSUJYazJXalJ3c2lJcW06a005RXVPaTRUMnlEYktaSmhWYTZtZw=='
-    }
-  })
+// const client = new Client({
+// cloud: {
+//       id: 'My_deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJGU1OTFlZGMxZjYyMjRkZGQ5MjAyZTQ3MTZmNzZhYThkJDk4YWVkNGM1MTg3NjQ3OWVhN2M4NGQ0NmZlMzcyODli'
+//     },
+//     auth: {
+//       apiKey: 'VTdTZzdvSUJYazJXalJ3c2lJcW06a005RXVPaTRUMnlEYktaSmhWYTZtZw=='
+//     }
+//   })
 
-  client.info()
-  .then(response => console.log(response))
-  .catch(error => console.error(error))
+//   client.info()
+//   .then(response => console.log(response))
+//   .catch(error => console.error(error))
 
 
 const search = async (searchOBJ) => {
