@@ -1,6 +1,6 @@
 const { randomUUID } = require('crypto');
 const userDataAccess = require('./../data-access/userDataAccess');
-const elasticWorker = require('./elasticWorker');
+// const elasticWorker = require('./elasticWorker');
 
 
 
@@ -88,7 +88,7 @@ module.exports.createUser = (req,res) => {
         }
         console.log('LOG: userRecord is: %j', userRecord)
         userDataAccess.insertUser(userRecord).then(() => {
-            elasticWorker.insert('user',userRecord);
+            // elasticWorker.insert('user',userRecord);
 
             let obj = {
                 cookbookID: userRecord.cookbookID,
@@ -96,7 +96,7 @@ module.exports.createUser = (req,res) => {
                 recipes: []
             }
 
-            elasticWorker.insert('cookbook',obj);
+            // elasticWorker.insert('cookbook',obj);
             res.status(200);
             res.contentType('application/json');
             res.send({status:"ok"});

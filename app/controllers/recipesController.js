@@ -7,7 +7,7 @@ const utilParser = require('./../utils/parser');
 const Collections = require('./../utils/dbEnums');
 const e = require('express');
 const { resolve } = require('path');
-const elasticWorker = require('./elasticWorker')
+// const elasticWorker = require('./elasticWorker')
 
 
 
@@ -40,7 +40,7 @@ module.exports.removeRecipeFromCookbook = async (req,res) => {
     const recipeID = req.body.recipeID;
     console.log(`LOG: in removeRecipeFromCookbook, email = ${userEmail}, recipeID  = ${recipeID}`);
     cookbookdataAccess.removeRecipeFromCookbook(userEmail,recipeID).then((data) => {
-        elasticWorker.removeFromArray('cookbook','recipes',recipeID,userEmail);
+        // elasticWorker.removeFromArray('cookbook','recipes',recipeID,userEmail);
         res.status(200);
         res.contentType('application/json');
         res.send({status: "ok", message: data});

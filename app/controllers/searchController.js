@@ -1,4 +1,4 @@
-const elasticWorker = require('./elasticWorker');
+// const elasticWorker = require('./elasticWorker');
 
 /*
 Gets: 
@@ -10,7 +10,7 @@ Gets:
 const searchRecipes = async (req,res) => {
     fieldName = req.body.fieldName;
     searchValue = req.body.value;
-
+    console.log(`in searchRecipes`)
     let searchOBJ = {
         index: 'recipe',
         size: 10000,
