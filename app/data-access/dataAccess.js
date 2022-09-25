@@ -1,5 +1,4 @@
 
-const { query } = require('express');
 const db = require('./../db/db');
 const dbAccess = db.connection;
 const recipesDataAccess = require ('./recipesDataAccess');

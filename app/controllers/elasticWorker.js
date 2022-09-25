@@ -30,7 +30,6 @@ const search = async (searchOBJ) => {
   return res;
 }
 
-//.removeFromArray('cookbook','recipes',recipeID,userEmail);
 const removeFromArray = async (indexName,arrayToRemoveFrom,valueToRemove,idToSearch) => {
   let obj = {};
   obj.index = indexName;
@@ -80,11 +79,7 @@ const update = async (indexName,fieldToUpdate,newValue,idToSearch) => {
   let obj = {};
   obj.index = indexName;
   obj.refresh = true;
-  // obj.id = idToSearch;
-  // let script = {
-  //   lang: "painless",
-  //   source: "ctx._source."+fieldToUpdate+"="+newValue
-  // }
+
   obj.size = 1000;
   let script = {
     lang: "painless",
@@ -93,7 +88,6 @@ const update = async (indexName,fieldToUpdate,newValue,idToSearch) => {
       value: newValue
     }
   }
-  // script.params[value] = newValue;
   obj.script = script;
   obj.query = {
     match_phrase:{

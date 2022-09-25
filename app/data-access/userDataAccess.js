@@ -1,9 +1,4 @@
-const { query } = require('express');
-const db = require('./../db/db');
-const worker = require('./../data-access/dataAccess');
-const { resolve } = require('path');
 const Users = require('../utils/models/user');
-const { ensureIndexes } = require('../utils/models/user');
 const Cookbooks = require('../utils/models/cookbook');
 // const elasticWorker = require('./../controllers/elasticWorker');
 
