@@ -2,26 +2,17 @@ import {
   AppBar,
   Container,
   Button,
-  Collapse,
-  IconButton,
   List,
-  ListItem,
   ListItemButton,
-  ListItemIcon,
   ListItemText,
   Toolbar,
   Grid,
   Typography
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import React, { useEffect, useState } from "react";
-// import { Link as Scroll } from "react-scroll";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { Link as Scroll } from "react-scroll";
-//import { Button } from "react-scroll/modules";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import { color } from "@mui/system";
 import image from "./captainCook.png"
 import image2 from "./image.png"
 
@@ -68,8 +59,6 @@ const useStyles = makeStyles(theme => ({
     textAlign: "center"
   },
   title: {
-    //color: "#fff",
-    //fontSize: "2.625rem",
     fontFamily: "Muli"
   },
   goDown: {
@@ -137,6 +126,8 @@ const LandingNavbar = () => {
 
       </Grid>
       </Container>
+
+      {/* mathod to scroll down the landing page */}
 
       {/* <Collapse
         in={checked}

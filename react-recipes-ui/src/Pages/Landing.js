@@ -1,7 +1,6 @@
 import { CssBaseline } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React from "react";
-import LandingContent from "../components/LandingComponents/LandingContent";
 import LandingNavbar from "../components/Navbars/LandingNavbar";
 
 const useStyles = makeStyles(theme => ({
@@ -18,7 +17,6 @@ const Landing = () => {
   return (
     <div className={classes.root}>
       <LandingNavbar />
-      {/* <LandingContent /> */}
       <CssBaseline />
     </div>
   );
@@ -26,75 +24,3 @@ const Landing = () => {
 
 export default Landing;
 
-
-// import React, { useEffect, useState } from "react";
-// import {
-//   AppBar,
-//   Box,
-//   Button,
-//   Collapse,
-//   IconButton,
-//   List,
-//   ListItem,
-//   ListItemButton,
-//   ListItemIcon,
-//   ListItemText,
-//   Toolbar,
-//   Grid,
-//   Typography
-// } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
-// import image from "./captainCook.png";
-// import { useHistory } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
-
-// const useStyles = makeStyles(theme => ({
-//   appbarWrapper: {
-//     width: "90%",
-//     backgroundColor: "F4F6F6",
-//     margin: "0 auto"
-//   },
-//   list: { display: "flex", justifyContent:"right", flexDirection: "row", padding: 20 }
-// }));
-
-
-// export default function Landing(){
-
-//   const history = useHistory();
-//   const location = useLocation();
-//   const classes = useStyles();
-
-
-
-//   return(
-//     <Box sx={{ flexGrow: 1 }}>
-//     <AppBar position="static">
-//       <Toolbar className={classes.appbarWrapper}>
-//           <img src={image} id="captainCook" height="90" component="div" sx={{ flexGrow: 1 }}/>
-//         <Button color="inherit">Login</Button>
-//         {/* <List className={classes.list}>
-//           <ListItemButton
-//             key="Login"
-//             onClick={() => history.push("/login")}
-//                 className={
-//                   location.pathname == "/login" ? classes.active : null
-//                 }
-//               >
-//             <ListItemText primary="Login" />
-//           </ListItemButton>
-//           <ListItemButton
-//             key="Sign up"
-//             onClick={() => history.push("/signup")}
-//                 className={
-//                   location.pathname == "/signup" ? classes.active : null
-//                 }
-//               >
-//             <ListItemText primary="Sign up" />
-//           </ListItemButton>
-//           </List> */}
-//       </Toolbar>
-//     </AppBar>
-//     </Box>
-    
-//   )
-// }

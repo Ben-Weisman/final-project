@@ -10,8 +10,6 @@ import RecipesArray from "../components/Recipes/RecipesArray";
 import {server} from "./../constants"
 
 
-
-
 const images = [
   {
     url: 'https://ichef.bbci.co.uk/food/ic/food_16x9_1600/recipes/vegetarian_shepherds_pie_18177_16x9.jpg',

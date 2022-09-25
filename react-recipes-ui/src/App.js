@@ -1,4 +1,3 @@
-//import './App.css';
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import SignupForm from "./components/Forms/SignupForm";
@@ -8,7 +7,6 @@ import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { deepPurple } from "@mui/material/colors";
-// import InsertRecipeManualForm from "./components/Forms/InsertRecipeManualForm";
 import Landing from "./Pages/Landing";
 import CookBook from "./Pages/CookBook";
 import SignUp from "./components/Forms/SignUp/SignUp";
@@ -20,12 +18,10 @@ import Categories from "./Pages/Categories";
 import {server} from "./constants"
 
 const ServerURL = "http://"+server+":3000/api/v1/";
-//const ServerURL = "http://3.84.157.88:3000/api/v1/";
-const theme = createTheme({
 
+const theme = createTheme({
   palette: {
     secondary: deepPurple
-
   },
   typography: {
     fontFamily: "Quicksand",

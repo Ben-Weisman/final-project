@@ -24,7 +24,7 @@ def receiveJson():
     if request.method == 'POST':
         updatedJson = request.data
  
-    req = requests.post('http://44.204.147.28:3000/api/v1/recipes/add-new', data=updatedJson, headers={'Content-type': 'application/json', 'Accept': 'application/json'})
+    req = requests.post('http://localhost:3000/api/v1/recipes/add-new', data=updatedJson, headers={'Content-type': 'application/json', 'Accept': 'application/json'})
 
     return('d')
 
@@ -72,11 +72,6 @@ def getMethod(soup, recipeIndexJson):
 def getImage(soup, recipeIndexJson): 
    image = soup.find(recipeIndexJson['image']['lookFor'],class_=recipeIndexJson['image']['className']).find("img")
    return image['src']
-
-def getCategory(soup, recipeIndexJson):
-    categories = soup.find_all(recipeIndexJson['category']['lookFor'],class_=recipeIndexJson['category']['className'])
-    if category[0] != []:
-        return category[0].text
 
 
 def createRecipeJson(soup, recipeIndexJson, url):
@@ -140,7 +135,6 @@ def tryToCreactRecipe(soup, url):
 
 
     dic = {}
-    #dic["owner_id"] = "59dc8b97-6fae-4dcc-82ed-7cd8e21340a0"
     dic["recipe_name"] = title
     dic["recipe_description"] = description
     dic["recipe_instructions"] = instructions
@@ -165,18 +159,14 @@ def main(url):
        else:
         recipeJson = tryToCreactRecipe(soup, url) 
 
-        print(recipeJson) # test log
-
-
-        #print(req)
        return recipeJson
-       # validateRecipe(recipeJson)
+
     except:
         print("couldn't find json")
 
 
 if __name__ == '__main__':
-    app.run(host='44.204.147.28', port=5000)
+    app.run(debug=True)
 
 
 

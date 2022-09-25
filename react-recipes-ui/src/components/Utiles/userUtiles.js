@@ -1,7 +1,6 @@
 function getUserName() {
   const user = localStorage.getItem("user");
   const userJson = JSON.parse(user);
-  console.log(userJson);
   return userJson["name"];
 }
 

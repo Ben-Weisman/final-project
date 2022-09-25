@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
-import { Container, Grid, List, Paper, TextareaAutosize, Button, Box } from "@mui/material";
+import React, { useState, useRef } from "react";
+import { Grid, List, Paper, TextareaAutosize, Button } from "@mui/material";
 import AddCommentIcon from '@mui/icons-material/AddComment';
 import {server} from "./../../../constants"
-
-
-
-
 
 
 export default function addComment(props) {
@@ -54,10 +50,7 @@ export default function addComment(props) {
       const onChange = (e) => {
         setCommentValue(e.target.value);
       };
-    
-
-
-      
+          
       async function addComment() {
         const comment = {
           "email":email,
@@ -65,9 +58,6 @@ export default function addComment(props) {
           "dateCreated": date,
           "content": commentValue
       }  
-
-
-
 
         const response =  await fetch("http://"+server+":3000/api/v1/recipes/comment-likes", {
           method: "POST",

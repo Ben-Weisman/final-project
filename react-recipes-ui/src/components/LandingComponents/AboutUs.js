@@ -2,7 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea, CardHeader, Collapse } from "@mui/material";
+import { Collapse } from "@mui/material";
 import React from "react";
 import { makeStyles } from "@mui/styles";
 

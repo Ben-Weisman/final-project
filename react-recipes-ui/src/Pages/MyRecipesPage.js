@@ -11,11 +11,6 @@ const MyRecipesPage = () => {
         My Cookbook
       </Typography>
       <CookBook></CookBook>
-      {/* <Typography align="center" variant="h2">
-        {" "}
-        My Recipes
-      </Typography> */}
-      <LogedInUserRecipes></LogedInUserRecipes>
     </div>
   );
 };

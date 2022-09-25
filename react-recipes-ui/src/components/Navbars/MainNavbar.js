@@ -1,16 +1,7 @@
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
+import { Box, Toolbar, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import React, { useEffect, useState } from "react";
-import { Redirect } from "react-router-dom";
 
-// const useStyles = makeStyles((theme)=>{
-
-//   return({
-//     appbar: {
-//       width: `calc(100%)`
-//     }
-//   })
-// })
 const useStyles = makeStyles(theme => {
   return {
     toolbar: theme.mixins.toolbar,
@@ -20,6 +11,7 @@ const useStyles = makeStyles(theme => {
     }
   };
 });
+
 function getUserName() {
   const user = localStorage.getItem("user");
   const userJson = JSON.parse(user);

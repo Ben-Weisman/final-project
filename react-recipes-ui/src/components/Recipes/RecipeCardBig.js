@@ -1,11 +1,9 @@
 import { DeleteOutlined } from "@mui/icons-material";
 import {
   Card,
-  CardActions,
   Button,
   CardContent,
   CardHeader,
-  CardMedia,
   Grid,
   IconButton,
   List,
@@ -14,11 +12,9 @@ import {
   Typography,
   Tooltip
 } from "@mui/material";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from '@mui/icons-material/Comment';
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
-import ElementList from "./ElementList";
 import CommentsArray from "./comments/commentsArray"
 
 
@@ -57,15 +53,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20,
     marginBottom: 40,
     width: 300
-  },
-  
-  modal: {
-
-  },
-  title: {},
-
-  paper: {
-
   }
 }));
 

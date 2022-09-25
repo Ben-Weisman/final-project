@@ -1,7 +1,5 @@
 import React from "react";
-import LoginForm from "../components/Forms/LoginForm";
 import { makeStyles } from "@mui/styles";
-import { border, borderColor } from "@mui/system";
 import SignIn from "../components/Forms/SignIn/SignIn";
 
 const useStyles = makeStyles(theme => ({
@@ -16,7 +14,6 @@ const Login = props => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      {/* <LoginForm ServerURL={props.ServerURL}></LoginForm> */}
       <SignIn ServerURL={props.ServerURL}></SignIn>
     </div>
   );

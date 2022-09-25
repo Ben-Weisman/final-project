@@ -13,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Swal from "sweetalert2";
+import {server} from "./../../../constants"
+
 
 
 function Copyright(props) {
@@ -25,7 +27,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Captain Cook
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -36,8 +38,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 async function CreateUser(email, password, name) {
-  //need to fix it to be working with URL
-  return fetch("http://3.84.157.88:3000/api/v1/users/add", {
+  return fetch("http://"+server+":3000/api/v1/users/add", {
     method: "POST",
     headers: {
       "Content-Type": "application/json"
@@ -72,7 +73,6 @@ const handleSubmit = async event => {
     window.location.href = "/login";
   } else {
     Swal.fire("Failed", response.message, "error");
-    // data.delete;
   }
 };
 

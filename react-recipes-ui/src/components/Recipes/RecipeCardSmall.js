@@ -72,7 +72,6 @@ function getUserEmail() {
 }
 
 async function deletFromDBServer(recipe_id) {
-  //need to change the static url
   console.log(recipe_id);
   return fetch("http://"+server+":3000/api/v1/recipes/remove", {
     method: "POST",
@@ -98,8 +97,6 @@ async function deletFromDB(id) {
         window.location.reload();
       }
     );
-
-    // window.location.reload();
   } else {
     Swal.fire("Failed", response.message, response.status);
   }
@@ -215,11 +212,6 @@ export default function RecipeCardSmall(props) {
     
           </Typography> 
       <img src={props.recipe.image} alt={props.recipe.name_name} width="312" />
-      {/* <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {props.recipe.description}
-        </Typography>
-      </CardContent> */}
       <br></br>
       <Container>
       {props.recipe.category.map(category=> (

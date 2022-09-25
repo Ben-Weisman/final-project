@@ -3,20 +3,14 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import Swal from "sweetalert2";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import RecipePreview from "../importRecipeUrl/RecipePreview";
-import { useState, useEffect } from "react";
-import { WindowRounded } from "@mui/icons-material";
+import { useState } from "react";
 import {server} from "./../../constants"
 
 
@@ -26,8 +20,6 @@ export default function AddRecipeURl() {
 
   const [recipeData, setData] = useState({});
   const [open, setOpen] = useState(false);
-  const [url, setUrl] = useState("");
-
 
   async function handleSubmit(event) {
   
@@ -50,11 +42,8 @@ export default function AddRecipeURl() {
 
     setData(recipe_data)
     setOpen(true)
-    //setUrl("");
-  }
 
-  
-   
+  }
     
 
 };
@@ -87,12 +76,9 @@ export default function AddRecipeURl() {
                 <TextField
                   required
                   fullWidth
-                  //value={url}
-                  //onChange={(e)=> setUrl(e.target.value)}
                   id="recipe_url"
                   label="Recipe URL"
                   name="recipe_url"
-                  //autoComplete="recipe_url"
                 />
               </Grid>
             </Grid>
