@@ -1,11 +1,10 @@
 
-const { query } = require('express');
 const db = require('./../db/db');
 const dbAccess = db.connection;
 const recipesDataAccess = require ('./recipesDataAccess');
 const cookbookDataAccess = require ('./cookbookDataAccess')
 const Recipes = require('../utils/models/recipes')
-const elasticWorker = require('./../controllers/elasticWorker')
+// const elasticWorker = require('./../controllers/elasticWorker')
 
 /*
 params = {
@@ -35,7 +34,7 @@ module.exports.pushValueToArrayField = (params) => {
     switch (params.collection){
         case 'cookbooks': return handleCookbook(params);
     }
-    elasticWorker.appendToArray('cookbook','recipes',params.queryVal,params.pushVal);
+    // elasticWorker.appendToArray('cookbook','recipes',params.queryVal,params.pushVal);
 }
 
 module.exports.fetchRecipeByName = (name) => {
@@ -59,9 +58,9 @@ module.exports.zombifyRecipe = (id) => {
         Recipes.findOneAndUpdate({recipeID:id}, {active:false})
         .then((data) => {
             console.log(`LOG: deactivated recipeID ${id}`)
-            elasticWorker.update('recipe','active',false,id).then((data) => {
-                elasticWorker.refresh();
-            });
+            // elasticWorker.update('recipe','active',false,id).then((data) => {
+            //     elasticWorker.refresh();
+            // });
             
             resolve(data);
         })
@@ -77,8 +76,8 @@ module.exports.addRecipeToCookbook = (recipeID,email) => {
     return new Promise ((resolve,reject) => {
         cookbookDataAccess.addRecipe(recipeID,email)
         .then((data) => {
-            elasticWorker.appendToArray('cookbook','recipes',email,recipeID);
-            elasticWorker.refresh();
+            // elasticWorker.appendToArray('cookbook','recipes',email,recipeID);
+            // elasticWorker.refresh();
             resolve(data);
         })
         .catch((err) => {
@@ -122,7 +121,7 @@ module.exports.executeQuery = (query) => {
 
 
 module.exports.insertNewDocument = (doc,collectionName) => {
-    elasticWorker.insert('recipe',doc);
+    // elasticWorker.insert('recipe',doc);
     return dbAccess.collection(collectionName).insertOne(doc);
 }
 

@@ -1,11 +1,6 @@
-const { query } = require('express');
-const db = require('./../db/db');
-const worker = require('./../data-access/dataAccess');
-const { resolve } = require('path');
 const Users = require('../utils/models/user');
-const { ensureIndexes } = require('../utils/models/user');
 const Cookbooks = require('../utils/models/cookbook');
-const elasticWorker = require('./../controllers/elasticWorker');
+// const elasticWorker = require('./../controllers/elasticWorker');
 
 
 module.exports.updateDetails = async (email,fieldToUpdate,newValue) => {
@@ -73,7 +68,7 @@ module.exports.deActivateUser = (user) =>{
         Users.findOneAndUpdate({email:email},{$set:{active:false}},{new: true}, (err,data) => {
             if (err) reject(err);
             else{
-                elasticWorker.update('user','active',false,user.email);
+                // elasticWorker.update('user','active',false,user.email);
                 resolve(data);
             } 
         })

@@ -5,18 +5,18 @@ const { removeRecipeFromCookbook } = require('./recipesController')
 
 
 
-const client = new Client({
-   cloud: {
-      id: 'captain_cook:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJGY5ZWY5N2Q4MWNmOTRlYmQ4OGFmMWNlYWNkNDFlMTA1JGUyZDI3MGMzMWFhNTRmNzdhN2Y2Y2JkMWQ0MTc3Yjg3'
-    },
-    auth: {
-      apiKey: 'bUlTYU1vTUJndy1TM0lLcWRJaFY6QXBrVXJUYlVSajJ1NEdJdjd0THFqQQ=='
-    }
-  })
+// const client = new Client({
+// cloud: {
+//       id: 'My_deployment:dXMtY2VudHJhbDEuZ2NwLmNsb3VkLmVzLmlvJGU1OTFlZGMxZjYyMjRkZGQ5MjAyZTQ3MTZmNzZhYThkJDk4YWVkNGM1MTg3NjQ3OWVhN2M4NGQ0NmZlMzcyODli'
+//     },
+//     auth: {
+//       apiKey: 'VTdTZzdvSUJYazJXalJ3c2lJcW06a005RXVPaTRUMnlEYktaSmhWYTZtZw=='
+//     }
+//   })
 
-  client.info()
-  .then(response => console.log(response))
-  .catch(error => console.error(error))
+//   client.info()
+//   .then(response => console.log(response))
+//   .catch(error => console.error(error))
 
 
 const search = async (searchOBJ) => {
@@ -30,7 +30,6 @@ const search = async (searchOBJ) => {
   return res;
 }
 
-//.removeFromArray('cookbook','recipes',recipeID,userEmail);
 const removeFromArray = async (indexName,arrayToRemoveFrom,valueToRemove,idToSearch) => {
   let obj = {};
   obj.index = indexName;
@@ -80,11 +79,7 @@ const update = async (indexName,fieldToUpdate,newValue,idToSearch) => {
   let obj = {};
   obj.index = indexName;
   obj.refresh = true;
-  // obj.id = idToSearch;
-  // let script = {
-  //   lang: "painless",
-  //   source: "ctx._source."+fieldToUpdate+"="+newValue
-  // }
+
   obj.size = 1000;
   let script = {
     lang: "painless",
@@ -93,7 +88,6 @@ const update = async (indexName,fieldToUpdate,newValue,idToSearch) => {
       value: newValue
     }
   }
-  // script.params[value] = newValue;
   obj.script = script;
   obj.query = {
     match_phrase:{

@@ -1,28 +1,6 @@
 const { randomUUID } = require('crypto');
 const userDataAccess = require('./../data-access/userDataAccess');
-const elasticWorker = require('./elasticWorker');
-
-
-
-module.exports.update = (req,res) => {
-    const email = req.body.email;
-    const fieldToUpdate = req.body.fieldToUpdate;
-    const newValue = req.body.newValue;
-
-    userDataAccess.updateDetails(email,fieldToUpdate,newValue)
-    .then((data) => {
-        res.status(200);
-        res.contentType('application/json');
-        res.send({status:"ok", message: data});
-    })
-    .catch((err) => {
-        res.status(400);
-        res.contentType('application/json');
-        res.send({status:"error",message: err});
-    });
-}
-
-
+// const elasticWorker = require('./elasticWorker');
 
 
 
@@ -88,7 +66,7 @@ module.exports.createUser = (req,res) => {
         }
         console.log('LOG: userRecord is: %j', userRecord)
         userDataAccess.insertUser(userRecord).then(() => {
-            elasticWorker.insert('user',userRecord);
+            // elasticWorker.insert('user',userRecord);
 
             let obj = {
                 cookbookID: userRecord.cookbookID,
@@ -96,7 +74,7 @@ module.exports.createUser = (req,res) => {
                 recipes: []
             }
 
-            elasticWorker.insert('cookbook',obj);
+            // elasticWorker.insert('cookbook',obj);
             res.status(200);
             res.contentType('application/json');
             res.send({status:"ok"});
@@ -156,27 +134,6 @@ const validateUser = (user,pass) => {
     }
     return res;
 }
-
-
-// const validateUser = (user,pass) => {
-//     res = null;
-//     if (user){
-//         console.log('LOG: validateUser user: ' + user[0].user_password);
-//         console.log('LOG: pass = ' + pass);
-//         if (user[0].user_password == pass){
-//             console.log('LOG: valid')
-//             is_admin = isAdmin(user[0]);
-//             res = {
-//                 name:user[0].full_name,
-//                 email:user[0].email,
-//                 admin: is_admin,
-//                 status: "Success",
-//                 userID: user[0].user_id
-//             }
-//         }
-//     }
-//     return res;
-// }
 
 const isAdmin = (user) => {
     return user.isAdmin;
